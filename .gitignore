@@ -1,0 +1,9 @@
+#ignorar módulos de node
+/node_modules/
+
+#ignorar archivos complementarios para el proyectos
+/unprg-archivos/
+
+# sublimetext
+*.sublime-project
+*.sublime-workspace

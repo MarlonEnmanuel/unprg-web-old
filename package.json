@@ -1,0 +1,17 @@
+{
+  "name": "unprg-web",
+  "version": "1.0.0",
+  "description": "\"\"",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "gulp"
+  },
+  "author": "\"Marlon Enmanuel Montalvo Flores\"",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-stylus": "^2.2.0",
+    "nib": "^1.1.0"
+  }
+}
