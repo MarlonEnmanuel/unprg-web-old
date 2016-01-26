@@ -24,7 +24,6 @@
 
 	<!-- Importación de archivos propios -->
 		<?= config::getLink(config::getPath(false,'/frontend/css/sistemaAcademico.css')) ?>
-
 </head>
 <body>
 	<?php require_once 'includes/header.html'; ?>
@@ -32,14 +31,8 @@
 	
 	<section class="enlaces">
 		<div class="wrap">
-			<a class="enlace" href="http://aplicaciones.unprg.edu.pe/ModuloAutenticacion/indice.jsp">
-				<p class="nombre">Actas Virtuales</p>
-				<img src="frontend/img/enlaces/actasv.jpg" height="150" width="150" alt="Actas Virtuales">
-			</a>
-			<a class="enlace" href="http://www2.unprg.edu.pe/ocaa/index.php">
-				<p class="nombre">OCCA</p>
-				<img src="frontend/img/enlaces/occa.JPG" alt="OCCA">
-			</a>
+			<h1>Estatuto UNPRG</h1>
+			<embed class="pdf" src="frontend/estatuto.pdf" type='application/pdf' style="width: 80%; height: 500px;">
 		</div>
 	</section>
 

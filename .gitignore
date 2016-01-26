@@ -1,4 +1,4 @@
-#ignorar módulos de node
+# ignorar módulos de node
 /node_modules/
 
 #ignorar archivos complementarios para el proyectos

@@ -1,14 +1,17 @@
+<?php
+	require_once '16/backend/config.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>UNPRG | Universidad Nacional Pedro Ruiz Gallo</title>
 	<meta name="description" content="Somos una universidad pública que crea, imparte, difunde conocimientos científicos, tecnológicos y humanísticos; forma científicos y profesionales innovadores, éticos, críticos y competitivos, que participan activamente en el desarrollo integral y sustentable de la sociedad.">
-	<link rel="shortcut icon" href="/unrpg-nueva/frontend/img/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= config::getPath(true,'/frontend/img/favicon.ico') ?>" type="image/x-icon">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 
-	<meta property="og:image"		content="http://unprg.edu.pe/unrpg-nueva/frontend/img/unprg-social.jpg" />
+	<meta property="og:image"		content="<?= config::getPath(true,'frontend/img/unprg-social.jpg') ?>" />
 	<meta property="og:title"   	content="UNPRG | Universidad Nacional Pedro Ruiz Gallo" />
 	<meta property="og:description"	content="Somos una universidad pública que crea, imparte, difunde conocimientos científicos, tecnológicos y humanísticos; forma científicos y profesionales innovadores, éticos, críticos y competitivos, que participan activamente en el desarrollo integral y sustentable de la sociedad." />
 	<meta property="og:url" 		content="http://unprg.edu.pe/" />
@@ -16,22 +19,22 @@
 	<meta property="og:site_name" 	content="UNPRG" />
 
 	<!-- Importación de Librerías -->
-		<script src="/unrpg-nueva/frontend/libs/jquery.js"></script>
-		<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+		<?= config::getScript(config::getPath(false,'/frontend/libs/jquery.js')) ?>
+		<?= config::getLink('https://fonts.googleapis.com/css?family=Titillium+Web') ?>
 
 	<!-- Importación de Slider -->
-		<link rel="stylesheet" href="/unrpg-nueva/frontend/owl-carousel/owl.carousel.css">
-		<script src="/unrpg-nueva/frontend/owl-carousel/owl.carousel.min.js"></script>
+		<?= config::getLink(config::getPath(false,'/frontend/owl-carousel/owl.carousel.css')) ?>
+		<?= config::getScript(config::getPath(false,'/frontend/owl-carousel/owl.carousel.min.js')) ?>
 
 	<!-- Importación de archivos propios -->
-		<link rel="stylesheet" type="text/css" href="unrpg-nueva/frontend/css/home.css">
+		<?= config::getLink(config::getPath(false,'/frontend/css/home.css')) ?>
 
 	<!-- Esto debería ir a un archivo aparte :P -->
 		<script type="text/javascript">
 			window.unprg = {};
 			$(document).ready(function(){
 				$(".unprg-cuerpo .autoridades .galeria").owlCarousel({
-					autoPlay : 3000,
+					autoPlay : 2000,
 					navigation : false, // Show next and prev buttons
 					slideSpeed : 300,
 					paginationSpeed : 400,
@@ -47,18 +50,18 @@
 		</script>
 </head>
 <body>
-	<?php require_once 'unrpg-nueva/includes/header.html'; ?>
-	<?php require_once 'unrpg-nueva/includes/nav.html'; ?>
+	<?php require_once config::getPath(false, 'includes/header.html'); ?>
+	<?php require_once config::getPath(false, 'includes/nav.html'); ?>
 	
 	<section class="unprg-portada">
 		<div class="wraper">
 			
 			<div class="portada-col unprg-slider">
-				<?php require_once 'unrpg-nueva/includes/slider.html'; ?>
+				<?php require_once config::getPath(false, 'includes/slider.html'); ?>
 			</div>
 
 			<div class="portada-col unprg-avisos">
-				<?php require_once 'unrpg-nueva/includes/avisos.html'; ?>
+				<?php require_once config::getPath(false, 'includes/avisos.html'); ?>
 			</div>
 
 			<div class="clean"></div>
@@ -135,13 +138,12 @@
 				</div>
 				<div class="clean"></div>
 				<div class="galeria owl-carousel owl-theme">
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/Agrícola.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/FacFym.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/FACHSE.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/FICSA.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/IngMecanica Electrica.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/Zootecnia.jpg" alt=""></div>
-					<div class="item"><img src="unrpg-nueva/frontend/img/autoridades/Agrícola.jpg" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/agricola.jpg') ?>" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/facfym.jpg') ?>" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/fachse.jpg') ?>" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/ficsa.jpg') ?>" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/mecanicaElectrica.jpg') ?>" alt=""></div>
+					<div class="item"><img src="<?= config::getPath(false,'/frontend/img/autoridades/zootecnia.jpg') ?>" alt=""></div>
 				</div>
 				<div class="clean"></div>
 			</div>
@@ -218,12 +220,12 @@
 		<aside class="cuerpo-col unprg-panel">
 			<div class="panel-elem">
 				<p class="titulo">Sistema Académico</p>
-				<a href="unrpg-nueva/sistemaAcademico.php"><img src="unrpg-nueva/frontend/img/enlaces/sistemaaca.jpeg" alt="Sistema Académico"></a>
+				<a href="<?= config::getPath(true,'sistemaAcademico.php') ?>"><img src="<?= config::getPath(false,'/frontend/img/enlaces/sistemaaca.jpeg')?>" alt="Sistema Académico"></a>
 				<div class="clean"></div>
 			</div>
 			<div class="panel-elem">
 				<p class="titulo">Centro PRE</p>
-				<a target="_blank" href="http://cpu.unprg.edu.pe/cpu/index.php"><img src="unrpg-nueva/frontend/img/enlaces/centropre.jpg" alt="Centro Pre"></a>
+				<a target="_blank" href="http://cpu.unprg.edu.pe/cpu/index.php"><img src="<?= config::getPath(false,'/frontend/img/enlaces/centropre.jpg') ?>" alt="Centro Pre"></a>
 				<div class="clean"></div>
 			</div>
 			<div class="panel-elem">
@@ -242,7 +244,7 @@
 			<p>Página en Construcción</p>
 		</div>
 	</div>
-
-	<?php require_once 'unrpg-nueva/includes/footer.html'; ?>
+	
+	<?php require_once config::getPath(false, 'includes/footer.html'); ?>
 </body>
 </html>
