@@ -1,76 +1,29 @@
 <p class="titulo">Avisos</p>
 <div class="avisos">
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
-	</a>
-	<a href="" class="aviso">
-		<p class="aviso__texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel esse quibusdam nihil a necessitatibus natus, voluptas fugiat officiis ipsa earum unde sit consequatur. Maxime harum ab, pariatur obcaecati ut eos.</p>
-		<p class="aviso__fecha">@10/10/2015</p>
+	<a href="" class="aviso" data-idAviso="1">
+		<p class="aviso__texto">La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el...</p>
+		<p class="aviso__fecha">@26/01/2016</p>
 	</a>
 </div>
 
+<div class="avisos-bg">
+	<div class="wraper">
+		<div class="cerrar"><span class="icon-cross"></span></div>
+		<div class="contenido">
+			<img src="<?= config::getPath(false, '/frontend/avisos/aviso1.jpg') ?>" alt="comunicado">
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
-
-	window.unprgAvisos = {
-
-		options : {
-			speed : 500,
-			delay : 2000
-		},
-
-		deslizar : function() {
-			var base = this;
-
-			base.indexItem ++;
-
-			if(base.indexItem >= base.numItems){
-				base.indexItem = 0;
-			}
-
-			var despl = (base.$items[base.indexItem].offsetTop) - (base.$elem[0].offsetTop) + 22;
-
-			base.$elem.animate({ scrollTop: despl }, base.options.speed);
-		},
-
-		init : function() {
-			var base = this;
-			base.$elem = $('.unprg-avisos');
-			base.$items = base.$elem.find('.aviso');
-			base.numItems = base.$items.length;
-			base.indexItem = 0;
-			base.interval = setInterval(base.deslizar.apply(this), base.options.delay);
-		}
-	};
-
-	window.unprgAvisos.init();
-
+	$(document).ready(function(){
+		$('.unprg-avisos .avisos-bg').fadeIn('600');
+		$('.unprg-avisos .avisos .aviso').click(function(event){
+			event.preventDefault();
+			$('.unprg-avisos .avisos-bg').fadeIn('600');
+		});
+		$('.unprg-avisos .cerrar span').click(function(){
+			$('.unprg-avisos .avisos-bg').fadeOut('400');
+		});
+	});
 </script>

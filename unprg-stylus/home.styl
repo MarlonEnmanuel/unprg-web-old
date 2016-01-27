@@ -1,12 +1,6 @@
-@import "libs/normalize.styl"
-@import "libs/icomoon.styl"
-@import "includes/general.styl"
-
-@import "includes/header.styl"
-@import "includes/nav.styl"
-@import "includes/footer.styl"
 
 @import "nib"
+@import "includes/config.styl"
 
 .unprg-portada
 	font-size: 10px
@@ -84,6 +78,7 @@
 			
 		.avisos
 			margin-top: 16px
+			min-height: 362px
 			
 			.aviso
 				border-top: 1px solid ccAzulClaro
@@ -105,7 +100,34 @@
 					color: ccAmarillo
 					font-size: 1.2em
 					text-align: right
-				
+		
+		.avisos-bg
+			display: none
+			position: fixed
+			top: 0
+			left: 0
+			right: 0
+			bottom: 0
+			background-color: rgba(0,0,0,0.75);
+			z-index: 100
+			
+			.cerrar
+				text-align: right
+				margin-top: 20px
+				span
+					font-size: 30px
+					color: white
+					cursor: pointer
+					transition: all .3s
+					&:hover
+						color: red
+					
+			.contenido
+				text-align: center
+				margin-top: 20px
+				img
+					max-width: 100%
+
 
 .unprg-cuerpo
 	

@@ -27,6 +27,7 @@
 		<?= config::getScript(config::getPath(false,'/frontend/owl-carousel/owl.carousel.min.js')) ?>
 
 	<!-- Importación de archivos propios -->
+		<?= config::getLink(config::getPath(false,'/frontend/css/general.css')) ?>
 		<?= config::getLink(config::getPath(false,'/frontend/css/home.css')) ?>
 
 	<!-- Esto debería ir a un archivo aparte :P -->
@@ -218,6 +219,12 @@
 		</section>
 
 		<aside class="cuerpo-col unprg-panel">
+			<div class="panel-elem">
+				<p class="titulo">Estatuto UNPRG</p>
+				<a href="<?= config::getPath(false, '/estatuto.php') ?>" class="titulo" style="text-decoration: none;">
+					<span class="icon-file-text2" style="font-size: 80px;text-align: center;color: white;display: block;margin-top: 10px;"></span>
+				</a>
+			</div>
 			<div class="panel-elem">
 				<p class="titulo">Sistema Académico</p>
 				<a href="<?= config::getPath(true,'sistemaAcademico.php') ?>"><img src="<?= config::getPath(false,'/frontend/img/enlaces/sistemaaca.jpeg')?>" alt="Sistema Académico"></a>

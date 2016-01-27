@@ -1,9 +1,5 @@
 <div class="owl-carousel owl-theme">
 	<div class="item">
-		<img src="<?= config::getPath(false,'/frontend/img/portada/img1.jpg') ?>">
-		<p class="item-titulo">Calendario Académico</p>
-	</div>
-	<div class="item">
 		<img src="<?= config::getPath(false,'/frontend/img/portada/img2.jpg') ?>">
 		<p class="item-titulo">Dr. Jorge Aurelio Oliva Nuñez - Rector UNPRG</p>
 		<p class="item-descripcion">Nuevas Autoridades ratificaron que su gestión será transparente</p>
@@ -17,6 +13,7 @@
 			$(".unprg-avisos").height(sliderHeight-32);
 		}else{
 			$(".unprg-avisos").height("auto");
+			$(".unprg-avisos .avisos").css("min-height","auto");
 		}
 	};
 

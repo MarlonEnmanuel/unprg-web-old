@@ -13,9 +13,10 @@ class config {
 
 	public static $isDeveloping = true;					// indica si es producción o desarrollo
 
-	public static $path_dom = 'http://unprg.edu.pe/'; 	// dominio del proecto
+	public static $path_dom = 'http://www.unprg.edu.pe/'; 	// dominio del proyecto
 	public static $path_dev = 'http://unprg.local/';	// dominio para desarrollo
 	public static $path_int = '16';						// carpeta interna del proyecto
+
 
 	/**
 	* Genera la ruta para un archivo
