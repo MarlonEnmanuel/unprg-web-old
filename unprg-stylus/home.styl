@@ -110,10 +110,19 @@
 			bottom: 0
 			background-color: rgba(0,0,0,0.75);
 			z-index: 100
-			
+			overflow: auto
+			.wraper
+				position: absolute
+				right: 4%
+				left: 4%
+				top: 20px
+				bottom: 20px
+				padding: 0
+				margin: 0
+				
 			.cerrar
-				text-align: right
-				margin-top: 20px
+				position: absolute
+				right: 0
 				span
 					font-size: 30px
 					color: white
@@ -123,10 +132,31 @@
 						color: red
 					
 			.contenido
+				display: none
 				text-align: center
 				margin-top: 20px
+				position: absolute
+				top: 20px
+				bottom: 0px
+				left: 0px
+				right: 0px
+				overflow: auto
+				font-size: 0
+				
 				img
 					max-width: 100%
+					height: 100%
+					width: auto
+				.pdf
+					width: 100%
+					height: 100%
+					max-width: 900px
+					margin: 0 auto
+					padding: 0 0
+					border: 0
+				
+			.visible
+				display: block
 
 
 .unprg-cuerpo

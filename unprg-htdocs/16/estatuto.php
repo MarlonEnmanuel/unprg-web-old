@@ -44,7 +44,7 @@
 	<section>
 		<div class="wraper">
 			<p class="titulo">Estatuto UNPRG</p>
-			<a href="<?= config::getPath(true, 'frontend/estatuto.pdf') ?>" download="UNPRG Estatuto.pdf">Descagar en PDF</a>
+			<a href="<?= config::getPath(true, 'frontend/estatuto.pdf') ?>" download="UNPRG-Estatuto.pdf">Descagar en PDF</a>
 			<div class="contenedor">
 				<embed class="pdf" src="frontend/estatuto.pdf" type="application/pdf">
 			</div>

@@ -4,26 +4,44 @@
 		<p class="aviso__texto">La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el...</p>
 		<p class="aviso__fecha">@26/01/2016</p>
 	</a>
+	<a href="" class="aviso" data-idAviso="2">
+		<p class="aviso__texto">Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación</p>
+		<p class="aviso__fecha">@28/01/2016</p>
+	</a>
 </div>
 
 <div class="avisos-bg">
 	<div class="wraper">
 		<div class="cerrar"><span class="icon-cross"></span></div>
-		<div class="contenido">
+
+		<div class="contenido visible" data-idAviso="1">
 			<img src="<?= config::getPath(false, '/frontend/avisos/aviso1.jpg') ?>" alt="comunicado">
 		</div>
+
+		<div class="contenido" data-idAviso="2">
+			<embed class="pdf" src="<?= config::getPath(false, '/frontend/avisos/aviso2.pdf') ?>" type="application/pdf">
+		</div>
+
 	</div>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.unprg-avisos .avisos-bg').fadeIn('600');
-		$('.unprg-avisos .avisos .aviso').click(function(event){
-			event.preventDefault();
-			$('.unprg-avisos .avisos-bg').fadeIn('600');
-		});
+
 		$('.unprg-avisos .cerrar span').click(function(){
 			$('.unprg-avisos .avisos-bg').fadeOut('400');
+		});
+
+		$('.unprg-avisos .avisos .aviso').each(function(index, el) {
+			$(this).click(function(event) {
+				event.preventDefault();
+				debugger;
+				var id = $(this).data('idaviso');
+				$('.unprg-avisos .avisos-bg .contenido').css('display','none');
+				$('.unprg-avisos .avisos-bg .contenido[data-idAviso='+id+']').css('display','block');
+				$('.unprg-avisos .avisos-bg').fadeIn('600');
+			});
 		});
 	});
 </script>
