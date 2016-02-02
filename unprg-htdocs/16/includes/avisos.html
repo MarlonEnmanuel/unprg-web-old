@@ -1,15 +1,16 @@
-<p class="titulo">Avisos</p>
-<div class="avisos">
-	<a href="" class="aviso" data-idAviso="1">
-		<p class="aviso__texto">La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el...</p>
-		<p class="aviso__fecha">@26/01/2016</p>
-	</a>
-	<a href="" class="aviso" data-idAviso="2">
-		<p class="aviso__texto">Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación</p>
-		<p class="aviso__fecha">@28/01/2016</p>
-	</a>
+<div class="avisos-cont">
+	<p class="titulo">Avisos</p>
+	<div class="avisos">
+		<a href="" class="aviso" data-idAviso="1">
+			<p class="aviso__texto">La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el...</p>
+			<p class="aviso__fecha">@26/01/2016</p>
+		</a>
+		<a href="" class="aviso" data-idAviso="2">
+			<p class="aviso__texto">Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación</p>
+			<p class="aviso__fecha">@28/01/2016</p>
+		</a>
+	</div>
 </div>
-
 <div class="avisos-bg">
 	<div class="wraper">
 		<div class="cerrar"><span class="icon-cross"></span></div>
@@ -26,7 +27,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	/**$(document).ready(function(){
 		$('.unprg-avisos .avisos-bg').fadeIn('600');
 
 		$('.unprg-avisos .cerrar span').click(function(){
@@ -36,12 +37,82 @@
 		$('.unprg-avisos .avisos .aviso').each(function(index, el) {
 			$(this).click(function(event) {
 				event.preventDefault();
-				debugger;
 				var id = $(this).data('idaviso');
 				$('.unprg-avisos .avisos-bg .contenido').css('display','none');
 				$('.unprg-avisos .avisos-bg .contenido[data-idAviso='+id+']').css('display','block');
 				$('.unprg-avisos .avisos-bg').fadeIn('600');
 			});
 		});
-	});
+	});**/
+
+	(function($, $elem){
+		if(!window.unprg) window.unprg = {};
+
+		var avisos = {
+
+			init : function(){
+				var base = this;
+				base.$elem = $elem;
+				base.$container = base.$elem.find('.avisos');
+
+				base.startSlide();
+			},
+
+			startSlide : function(){
+				var base = this;
+				$(base.$container.find('.aviso')[0]).addClass('primero');
+
+				//verificar scroll
+				base.stopOnHover();
+				base.play();
+			},
+
+			play : function(){
+				var base = this;
+				window.clearInterval(base.playInterval);
+				base.playInterval = window.setInterval(function(){
+					base.slide();
+				}, base.options.timeWait);
+			},
+
+			stop : function(){
+				var base = this;
+				window.clearInterval(base.playInterval);
+			},
+
+			stopOnHover : function(){
+				var base = this;
+				base.$elem.on("mouseover", function () {
+                    base.stop();
+                });
+                base.$elem.on("mouseout", function () {
+                    base.play();
+                });
+			},
+
+			slide : function(){
+				var base = this, item, clon;
+				debugger;
+				item = $(base.$container.find('.aviso')[0]);
+				item.addClass('ocultar');
+				clon = item.clone();
+				base.$container.append(clon);
+				clon.removeClass('ocultar');
+				window.setTimeout(function(){
+					item.remove();
+				}, base.options.timeChange);
+			},
+
+			options : {
+				timeChange : 500,
+				timeWait : 2000
+			}
+
+		};
+
+		window.unprg.avisos = avisos;
+	})(jQuery, $('.unprg-avisos'));
+
+	window.unprg.avisos.init();
+
 </script>
