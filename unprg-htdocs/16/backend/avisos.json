@@ -1,0 +1,18 @@
+{
+	"avisos" : [
+		{
+			"id" 		: "2",
+			"fecha" 	: "28/01/2016",
+			"doc" 		: "/frontend/avisos/aviso2.pdf",
+			"emergente" : false,
+			"texto" 	: "Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación"
+		},
+		{
+			"id" 		: "1",
+			"fecha" 	: "26/01/2016",
+			"img" 		: "/frontend/avisos/aviso1.jpg",
+			"emergente" : true,
+			"texto" 	: "La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el..."
+		}
+	]
+}
