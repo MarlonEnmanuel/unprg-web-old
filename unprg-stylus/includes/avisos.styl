@@ -8,6 +8,18 @@
 	height: 100%
 	overflow: auto
 	
+	.aux
+		width: 200px
+		height: 200px
+		border: 2px solid ccAzulClaro
+		padding: 10px
+		background-color: ccAmarillo
+		transition: all 200ms
+	.oculto
+		height: 0px
+		border: 0px solid ccAzulClaro
+		padding: 0px
+	
 	.avisos-cont
 		margin: 16px
 	
@@ -19,21 +31,37 @@
 		padding-bottom: 12px
 		
 	.avisos
-		min-height: 362px
 		
+		.carga
+			text-align: center
+			.texto
+				color: white
+				font-size: 16px
+				text-align: center
+				margin-top: 20px
+				margin-bottom: 30px
+			.icono
+				color: white
+				display: inline-block
+				font-size: 40px
+				animation: rotar 800ms infinite linear
+		
+		.aviso-wrap
+			height: 70px
+			opacity: 1
+			overflow: hidden
+			&:last-child .aviso
+				border-bottom: 1px solid ccAzulClaro
+			
 		.aviso
 			box-sizing: border-box
 			cursor: pointer
 			display: block
 			text-decoration: none
-			transition: all 0.5s
-			overflow: hidden
 			border-top: 1px solid ccAzulClaro
 			height: 70px
 			padding: 6px 0px
-			transition: all 800ms
-			&:last-child
-				border-bottom: 1px solid ccAzulClaro
+			transition: all 200ms
 			&:hover
 				background-color: ccAzul+4%
 				
@@ -43,6 +71,8 @@
 				line-height: 20px
 				height: 40px
 				text-align: justify
+				text-outline: ellipsis
+				overflow: hidden
 			&__fecha
 				color: ccAmarillo
 				font-size: 12px
@@ -50,10 +80,10 @@
 				height: 18px
 				text-align: right
 		
-		.ocultar
-			border: none
+		.aviso-hide
 			height: 0px
-			padding: 0px
+			opacity: 0
+			
 		.primero
 			border-top: 2px solid ccAzulClaro
 	
@@ -74,7 +104,7 @@
 			top: 20px
 			bottom: 20px
 			padding: 0
-			margin: 0
+			margin: 0 auto
 			
 		.cerrar
 			position: absolute
@@ -113,3 +143,11 @@
 			
 		.visible
 			display: block
+			
+
+
+@keyframes rotar
+	from
+		transform: rotate(0deg);
+	to
+		transform: rotate(360deg);

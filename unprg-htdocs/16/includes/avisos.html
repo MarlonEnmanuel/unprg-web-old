@@ -1,198 +1,199 @@
 <div class="avisos-cont">
 	<p class="titulo">Avisos</p>
 	<div class="avisos">
-		<!--div class="aviso" data-idAviso="1">
-			<p class="aviso__texto">La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el...</p>
-			<p class="aviso__fecha">@26/01/2016</p>
+		<div class="carga">
+			<div class="texto">Cargando</div>
+			<span class="icono icon-spinner2"></span>
 		</div>
-		<div class="aviso" data-idAviso="2">
-			<p class="aviso__texto">Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación</p>
-			<p class="aviso__fecha">@28/01/2016</p>
-		</div-->
 	</div>
 </div>
 <div class="avisos-bg">
 	<div class="wraper">
 		<div class="cerrar"><span class="icon-cross"></span></div>
-
-		<!--div class="contenido visible" data-idAviso="1">
-			<img src="<?= config::getPath(false, '/frontend/avisos/aviso1.jpg') ?>" alt="comunicado">
-		</div>
-
-		<div class="contenido" data-idAviso="2">
-			<embed class="pdf" src="<?= config::getPath(false, '/frontend/avisos/aviso2.pdf') ?>" type="application/pdf">
-		</div-->
-
 	</div>
 </div>
 
 <script type="text/javascript">
-	(function($, $elem){
-		if(!window.unprg) window.unprg = {};
+(function($, $elem){
+	if(!window.unprg) window.unprg = {};
 
-		var avisos = {
+	var avisos = {
 
-			init : function(){
-				var base = this;
-				base.$elem = $elem;
-				base.$container = base.$elem.find('.avisos');
-				base.$background = base.$elem.find('.avisos-bg');
-				base.items = {};
+		options : {
+			timeChange 		: 800,    	//tiempo de transión al deslizar aviso
+			timeChangeDelay : 60,    	//tiempo de respuesta para desizamiento
+			timeWait 		: 3600,	   	//tiempo entre cada deslizamiento de avisos
+			timeBgShow  	: 400,    	//tiempo de transición de aviso emergente
+			timeBgInit		: 1500,   	//tiempo para mostrar el aviso emergente desde la carga de la página
+			playOnlyScroll	: false,  	//si es verdadero solo se anima cuando hay escroll
+			stopOnHover		: true,    	//si es verdadero la reproducción se detiene al posicionar el mouse
+			absPath 		: "/16/", 	//indica la carpeta interna del proyecto
+			jsonPath 		: "/16/backend/avisos.json"	//indica la ruta de los avisos
+		},
 
-				base.startSlide();
-			},
+		init : function(){
+			var base = this;
+			base.$elem = $elem;
+			base.$container = base.$elem.find('.avisos');
+			base.$background = base.$elem.find('.avisos-bg');
+			base.items = {};
+			base.loadItems();
+		},
 
-			startSlide : function(){
-				var base = this, 
-					time = 0;
-					increase = 150;
+		startSlide : function(){
+			var base = this;
+			base.$background.find('.icon-cross').click(function(event) {
+				base.$background.fadeOut(base.options.timeBgShow);
+			});
+			base.$container.find('.aviso-wrap').first().find('.aviso').addClass('primero');
+			if(base.options.stopOnHover) base.stopOnHover();
+			base.showEmergente();
+			base.play();
+		},
 
-				base.$background.find('.icon-cross').click(function(event) {
-					base.$background.fadeOut(base.options.timeBgShow);
-				});
-
-				base.loadItems();
-				window.setTimeout(function(){
-					base.showEmergente();
-				}, 1500);
-
-				$(base.$container.find('.aviso')[0]).addClass('primero');
-
-				if(base.options.playOnScroll === true){
-					if(base.$container.height()>base.$elem.height()){
-						base.play();
-						base.stopOnHover();
-					}
-				}else{
-					base.play();
-					base.stopOnHover();
-				}
-			},
-
-			play : function(){
-				var base = this;
-				window.clearInterval(base.playInterval);
-				base.playInterval = window.setInterval(function(){
-					base.slide();
-				}, base.options.timeWait);
-			},
-
-			stop : function(){
-				var base = this;
-				window.clearInterval(base.playInterval);
-			},
-
-			stopOnHover : function(){
-				var base = this;
-				base.$elem.on("mouseover", function () {
-                    base.stop();
-                });
-                base.$elem.on("mouseout", function () {
-                    base.play();
-                });
-			},
-
-			slide : function(){
-				var base = this, item, clon;
-				
-				item = $(base.$container.find('.aviso')[0]);
-				item.addClass('ocultar');
-				clon = item.clone();
-				base.$container.append(clon);
-				clon.removeClass('ocultar');
-				window.setTimeout(function(){
-					item.remove();
-				}, base.options.timeChange);
-			},
-
-			loadItems : function(){
-				var base = this;
-				$.getJSON(base.options.jsonPath)
-					.done(function(data){
-						$.each(data.avisos, function(index, el) {
-							base.addItem(el);
-						});
-					})
-					.fail(function(data){
-						alert('Error al cargar');
-						console.log(data);
-					});
-			},
-
-			addItem : function(aviso){
-				var base = this, item, bg, desplegar;
-
-				bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
-				if(aviso.img){
-					bg.append($('<img/>').attr({
-						'src'  : base.options.absPath+aviso.img,
-						'class': 'img',
-						'alt'  : 'comunicado'
-					}));
-
-				}else{
-					bg.append($('<embed/>').attr({
-						'src'  : base.options.absPath+aviso.doc,
-						'class': 'pdf',
-						'type' : 'application/pdf'
-					}));
-				}
-
-				base.items[aviso.id] = {
-					'id' 		: aviso.id,
-					'fecha' 	: aviso.fecha,
-					'emergente'	: aviso.emergente,
-					'texto' 	: aviso.texto,
-					'bg' 		: bg,
-					'load' 		: false
-				};
-				item = $("<div/>").addClass('aviso').attr('data-id',aviso.id);
-				item.append($("<p/>").addClass('aviso__texto').text(aviso.texto));
-				item.append($("<p/>").addClass('aviso__fecha').text(aviso.fecha));
-
-				item.click(function(event) {
-					base.desplegar($(this).data('id'));
-				});
-
-				base.$container.append(item);
-			},
-
-			desplegar : function(idAviso){
-				var base = this;
-				if(base.items[idAviso].load === false){
-					base.items[idAviso].load = true;
-					base.$background.find('.wraper').append(base.items[idAviso].bg);
-				}
-				base.$background.find('.contenido').each(function(index, el) {
-					$(el).hide();
-				});
-				base.$background.find('.contenido[data-id='+idAviso+']').show();
-				base.$background.fadeIn(base.options.timeBgShow);
-			},
-
-			showEmergente : function(){
-				var base = this;
-				$.each(base.items, function(index, el) {
-					if(el.emergente)base.desplegar(el.id);
-				});
-				base.$background.fadeIn(base.options.timeBgShow);
-			},
-
-			options : {
-				timeChange 	: 800,
-				timeWait 	: 4000,
-				timeBgShow  : 400,
-				playOnScroll: true,
-				absPath 	: "/16/",
-				jsonPath 	: "/16/backend/avisos.json"
+		play : function(){
+			var base = this;
+			window.clearInterval(base.playInterval);
+			if(base.options.playOnlyScroll===true && base.$elem.find('.avisos-cont').height()<=base.$elem.height()){
+				return false;
 			}
+			base.playInterval = window.setInterval(function(){
+				base.slide();
+			}, base.options.timeWait);
+		},
 
-		};
+		stop : function(){
+			var base = this;
+			window.clearInterval(base.playInterval);
+		},
 
-		window.unprg.avisos = avisos;
-	})(jQuery, $('.unprg-avisos'));
+		stopOnHover : function(){
+			var base = this;
+			base.$elem.on("mouseover", function () {
+                base.stop();
+            });
+            base.$elem.on("mouseout", function () {
+                base.play();
+            });
+		},
+
+		getTransition : function(time){
+			return {
+				'-webkit-transition': 'all '+time+'ms',
+				'-moz-transition' 	: 'all '+time+'ms',
+				'-o-transition'		: 'all '+time+'ms',
+				'-ms-transition'	: 'all '+time+'ms',
+				'transition' 		: 'all '+time+'ms'
+			};
+		},
+
+		slide : function(){
+			var base = this, item, clon;
+			item = base.$container.find('.aviso-wrap').first().css(base.getTransition(0));
+			clon = item.clone().addClass('aviso-hide');
+			base.$container.append(clon);
+			window.setTimeout(function(){
+				item.css(base.getTransition(base.options.timeChange));
+				item.addClass('aviso-hide');
+			}, 0);
+			window.setTimeout(function(){
+				clon.css(base.getTransition(base.options.timeChange));
+				clon.removeClass('aviso-hide');
+			}, base.options.timeChangeDelay);
+			window.setTimeout(function(){
+				item.remove();
+			}, base.options.timeChange);
+		},
+
+		loadItems : function(){
+			var base = this, 
+				time = 0;
+			$.getJSON(base.options.jsonPath)
+				.done(function(data){
+					base.status = true;
+					base.$container.find('.carga').remove();
+					$.each(data.avisos, function(index, el) {
+						base.addItem(el);
+					});
+					window.setTimeout(function(){
+						base.startSlide();
+					},base.options.timeChange+base.options.timeChangeDelay*2);
+				})
+				.fail(function(data){
+					base.status = false;
+					base.$container.find('.carga .icono').remove();
+					base.$container.find('.carga .texto').text('Error al cargar contenido');
+					console.log(data);
+				});
+		},
+
+		addItem : function(aviso){
+			var base = this, item, bg, desplegar;
+			bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
+			if(aviso.img){
+				bg.append($('<img/>').attr({
+					'src'  : base.options.absPath+aviso.img,
+					'class': 'img',
+					'alt'  : 'comunicado'
+				}));
+			}else{
+				bg.append($('<embed/>').attr({
+					'src'  : base.options.absPath+aviso.doc,
+					'class': 'pdf',
+					'type' : 'application/pdf'
+				}));
+			}
+			base.items[aviso.id] = {
+				'id' 		: aviso.id,
+				'fecha' 	: aviso.fecha,
+				'emergente'	: aviso.emergente,
+				'texto' 	: aviso.texto,
+				'bg' 		: bg,
+				'load' 		: false
+			};
+			item = $("<div/>").addClass('aviso').attr('data-id',aviso.id);
+			item.append($("<p/>").addClass('aviso__texto').text(aviso.texto));
+			item.append($("<p/>").addClass('aviso__fecha').text('@'+aviso.fecha));
+			item = $("<div/>").addClass('aviso-wrap').attr('data-id',aviso.id).append(item);
+			item.click(function(event) {
+				base.desplegar($(this).data('id'));
+			});
+			item.addClass('aviso-hide').css(base.getTransition(base.options.timeChange));
+			base.$container.append(item);
+			window.setTimeout(function(){
+				item.removeClass('aviso-hide');
+			}, base.options.timeChangeDelay);
+		},
+
+		desplegar : function(idAviso){
+			var base = this;
+			if(base.items[idAviso].load === false){
+				base.items[idAviso].load = true;
+				base.$background.find('.wraper').append(base.items[idAviso].bg);
+			}
+			base.$background.find('.contenido').each(function(index, el) {
+				$(el).hide();
+			});
+			base.$background.find('.contenido[data-id='+idAviso+']').show();
+			base.$background.fadeIn(base.options.timeBgShow);
+		},
+
+		showEmergente : function(){
+			var base = this;
+			if(base.status === false) return false;
+			$.each(base.items, function(index, el) {
+				if(el.emergente)base.desplegar(el.id);
+			});
+			base.$background.fadeIn(base.options.timeBgShow);
+		}
+
+	};
+
+	window.unprg.avisos = avisos;
 
 	$(document).ready(function(){
 		window.unprg.avisos.init();
 	});
+
+})(jQuery, $('.unprg-avisos'));
 </script>
