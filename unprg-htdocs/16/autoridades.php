@@ -1,18 +1,18 @@
 <?php
-	require_once '16/backend/config.php';
+	require_once 'backend/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>UNPRG | Universidad Nacional Pedro Ruiz Gallo</title>
-	<meta name="description" content="Somos una universidad pública que crea, imparte, difunde conocimientos científicos, tecnológicos y humanísticos; forma científicos y profesionales innovadores, éticos, críticos y competitivos, que participan activamente en el desarrollo integral y sustentable de la sociedad.">
+	<title>UNPRG | Estatuto</title>
+	<meta name="description" content="UNPRG Estatuto">
 	<link rel="shortcut icon" href="<?= config::getPath(true,'/frontend/img/favicon.ico') ?>" type="image/x-icon">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 
 	<meta property="og:image"		content="<?= config::getPath(true,'frontend/img/unprg-social.jpg') ?>" />
-	<meta property="og:title"   	content="UNPRG | Universidad Nacional Pedro Ruiz Gallo" />
+	<meta property="og:title"   	content="UNPRG | Estatuto" />
 	<meta property="og:description"	content="Somos una universidad pública que crea, imparte, difunde conocimientos científicos, tecnológicos y humanísticos; forma científicos y profesionales innovadores, éticos, críticos y competitivos, que participan activamente en el desarrollo integral y sustentable de la sociedad." />
 	<meta property="og:url" 		content="http://unprg.edu.pe/" />
 	<meta property="og:locale" 		content="es_ES" />
@@ -28,13 +28,12 @@
 
 	<!-- Importación de archivos propios -->
 		<?= config::getLink(config::getPath(false,'/frontend/css/general.css')) ?>
-		<?= config::getLink(config::getPath(false,'/frontend/css/home.css')) ?>
+		<?= config::getLink(config::getPath(false,'/frontend/css/autoridades.css')) ?>
 
-	<!-- Esto debería ir a un archivo aparte :P -->
 		<script type="text/javascript">
 			window.unprg = {};
 			$(document).ready(function(){
-				$(".unprg-cuerpo .autoridades .galeria").owlCarousel({
+				$("section .autoridades .galeria").owlCarousel({
 					autoPlay : 2000,
 					navigation : false, // Show next and prev buttons
 					slideSpeed : 300,
@@ -51,29 +50,12 @@
 		</script>
 </head>
 <body>
-	<?php require_once config::getPath(false, 'includes/header.html'); ?>
-	<?php require_once config::getPath(false, 'includes/nav.html'); ?>
+	<?php require_once 'includes/header.html'; ?>
+	<?php require_once 'includes/nav.html'; ?>
 	
-	<section class="unprg-portada">
+	<section>
 		<div class="wraper">
 			
-			<div class="portada-col unprg-slider">
-				<?php require_once config::getPath(false, 'includes/slider.html'); ?>
-			</div>
-
-			<div class="portada-col unprg-avisos">
-				<?php require_once config::getPath(false, 'includes/avisos.html'); ?>
-			</div>
-
-			<div class="clean"></div>
-
-		</div>
-	</section>
-
-	<div class="wraper unprg-cuerpo">
-
-		<section class="cuerpo-col unprg-home">
-
 			<div class="autoridades unprg-sec">
 				<p class="titulo">Vicerrectores UNPRG</p>
 				<div class="persona">
@@ -265,23 +247,9 @@
 					<p class="persona-cargo">Director Administrativo del Centro Pre Universitario</p>
 				</div>
 			</div>
-
-		</section>
-
-		<aside class="cuerpo-col unprg-panel">
-			<?php require_once config::getPath(false, 'includes/panel.html'); ?>
-		</aside>
-
-		<div class="clean"></div>
-
-	</div>	
-
-	<div class="construccion">
-		<div class="wraper">
-			<p>Página en Construcción</p>
 		</div>
-	</div>
-	
-	<?php require_once config::getPath(false, 'includes/footer.html'); ?>
+	</section>
+
+	<?php require_once 'includes/footer.html'; ?>
 </body>
 </html>
