@@ -33,7 +33,7 @@
 				$('html body').animate({
 					scrollTop : $('.pdf').offset().top-80
 				});
-			},1500);
+			},1200);
 		});
 	</script>
 </head>

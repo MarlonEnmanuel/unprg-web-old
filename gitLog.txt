@@ -1,0 +1,41 @@
+commit e4bec8a12589c9656d476c894221f5e239f286d7
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Wed Feb 3 14:51:51 2016 -0500
+
+    Corregido bug de avisos, pag se congelaba al hacer scroll
+
+commit d506fdb4b2a704d7f4400a2162429c5ca30e0bc7
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Tue Feb 2 12:05:07 2016 -0500
+
+    Agregar cargar ajax de los visos
+
+commit ab49691357d75701a56495fe35717d97d30dc672
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Tue Feb 2 08:51:00 2016 -0500
+
+    Corregido altura automática de los avisos, agregada animación a avisos
+
+commit 6a8d11eecd1e95c945c0b1d9d6e498b513a8ecc3
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Thu Jan 28 14:58:13 2016 -0500
+
+    Agregado actas en avisos, corregida resolucion de comunicado, corregido posicionamiento de avisos
+
+commit c00282e6477a78c530f63d971e798b4892a437c8
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Wed Jan 27 14:04:31 2016 -0500
+
+    Segunda publicación. Agregados avisos html, aviso emergente, estatuto, enlaces, config.
+
+commit 1b9670e086ad9f93877d7e1079c2bdf2e0221477
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Tue Jan 26 14:11:42 2016 -0500
+
+    Referencias corregidas
+
+commit 4dbcdba6eb8cac415b0459aa5c2d7e7462c3a471
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Sun Jan 24 20:38:48 2016 -0500
+
+    Primer commit, unprg-avisos a medias

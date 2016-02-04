@@ -167,23 +167,6 @@
 			</div>
 
 			<div class="autoridades unprg-sec">
-				<p class="titulo">Comisión reorganizadora de la Escuela de Postgrado</p>
-				<div class="persona">
-					<p class="persona-nombre">Dr. Carlos Quiñonez Farro</p>
-					<p class="persona-cargo">Director General</p>
-				</div>
-				<div class="persona">
-					<p class="persona-nombre">Dra. Consuelo Rojas</p>
-					<p class="persona-cargo">Director asuntos académicos</p>
-				</div>
-				<div class="persona">
-					<p class="persona-nombre">Dr. Juan Granados Inoñán</p>
-					<p class="persona-cargo">Asuntos Administrativos</p>
-				</div>
-				<div class="clean"></div>
-			</div>
-
-			<div class="autoridades unprg-sec">
 				<p class="titulo">Funcionarios de la nueva gestión</p>
 				<div class="persona">
 					<p class="persona-nombre">Dr. Saúl Espinoza</p>

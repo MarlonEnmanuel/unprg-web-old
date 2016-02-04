@@ -9,7 +9,7 @@
 </div>
 <div class="avisos-bg">
 	<div class="wraper">
-		<div class="cerrar"><span class="icon-cross"></span></div>
+		<span class="cerrar icon-cross"></span>
 	</div>
 </div>
 
@@ -27,8 +27,8 @@
 			timeBgInit		: 1500,   	//tiempo para mostrar el aviso emergente desde la carga de la página
 			playOnlyScroll	: false,  	//si es verdadero solo se anima cuando hay escroll
 			stopOnHover		: true,    	//si es verdadero la reproducción se detiene al posicionar el mouse
-			absPath 		: "/16/", 	//indica la carpeta interna del proyecto
-			jsonPath 		: "/16/backend/avisos.json"	//indica la ruta de los avisos
+			jsonPath 		: "/16/backend/avisos.json",	//indica la ruta de los avisos
+			domain			: "http://www.unprg.edu.pe"
 		},
 
 		init : function(){
@@ -42,7 +42,7 @@
 
 		startSlide : function(){
 			var base = this;
-			base.$background.find('.icon-cross').click(function(event) {
+			base.$background.find('.cerrar').click(function(event) {
 				base.$background.fadeOut(base.options.timeBgShow);
 			});
 			base.$container.find('.aviso-wrap').first().find('.aviso').addClass('primero');
@@ -90,7 +90,7 @@
 		slide : function(){
 			var base = this, item, clon;
 			item = base.$container.find('.aviso-wrap').first().css(base.getTransition(0));
-			clon = item.clone().addClass('aviso-hide');
+			clon = item.clone(true,true).addClass('aviso-hide');
 			base.$container.append(clon);
 			window.setTimeout(function(){
 				item.css(base.getTransition(base.options.timeChange));
@@ -128,29 +128,30 @@
 		},
 
 		addItem : function(aviso){
-			var base = this, item, bg, desplegar;
-			bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
+			var base = this, item;
+			aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
+			aviso.bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
 			if(aviso.img){
-				bg.append($('<img/>').attr({
-					'src'  : base.options.absPath+aviso.img,
-					'class': 'img',
-					'alt'  : 'comunicado'
+				aviso.src = aviso.img;
+				aviso.bg.append($('<img/>').attr({
+					'class': 'documento img',
+					'alt'  : aviso.nombre
 				}));
-			}else{
-				bg.append($('<embed/>').attr({
-					'src'  : base.options.absPath+aviso.doc,
-					'class': 'pdf',
+			}else if(aviso.doc){
+				aviso.src = aviso.doc;
+				aviso.bg.append($('<embed/>').attr({
+					'class': 'documento pdf',
 					'type' : 'application/pdf'
 				}));
 			}
-			base.items[aviso.id] = {
-				'id' 		: aviso.id,
-				'fecha' 	: aviso.fecha,
-				'emergente'	: aviso.emergente,
-				'texto' 	: aviso.texto,
-				'bg' 		: bg,
-				'load' 		: false
-			};
+			aviso.bg.prepend($('<a><span class="icon-download2"></span>Descargar</a>').attr({
+				'class'		: 'dowload',
+				'href'		: aviso.src,
+				'download'	: aviso.nombre
+			}));			
+			aviso.load = false;
+			base.items[aviso.id] = aviso;
+
 			item = $("<div/>").addClass('aviso').attr('data-id',aviso.id);
 			item.append($("<p/>").addClass('aviso__texto').text(aviso.texto));
 			item.append($("<p/>").addClass('aviso__fecha').text('@'+aviso.fecha));
@@ -166,15 +167,17 @@
 		},
 
 		desplegar : function(idAviso){
-			var base = this;
-			if(base.items[idAviso].load === false){
-				base.items[idAviso].load = true;
-				base.$background.find('.wraper').append(base.items[idAviso].bg);
+			var base = this, 
+				item  = base.items[idAviso];
+			if(item.load === false){
+				item.load = true;
+				item.bg.find('.documento').attr('src', item.src);
+				base.$background.find('.wraper').append(item.bg);
 			}
 			base.$background.find('.contenido').each(function(index, el) {
 				$(el).hide();
 			});
-			base.$background.find('.contenido[data-id='+idAviso+']').show();
+			item.bg.show();
 			base.$background.fadeIn(base.options.timeBgShow);
 		},
 
