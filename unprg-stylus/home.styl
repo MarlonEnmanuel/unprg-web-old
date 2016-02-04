@@ -123,7 +123,7 @@
 		
 		.panel-elem
 			box-sizing: border-box
-			display: inline-block
+			display: block
 			font-size: 10px
 			padding: 20px 20px 0px 20px
 			width: 100%
@@ -148,10 +148,13 @@
 				margin: 10px 0px
 				
 			@media screen and (max-width: 1024px)
-				width: auto
+				width: 50%
+				display: inline-block
 				float: left
 			@media screen and (max-width: 420px)
 				width: auto
+				float: none
+				display: block
 
 
 .construccion
