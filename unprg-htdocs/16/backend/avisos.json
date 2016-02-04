@@ -12,7 +12,7 @@
 			"id" 		: "1",
 			"fecha" 	: "26/01/2016",
 			"img" 		: "/16/frontend/avisos/aviso1.jpg",
-			"emergente" : true,
+			"emergente" : false,
 			"nombre"	: "Comunicado",
 			"texto" 	: "La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el..."
 		}

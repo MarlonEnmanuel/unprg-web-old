@@ -27,8 +27,7 @@
 			timeBgInit		: 1500,   	//tiempo para mostrar el aviso emergente desde la carga de la página
 			playOnlyScroll	: false,  	//si es verdadero solo se anima cuando hay escroll
 			stopOnHover		: true,    	//si es verdadero la reproducción se detiene al posicionar el mouse
-			jsonPath 		: "/16/backend/avisos.json",	//indica la ruta de los avisos
-			domain			: "http://www.unprg.edu.pe"
+			jsonPath 		: "/16/backend/avisos.json"	//indica la ruta de los avisos
 		},
 
 		init : function(){
@@ -182,12 +181,14 @@
 		},
 
 		showEmergente : function(){
-			var base = this;
-			if(base.status === false) return false;
+			var base = this, mostrar = false;
 			$.each(base.items, function(index, el) {
-				if(el.emergente)base.desplegar(el.id);
+				if(el.emergente){
+					base.desplegar(el.id);
+					mostrar = true;
+				}
 			});
-			base.$background.fadeIn(base.options.timeBgShow);
+			if(mostrar === true) base.$background.fadeIn(base.options.timeBgShow);
 		}
 
 	};
