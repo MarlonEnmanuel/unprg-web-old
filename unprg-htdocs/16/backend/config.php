@@ -11,11 +11,11 @@
 
 class config {
 
-	public static $isDeveloping = true;					// indica si es producción o desarrollo
+	public static $isDeveloping = true;   					// indica si es producción o desarrollo
 
-	public static $path_dom = 'http://www.unprg.edu.pe/'; 	// dominio del proyecto
-	public static $path_dev = 'http://unprg.local/';	// dominio para desarrollo
-	public static $path_int = '16';						// carpeta interna del proyecto
+	public static $path_dom = 'http://www.unprg.edu.pe/';	// dominio del proyecto
+	public static $path_dev = 'http://unprg.local/';     	// dominio para desarrollo
+	public static $path_int = '16';       					// carpeta interna del proyecto
 
 
 	/**
@@ -46,5 +46,9 @@ class config {
 		return '<script src="'.$path.'"></script>';
 	}
 
+}
+
+if(isset($_GET['php'])){
+	echo phpinfo();
 }
 ?>

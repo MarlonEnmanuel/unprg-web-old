@@ -1,3 +1,27 @@
+commit a3e45c7e250bb3ef41fb9d3da74b4dee522382ca
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Thu Feb 4 15:55:05 2016 -0500
+
+    Agregado funcionarios, pie de página, agregado videos en panel
+
+commit b8b18ff9f79b3e745de0b3a4e844ee0893a40185
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Wed Feb 3 20:10:28 2016 -0500
+
+    Solucionado posicionamiento del panel en pantallas pequeñas
+
+commit b7d80cbe9c2eabdf3cfeaca1cc8d3a7d4d3a5826
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Wed Feb 3 20:04:48 2016 -0500
+
+    Corregido aparición de fondo de avisos, cuando ninguno es emergente
+
+commit f151e60e479512fbde94786fb7bf1134c0dbf747
+Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
+Date:   Wed Feb 3 19:47:36 2016 -0500
+
+    Agregado la opción de descarga en avisos
+
 commit e4bec8a12589c9656d476c894221f5e239f286d7
 Author: Marlon Enmanuel Montalvo Flores <marlon.enmanuel.mf@gmail.com>
 Date:   Wed Feb 3 14:51:51 2016 -0500
