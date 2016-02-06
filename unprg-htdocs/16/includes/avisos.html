@@ -128,7 +128,6 @@
 
 		addItem : function(aviso){
 			var base = this, item;
-			aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
 			aviso.bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
 			if(aviso.img){
 				aviso.src = aviso.img;
@@ -143,11 +142,19 @@
 					'type' : 'application/pdf'
 				}));
 			}
-			aviso.bg.prepend($('<a><span class="icon-download2"></span>Descargar</a>').attr({
-				'class'		: 'dowload',
-				'href'		: aviso.src,
-				'download'	: aviso.nombre
-			}));			
+			if(aviso.nombre){
+				aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
+				aviso.bg.prepend($('<a><span class="icon-download2"></span>Descargar</a>').attr({
+					'class'		: 'dowload',
+					'href'		: aviso.src,
+					'download'	: aviso.nombre
+				}));			
+			}else if(aviso.link){
+				aviso.bg.find('.img').wrap($('<a/>').attr({
+					'href': aviso.link,
+					'target': '_blank'
+				}));
+			}
 			aviso.load = false;
 			base.items[aviso.id] = aviso;
 

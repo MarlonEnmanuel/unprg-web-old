@@ -1,6 +1,14 @@
 {
 	"avisos" : [
 		{
+			"id" 		: "3",
+			"fecha" 	: "07/02/2016",
+			"img" 		: "/16/frontend/img/enlaces/centropre.jpg",
+			"emergente" : true,
+			"link"		: "http://cpu.unprg.edu.pe/cpu/index.html",
+			"texto" 	: "Resultados del Primer Parcial del Centro Pre UNPRG Ciclo 2016-I"	
+			},
+		{
 			"id" 		: "2",
 			"fecha" 	: "28/01/2016",
 			"doc" 		: "/16/frontend/avisos/aviso2.pdf",
