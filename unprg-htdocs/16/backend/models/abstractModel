@@ -1,0 +1,48 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of absModel
+ *
+ * @author Enmanuel
+ */
+require_once '../config.php';
+
+abstract class abstractModel {
+    
+    protected $cado;
+    
+    public $md_estado;
+    public $md_mensaje;
+    public $md_detalle;
+
+    public function __construct(&$cado){
+        $this->cado = cado;
+    }
+    
+    abstract public function get();
+    abstract public function set();
+    abstract public function edit();
+    abstract public function delete();
+    abstract public function search();
+    
+    public function toJSON(){
+        return json_encode($this->toArray());
+    }
+    
+    public function toArray(){
+        $a1 = get_object_vars($this);
+        $a2 = array();
+        foreach ($a1 as $c=>$v){
+            if($c!='cado' && substr($c,0,3)!='md_'){
+                $a2[$c] = $v;
+            }
+        }
+        return $a2;
+    }
+}

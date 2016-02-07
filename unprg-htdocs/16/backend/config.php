@@ -54,7 +54,4 @@ class config {
 
 }
 
-if(isset($_GET['php'])){
-	echo phpinfo();
-}
 ?>

@@ -1,0 +1,24 @@
+<link rel="stylesheet" type="text/css" href="/frontend/css/headerHome.css">
+<header>
+    <div class="cont-general">
+        <div class="logo">
+            <a href="/home"><img src="/frontend/img/logo1.png?<%= nocache %>"></a>
+            <p>entrevistaDO</p>
+        </div>
+        <div class="informacion">
+            <a href="/home" class="perfil">
+                <img id="header-fotoPerfil" class="foto" src="<%= foto %>">
+                <div class="nombre">
+                    <p><%= nombres %></p>
+                    <p><%= apellidos %></p>
+                </div>
+            </a>
+            <div class="botones">
+                <!--a title="" href="/home"><span class="icon-attachment"></span></a-->
+                <a title="Crear Entrevista" href="/nuevaEntrevista"><span class="icon-pencil2"></span></a>
+                <a title="Mi Perfil" href="/perfil"><span class="icon-cog"></span></a>
+                <a title="Cerrar Sesión" href="/"><span class="icon-enter"></span></a>
+            </div>
+        </div>
+    </div>
+</header>

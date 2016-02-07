@@ -1,0 +1,51 @@
+<html lang="es">
+    <head>
+        <title>Invitación a Entrevista</title>
+    </head>
+    <body>
+        <table lang="es" style="
+               border-collapse: separate;
+               border-spacing: 40px 20px;
+               border: 3px solid #0059FF;
+               color: #474747;
+               font-family: Calibri;
+               font-size: 16px;
+               margin: 0 auto;
+               width: 90%;
+               text-align: center;
+               margin: 10px 5%;
+               -webkit-box-shadow: 0px 0px 10px 0px rgba(0,89,255,1);
+               -moz-box-shadow: 0px 0px 10px 0px rgba(0,89,255,1);
+               box-shadow: 0px 0px 10px 0px rgba(0,89,255,1);;
+               ">
+            <tr>
+                <td>
+                    <img style="max-height: 80px; vertical-align: middle;" src="https://lh3.googleusercontent.com/-YEVt3F-sufI/VkQjGvs3SDI/AAAAAAAAAAw/cgayMp4im-k/w140-h140-p/logo1.png" alt="Logo de entrevistaDO"/>
+                    <span style="font-size: 44px; font-weight: bold;text-align: left;">entrevistaDO</span>
+                </td>
+            </tr>
+            <tr style="font-size: 20px; font-weight: bold">
+                <td>
+                    <span style="font-size: 18px; font-weight: normal">Hola! </span>
+                    <%= nombres %>, <%= apellidos %>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: 20px; font-weight: bold; color: #0059FF">
+                    Tienes una invitación de entrevista
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-size: 20px; font-weight: bold;"><%= titulo %></span><br>
+                    Válido desde <%= fchInicio %> hasta <%= fchFin %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Porfavor inicie sesión en <span style="font-size: 20px; font-weight: bold">entrevistaDO</span> para responder su entrevista
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
