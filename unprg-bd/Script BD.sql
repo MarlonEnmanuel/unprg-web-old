@@ -19,7 +19,7 @@ USE `unprg-web` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `unprg-web`.`usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `login` VARCHAR(45) NOT NULL COMMENT '',
+  `email` VARCHAR(45) NOT NULL COMMENT '',
   `password` VARCHAR(45) NOT NULL COMMENT '',
   `nombres` VARCHAR(45) NOT NULL COMMENT '',
   `apellidos` VARCHAR(45) NOT NULL COMMENT '',
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `unprg-web`.`usuario` (
   `fchReg` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '',
   `permisos` TEXT NOT NULL COMMENT '',
   PRIMARY KEY (`idUsuario`)  COMMENT '',
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC)  COMMENT '')
+  UNIQUE INDEX `login_UNIQUE` (`email` ASC)  COMMENT '')
 ENGINE = InnoDB;
 
 
@@ -81,7 +81,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `unprg-web`;
-INSERT INTO `unprg-web`.`usuario` (`idUsuario`, `login`, `password`, `nombres`, `apellidos`, `oficina`, `fchReg`, `permisos`) VALUES (DEFAULT, 'administrador', '9dbf7c1488382487931d10235fc84a74bff5d2f4', 'admin', 'admin', 'Red Telemática', DEFAULT, 'admin');
+INSERT INTO `unprg-web`.`usuario` (`idUsuario`, `email`, `password`, `nombres`, `apellidos`, `oficina`, `fchReg`, `permisos`) VALUES (DEFAULT, 'administrador', '9dbf7c1488382487931d10235fc84a74bff5d2f4', 'admin', 'admin', 'Red Telemática', DEFAULT, 'admin');
 
 COMMIT;
 

@@ -52,6 +52,19 @@ class config {
 		return '<script src="'.$path.'"></script>';
 	}
 
+	/**
+	* Genera la conección con la BD
+	*
+	* @return conección con la BD
+	*/
+	public static function getMysqli(){
+		return new mysqli ( config::$db_host,
+                            config::$db_user,
+                            config::$db_pass,
+                            config::$db_name,
+                            config::$db_port );
+	}
+
 }
 
 ?>
