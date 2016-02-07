@@ -17,6 +17,12 @@ class config {
 	public static $path_dev = 'http://unprg.local/';     	// dominio para desarrollo
 	public static $path_int = '16';       					// carpeta interna del proyecto
 
+	public static $db_host = "localhost";           		//Dirección de la BD
+	public static $db_user = "root";            			//Usuario de la BD
+	public static $db_pass = "";          					//Password de la BD
+	public static $db_name = "unprg-web";        			//Nombre de la BD	
+	public static $db_port = "3306";         				//Puerto de la BD
+
 
 	/**
 	* Genera la ruta para un archivo
