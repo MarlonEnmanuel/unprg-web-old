@@ -2,6 +2,13 @@
 
 require_once "abstractModel.php";
 
+/**
+ * Modelo usuario
+ *
+ * Esta clase representa el modelo de la tabla usuario de la BD
+ *
+ * @author Marlon Enmanuel Montalvo Flores
+ */
 class Usuario extends abstractModel{
 
 	public $email;
@@ -11,20 +18,27 @@ class Usuario extends abstractModel{
 	public $oficina;
 	public $fchReg;
 	public $permisos;
+	public $estado;
+	public $reset;
 
 	public function __construct(&$mysqli, $id=null){
 		parent::__construct($mysqli, $id);
 	}
 
 	public function get(){
-		if($this->mysqli->errno) return false;
+		if($this->mysqli->errno) return false; //verificar error en el cado
+
+		if(!isset($this->id)){	//debe tener id para buscar
+    		$this->md_mensaje = "Debe indicar un id para buscar";
+    		return $this->md_estado = false;
+    	}
 
 		$sql = "select * from usuario where idUsuario=?";
-		$stmt = $this->mysqli->stmt_init();
-		$stmt->prepare($sql);
-		$stmt->bind_param('i', $this->id);
-		$stmt->execute();
-		$stmt->bind_result(
+		$stmt = $this->mysqli->stmt_init();	//se inicia pa consulta preparada
+		$stmt->prepare($sql);				//se arma la consulta preparada
+		$stmt->bind_param('i', $this->id);	//se vinculan los parámetros
+		$stmt->execute();		//se ejecuta la consulta
+		$stmt->bind_result( 	//se vinculan las variables que obtendrán los resultados
 			$this->id,
 			$this->email,
 			$this->password,
@@ -32,21 +46,24 @@ class Usuario extends abstractModel{
 			$this->apellidos,
 			$this->oficina,
 			$this->fchReg,
-			$this->permisos
+			$this->permisos,
+			$this->estado,
+			$this->reset
 			);
 		if($stmt->fetch()){
-            $this->md_estado = true;
-            $this->md_mensaje = "Usuario obtenido";
+			$this->fchReg = DateTime::createFromFormat(config::$date_sql, $this->fchReg); //se convierte de string a DateTime
+            $this->md_estado = true;				//estado del procedimiento: correcto
+            $this->md_mensaje = "Usuario obtenido"; //mensaje del procedimiento
         }else{
-            $this->md_estado = false;
-            $this->md_mensaje = "Error al obtener usuario";
-            $this->md_detalle = $stmt->error;
+            $this->md_estado = false;				//estado del procedimiento: fallido
+            $this->md_mensaje = "Error al obtener usuario";//mensaje del procedimiento
+            $this->md_detalle = $stmt->error;		//detalle del procedimiento
         }
-        return $this->md_estado;
+        return $this->md_estado;					//devuelve el estado del procedimiento
 	}
 
 	public function getEmail($email){
-		if($this->mysqli->errno) return false;
+		if($this->mysqli->errno) return false; //verificar error en el cado
 
 		$sql = "select * from usuario where email=?";
 		$stmt = $this->mysqli->stmt_init();
@@ -61,9 +78,12 @@ class Usuario extends abstractModel{
 			$this->apellidos,
 			$this->oficina,
 			$this->fchReg,
-			$this->permisos
+			$this->permisos,
+			$this->estado,
+			$this->reset
 			);
 		if($stmt->fetch()){
+			$this->fchReg = DateTime::createFromFormat(config::$date_sql, $this->fchReg); //se convierte de string a DateTime
             $this->md_estado = true;
             $this->md_mensaje = "Usuario obtenido";
         }else{
@@ -75,26 +95,89 @@ class Usuario extends abstractModel{
 	}
 
     public function set(){
+    	if($this->mysqli->errno) return false;
 
+    	if(isset($this->id)){	//si tiene ID entonces ya existe en la BD
+    		$this->md_mensaje = "El usuario ya tiene id";
+    		return $this->md_estado = false;
+    	}
+
+    	$sql = "INSERT INTO usuario (email, password, nombres, apellidos, oficina, permisos) VALUES (?, ?, ?, ?, ?, ?)";
+    	$stmt = $this->mysqli->stmt_init();
+    	$stmt->prepare($sql);
+    	$stmt->bind_param('ssssss',
+    		$this->email,
+    		$this->password,
+    		$this->nombres,
+    		$this->apellidos,
+    		$this->oficina,
+    		$this->permisos
+    		);
+    	if($stmt->execute()){
+            $this->id = $stmt->insert_id;
+            $this->md_estado = true;
+            $this->md_mensaje = "Usuario insertado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al insertar usuario";
+            $this->md_detalle = $stmt->error;
+        }
+        return $this->md_estado;
     }
 
     public function edit(){
+    	if($this->mysqli->errno) return false;
 
+    	if(!isset($this->id)){	//debe tener id para poder editar
+    		$this->md_mensaje = "Debe indicar un id para buscar";
+    		return $this->md_estado = false;
+    	}
+
+    	$sql = "UPDATE usuario SET 
+					email=?, 
+					password=?, 
+					nombres=?, 
+					apellidos=?, 
+					oficina=?, 
+					permisos=?, 
+					estado=?, 
+					reset=? 
+				WHERE idUsuario=?";
+		$stmt = $this->mysqli->stmt_init();
+		$stmt->prepare($sql);
+		$stmt->bind_param('ssssssii',
+			$this->email,
+			$this->password,
+			$this->nombres,
+			$this->apellidos,
+			$this->oficina,
+			$this->permisos,
+			intval($this->estado),
+			intval($this->reset)
+			);
+		if($stmt->execute()){
+            $this->md_estado = true;
+            $this->md_mensaje = "Usuario actualizado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al actualizar usuario";
+            $this->md_detalle = $stmt->error;
+        }
+        return $this->md_estado;
     }
 
     public function delete(){
-
+    	
     }
 
 }
 
 //Probando el funcionamiento del modelo
-require_once "../config.php";
 $mysqli = config::getMysqli();
 
 $user = new Usuario($mysqli, 1);
 
-$user->get();
+$user->getEmail('administrador');
 echo $user->toJSON();
 
 ?>
