@@ -26,19 +26,19 @@ class Usuario extends abstractModel{
 	}
 
 	public function get(){
-		if($this->mysqli->errno) return false; //verificar error en el cado
+		if($this->mysqli->errno) return false; 	//verificar error en el cado
 
-		if(!isset($this->id)){	//debe tener id para buscar
+		if(!isset($this->id)){					//debe tener id para buscar
     		$this->md_mensaje = "Debe indicar un id para buscar";
     		return $this->md_estado = false;
     	}
 
 		$sql = "select * from usuario where idUsuario=?";
-		$stmt = $this->mysqli->stmt_init();	//se inicia pa consulta preparada
+		$stmt = $this->mysqli->stmt_init();	//se inicia la consulta preparada
 		$stmt->prepare($sql);				//se arma la consulta preparada
 		$stmt->bind_param('i', $this->id);	//se vinculan los parámetros
-		$stmt->execute();		//se ejecuta la consulta
-		$stmt->bind_result( 	//se vinculan las variables que obtendrán los resultados
+		$stmt->execute();					//se ejecuta la consulta
+		$stmt->bind_result( 				//se vinculan las variables que obtendrán los resultados
 			$this->id,
 			$this->email,
 			$this->password,
@@ -152,8 +152,8 @@ class Usuario extends abstractModel{
 			$this->apellidos,
 			$this->oficina,
 			$this->permisos,
-			intval($this->estado),
-			intval($this->reset)
+			intval($this->estado),	//combertir booleano a 0 ó 1 para insertar en la BD
+			intval($this->reset)	//combertir booleano a 0 ó 1 para insertar en la BD
 			);
 		if($stmt->execute()){
             $this->md_estado = true;
@@ -167,17 +167,17 @@ class Usuario extends abstractModel{
     }
 
     public function delete(){
-    	
+
     }
 
 }
 
+/*
 //Probando el funcionamiento del modelo
 $mysqli = config::getMysqli();
 
 $user = new Usuario($mysqli, 1);
-
 $user->getEmail('administrador');
 echo $user->toJSON();
-
+*/
 ?>
