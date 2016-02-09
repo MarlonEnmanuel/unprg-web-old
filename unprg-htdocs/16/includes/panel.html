@@ -47,6 +47,9 @@
 				var base = this;
 				base.$elem = $elem;
 				base.$bg = base.$elem.find('.videos-bg');
+				base.$bg.click(function(event) {
+					base.$bg.fadeOut(base.options.timeBgShow);
+				});
 				base.items = {};
 				base.$bg.find('.cerrar').click(function(event) {
 					base.$bg.fadeOut(base.options.timeBgShow);
@@ -80,7 +83,9 @@
 							'src'		 	 : base.getEmbedLink(item.link),
 							'frameborder'	 : '0',
 							'allowfullscreen': ''
-						}))
+						})).click(function(event) {
+							event.stopPropagation();
+						})
 					);
 					item.load = true;
 				}

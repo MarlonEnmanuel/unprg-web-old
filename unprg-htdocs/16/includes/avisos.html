@@ -35,16 +35,18 @@
 			base.$elem = $elem;
 			base.$container = base.$elem.find('.avisos');
 			base.$background = base.$elem.find('.avisos-bg');
+			base.$background.click(function(event) {
+				base.$background.fadeOut(base.options.timeBgShow);
+			});
+			base.$background.find('.cerrar').click(function(event) {
+				base.$background.fadeOut(base.options.timeBgShow);
+			});
 			base.items = {};
 			base.loadItems();
 		},
 
 		startSlide : function(){
 			var base = this;
-			base.$background.find('.cerrar').click(function(event) {
-				base.$background.fadeOut(base.options.timeBgShow);
-			});
-			//base.$container.find('.aviso-wrap').first().find('.aviso').addClass('primero');
 			if(base.options.stopOnHover) base.stopOnHover();
 			base.showEmergente();
 			base.play();
@@ -141,15 +143,18 @@
 					'type' : 'application/pdf'
 				});
 			}
+			aviso.bg.click(function(event) {
+				event.stopPropagation();
+			});
 			cont = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
 			if(aviso.nombre){
 				aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
-				cont.prepend($('<a><span class="icon-cloud-download"></span>Descargar</a>').attr({
+				cont.append($('<a><span class="icon-cloud-download"></span>Descargar</a>').attr({
 					'class'		: 'dowload',
 					'href'		: aviso.src,
 					'download'	: aviso.nombre
 				}));
-				cont.prepend(aviso.bg);
+				cont.append(aviso.bg);
 			}else if(aviso.link){
 				cont.append($('<a><span class="icon-link"></span>Ver Enlace</a>').attr({
 					'class'		: 'dowload',
