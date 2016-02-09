@@ -4,7 +4,7 @@ var stylus = require("gulp-stylus");
 var nib = require('nib');
 
 gulp.task('Estilos', function(){
-	gulp.src(['./unprg-stylus/*.styl'])
+	gulp.src(['./unprg-stylus/**/!(inc*).styl'])
 	.pipe(stylus({use : nib(),compress : true}))
 	.pipe(gulp.dest("./unprg-htdocs/16/frontend/css"));
 });
