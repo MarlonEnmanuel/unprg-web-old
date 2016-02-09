@@ -127,42 +127,43 @@
 		},
 
 		addItem : function(aviso){
-			var base = this, item;
-			aviso.bg = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
+			var base = this, item, cont;
 			if(aviso.img){
 				aviso.src = aviso.img;
-				aviso.bg.append($('<img/>').attr({
+				aviso.bg = $('<img/>').attr({
 					'class': 'documento img',
 					'alt'  : aviso.nombre
-				}));
+				});
 			}else if(aviso.doc){
 				aviso.src = aviso.doc;
-				aviso.bg.append($('<embed/>').attr({
+				aviso.bg = $('<embed/>').attr({
 					'class': 'documento pdf',
 					'type' : 'application/pdf'
-				}));
+				});
 			}
+			cont = $('<div/>').addClass('contenido').attr('data-id', aviso.id);
 			if(aviso.nombre){
 				aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
-				aviso.bg.prepend($('<a><span class="icon-cloud-download"></span>Descargar</a>').attr({
+				cont.prepend($('<a><span class="icon-cloud-download"></span>Descargar</a>').attr({
 					'class'		: 'dowload',
 					'href'		: aviso.src,
 					'download'	: aviso.nombre
-				}));			
+				}));
+				cont.prepend(aviso.bg);
 			}else if(aviso.link){
-				aviso.bg.prepend($('<a><span class="icon-link"></span>Ver Enlace</a>').attr({
+				cont.append($('<a><span class="icon-link"></span>Ver Enlace</a>').attr({
 					'class'		: 'dowload',
 					'href'		: aviso.link,
 					'target'	: '_blank'
 				}));
-				aviso.bg.find('.img').wrap($('<a/>').attr({
+				cont.append($('<a/>').attr({
 					'href': aviso.link,
 					'target': '_blank'
-				}));
+				}).append(aviso.bg));
 			}
+			aviso.bg = cont;
 			aviso.load = false;
 			base.items[aviso.id] = aviso;
-
 			item = $("<div/>").addClass('aviso').attr('data-id',aviso.id);
 			item.append($("<p/>").addClass('aviso__texto').text(aviso.texto));
 			item.append($("<p/>").addClass('aviso__fecha').text('@'+aviso.fecha));
