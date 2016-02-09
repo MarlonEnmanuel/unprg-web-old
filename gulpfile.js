@@ -13,4 +13,4 @@ gulp.task('watch', function(){
 	gulp.watch('./unprg-stylus/**/*.styl',['Estilos']);
 });
 
-gulp.task('default',['watch']);
+gulp.task('default',['Estilos','watch']);

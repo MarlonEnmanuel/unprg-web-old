@@ -1,13 +1,21 @@
 {
 	"avisos" : [
 		{
+			"id" 		: "4",
+			"fecha" 	: "08/02/2016",
+			"img" 		: "/16/frontend/avisos/aviso4.jpg",
+			"emergente" : true,
+			"link"		: "16/documentos/",
+			"texto" 	: "El Vicerrectorado de Investigación, en su proceso de implementación, pone a su disposición los siguientes documentos"
+		},
+		{
 			"id" 		: "3",
 			"fecha" 	: "07/02/2016",
 			"img" 		: "/16/frontend/img/enlaces/centropre.jpg",
-			"emergente" : true,
-			"link"		: "http://cpu.unprg.edu.pe/cpu/index.html",
+			"emergente" : false,
+			"link"		: "http://unprg.edu.pe/resexm/index.html",
 			"texto" 	: "Resultados del Primer Parcial del Centro Pre UNPRG Ciclo 2016-I"	
-			},
+		},
 		{
 			"id" 		: "2",
 			"fecha" 	: "28/01/2016",

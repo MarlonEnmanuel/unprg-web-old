@@ -144,12 +144,17 @@
 			}
 			if(aviso.nombre){
 				aviso.nombre = aviso.nombre.trim().replace(/\s+/g, '_');
-				aviso.bg.prepend($('<a><span class="icon-download2"></span>Descargar</a>').attr({
+				aviso.bg.prepend($('<a><span class="icon-cloud-download"></span>Descargar</a>').attr({
 					'class'		: 'dowload',
 					'href'		: aviso.src,
 					'download'	: aviso.nombre
 				}));			
 			}else if(aviso.link){
+				aviso.bg.prepend($('<a><span class="icon-link"></span>Ver Enlace</a>').attr({
+					'class'		: 'dowload',
+					'href'		: aviso.link,
+					'target'	: '_blank'
+				}));
 				aviso.bg.find('.img').wrap($('<a/>').attr({
 					'href': aviso.link,
 					'target': '_blank'
