@@ -105,5 +105,11 @@ class Archivo extends abstractModel{
     }
 
 }
+/*$mysqli = config::getMysqli();
+
+$user = new Archivo($mysqli, 1);
+$user->get();
+echo $user->toJSON();
+*/
 
 ?>
