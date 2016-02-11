@@ -5,15 +5,15 @@
 <html lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>UNPRG | Introducción</title>
-	<meta name="description" content="UNPRG Estatuto">
+	<title>UNPRG | Administración</title>
+	<meta name="description" content="UNPRG Sistema de Administración Web">
 	<link rel="shortcut icon" href="<?= config::getPath(true,'/frontend/img/favicon.ico') ?>" type="image/x-icon">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 
 	<meta property="og:image"		content="<?= config::getPath(true,'frontend/img/unprg-social.jpg') ?>" />
-	<meta property="og:title"   	content="UNPRG | Estatuto" />
-	<meta property="og:description"	content="Somos una universidad pública que crea, imparte, difunde conocimientos científicos, tecnológicos y humanísticos; forma científicos y profesionales innovadores, éticos, críticos y competitivos, que participan activamente en el desarrollo integral y sustentable de la sociedad." />
+	<meta property="og:title"   	content="UNPRG | Administración" />
+	<meta property="og:description"	content="UNPRG Sistema de Administración Web" />
 	<meta property="og:url" 		content="http://unprg.edu.pe/" />
 	<meta property="og:locale" 		content="es_ES" />
 	<meta property="og:site_name" 	content="UNPRG" />
@@ -24,7 +24,7 @@
 
 	<!-- Importación de archivos propios -->
 		<?= config::getLink(config::getPath(false,'/frontend/css/general.css')) ?>
-		<?= config::getLink(config::getPath(false,'/frontend/css/documentosIntro.css')) ?>
+		<?= config::getLink(config::getPath(false,'/frontend/css/admin/login.css')) ?>
 
 </head>
 <body>
@@ -33,35 +33,17 @@
 	
 	<section>
 		<div class="wraper">
-			<div class="contacto">
-				<p class="titulo">Haznos llegar tus aportes, dudas o comentarios</p>
-				<form action="">
-					<div>
-						<span>Tu nombre</span><input type="text" name="nombre" value="">
-					</div>
-					<div>
-						<span>Tu correo</span><input type="text" name="email" value="">
-					</div>
-					<div>
-						<textarea name="texto" value=""></textarea>
-					</div>
-					<div style="text-align: right">
-						<i class="mensaje"></i>
-						<input type="submit" value="Enviar">
-					</div>
-				</form>
-			</div>
+			<h1 class="titulo">Sistema de Administración Web<br><b>UNPRG</b></h1>
+			<form>
+				<input type="email" name="email" value="" placeholder="Correo">
+				<input type="password" name="pass" value="" placeholder="Contraseña">
+				<input type="submit" value="Entrar" class="boton-amarillo">
+			</form>
+			<h2>Información<h2>
 		</div>
 	</section>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-			setTimeout(function(){
-				$('html body').animate({
-					scrollTop : $('nav').offset().top
-				});
-			},1200);
-		});
 		$('section form').submit(function(event) {
 			event.preventDefault();
 
