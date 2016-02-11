@@ -172,12 +172,4 @@ class Usuario extends abstractModel{
 
 }
 
-
-//Probando el funcionamiento del modelo
-$mysqli = config::getMysqli();
-
-$user = new Usuario($mysqli, 1);
-$user->getEmail('administrador');
-echo $user->toJSON();
-
 ?>

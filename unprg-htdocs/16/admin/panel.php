@@ -20,7 +20,6 @@
 
 	<!-- Importación de Librerías -->
 		<?= config::getScript(config::getPath(false,'/frontend/libs/jquery.js')) ?>
-		<?= config::getScript(config::getPath(false,'/frontend/libs/sha1.js')) ?>
 		<?= config::getLink('https://fonts.googleapis.com/css?family=Titillium+Web') ?>
 
 	<!-- Importación de archivos propios -->
@@ -34,7 +33,7 @@
 	
 	<section>
 		<div class="wraper">
-			<h1 class="titulo">Sistema de Administración Web<br><b>UNPRG</b></h1>
+			<h1 class="titulo">Panel de Administración de ejemplo<br><b>UNPRG</b></h1>
 			<form>
 				<input type="email" name="email" value="" placeholder="Correo">
 				<input type="password" name="pass" value="" placeholder="Contraseña">
@@ -48,44 +47,35 @@
 		$('section form').submit(function(event) {
 			event.preventDefault();
 
-			var $form = $(this);
-			var $info = $('section .wraper h2');
-
-			$form.find('input[type=submit]').attr('disabled','disabled').val('Enviando ...');
-
 			var form = {
-				accion : 'login',
-				email : $('section form input[name=email]').val().trim(),
-				pass : $('section form input[name=pass]').val().trim()
+				nombre : $('section form input[name=nombre]').val().trim().replace(/\s+/g, '_'),
+				email : $('section form input[name=email]').val().trim().replace(/\s+/g, '_'),
+				texto : $('section form textarea').val().replace(/\s+/g, '_')
 			};
 
-			if( !form.email || !form.pass ){
-				$info.html('Llene los campos');
+			if(!form.nombre || !form.email || !form.texto){
+				$('section form .mensaje').text('Llene los campos');
 				return false;
 			}
 
-			form.pass = hex_sha1(form.pass);
+			$('section form input[type=submit]').attr('disabled','disabled').val('Enviando ...');
 
 			$.ajax({
-				url: "../backend/controllers/ctrlUsuario.php",
+				url: "<?= config::getPath(false,'/backend/documentos/nuevoMensaje.php') ?>",
 				type: 'post',
 				dataType: 'json',
 				data: form,
 			})
 			.done(function(data) {
-				debugger;
-				$info.html(data.mensaje);
+				$('section form .mensaje').text(data.mensaje);
 				if(data.estado){
-					$form.find('input[type=submit]').val('Correcto');
-					window.setTimeout(function(){
-						window.location = data.data;
-					},500);
+					$('section form input[type=submit]').val('Enviado');
 				}else{
-					$form.find('input[type=submit]').removeAttr('disabled').val('Entrar');
+					$('section form input[type=submit]').removeAttr('disabled').val('Enviar');
 				}
 			})
 			.fail(function(data) {
-				$form.find('input[type=submit]').removeAttr('disabled').val('Entrar');
+				$('section form input[type=submit]').removeAttr('disabled').val('Enviar');
 				console.log(data);
 			});
 		});

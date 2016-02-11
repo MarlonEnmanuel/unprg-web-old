@@ -29,7 +29,7 @@ abstract class abstractController {
 	* @param $datos Datos enviados al usuario
 	* @return boolean Indica si el usuario tiene acceso
 	*/
-	protected final function Responder($estado, $mensaje, $detalle='', $datos=array()){
+	protected final function responder($estado, $mensaje, $detalle='', $datos=array()){
 		$rpta = array(
 	            'estado' => $estado,
 	            'mensaje' => $mensaje,
