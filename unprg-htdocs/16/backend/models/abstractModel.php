@@ -39,18 +39,25 @@ abstract class abstractModel {
     abstract public function edit();
     abstract public function delete();
     
-    public function toJSON(){
-        return json_encode($this->toArray());
+    public final function toJSON($campos=[]){
+        return json_encode($this->toArray($campos));
     }
     
-    public function toArray(){
-        $a1 = get_object_vars($this);
-        $a2 = array();
-        foreach ($a1 as $c=>$v){
-            if($c!='mysqli' && substr($c,0,3)!='md_'){
-                $a2[$c] = $v;
+    public final function toArray($campos=[]){
+        $filtrar = count($campos)>0;
+        $model = get_object_vars($this);
+        $array = array();
+        foreach ($model as $campo=>$valor){
+            if($campo!='mysqli' && substr($campo,0,3)!='md_'){
+                if($filtrar){
+                    if(in_array($campo, $campos)){
+                        $array[$campo] = $valor;
+                    }
+                }else{
+                    $array[$campo] = $valor;
+                }
             }
         }
-        return $a2;
+        return $array;
     }
 }
