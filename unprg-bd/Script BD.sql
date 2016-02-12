@@ -38,9 +38,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `unprg-web`.`archivo` (
   `idArchivo` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `nombre` VARCHAR(45) NOT NULL COMMENT 'nombre del archivo',
+  `nombre` TEXT NOT NULL COMMENT 'nombre del archivo, o enlace externo',
   `type` VARCHAR(45) NOT NULL COMMENT 'tipo o formato del archivo, jpg o pdf',
-  `link` TEXT NOT NULL COMMENT 'enlace del archivo',
+  `rutaArch` TEXT NOT NULL COMMENT 'ruta del archivo a mostrar',
   `fchReg` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de registro del archivo',
   PRIMARY KEY (`idArchivo`)  COMMENT '')
 ENGINE = InnoDB;
@@ -84,7 +84,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `unprg-web`;
-INSERT INTO `unprg-web`.`usuario` (`idUsuario`, `email`, `password`, `nombres`, `apellidos`, `oficina`, `fchReg`, `permisos`, `estado`, `reset`) VALUES (DEFAULT, 'administrador', '9dbf7c1488382487931d10235fc84a74bff5d2f4', 'admin', 'admin', 'Red Telemática', DEFAULT, 'admin', 1, 1);
+INSERT INTO `unprg-web`.`usuario` (`idUsuario`, `email`, `password`, `nombres`, `apellidos`, `oficina`, `fchReg`, `permisos`, `estado`, `reset`) VALUES (DEFAULT, 'admin@admin.com', '9dbf7c1488382487931d10235fc84a74bff5d2f4', 'admin', 'admin', 'Red Telemática', DEFAULT, 'admin', 1, 1);
 
 COMMIT;
 
