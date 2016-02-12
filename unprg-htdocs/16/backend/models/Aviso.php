@@ -55,7 +55,7 @@ class Aviso extends abstractModel{
 	public function searchVisible(){
 		if($this->mysqli->errno) return false; //verificar error en el cado
 
-		$sql = "select * from aviso where visible=?";
+		$sql = "select * from aviso where visible=? order by fchReg desc";
 
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);

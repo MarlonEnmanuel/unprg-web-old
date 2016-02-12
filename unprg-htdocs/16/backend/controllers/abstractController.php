@@ -1,7 +1,7 @@
 <?php
 abstract class abstractController {
 
-	public static $acceso;
+	public $acceso;
 
 	abstract public function init();
 
