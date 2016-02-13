@@ -51,8 +51,6 @@
 			var $form = $(this);
 			var $info = $('section .wraper h2');
 
-			$form.find('input[type=submit]').attr('disabled','disabled').val('Enviando ...');
-
 			var form = {
 				accion : 'login',
 				email : $('section form input[name=email]').val().trim(),
@@ -63,6 +61,8 @@
 				$info.html('Llene los campos');
 				return false;
 			}
+			
+			$form.find('input[type=submit]').attr('disabled','disabled').val('Enviando ...');
 
 			form.pass = hex_sha1(form.pass);
 
@@ -73,7 +73,6 @@
 				data: form,
 			})
 			.done(function(data) {
-				debugger;
 				$info.html(data.mensaje);
 				if(data.estado){
 					$form.find('input[type=submit]').val('Correcto');

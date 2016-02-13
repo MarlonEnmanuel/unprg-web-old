@@ -25,8 +25,6 @@ class config {
 
 	public static $date_sql = "Y-m-d H:i:s";				//Formato de fecha de la BD
 
-	public static $path_admin = "panel.php";  				//Página de bienvenida al sistema de administración
-
 
 	/**
 	* Genera la ruta para un archivo
