@@ -5,7 +5,7 @@ require_once '../config.php';
 
 class ctrlUsuario extends abstractController {
 
-    public function init($accion){
+    protected function init($accion){
 
         if($accion == 'login'){         //acción del controlador
             $this->login();

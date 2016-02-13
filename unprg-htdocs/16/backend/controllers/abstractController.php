@@ -8,7 +8,7 @@ abstract class abstractController {
 	public function __construct($isAjax=true){
 		
 		if($isAjax===true || $isAjax===false){
-			$this->isAjax = false;
+			$this->isAjax = $isAjax;
 		}
 
 		//Se inicializa el controlador solo si recibe peticiones ajax
