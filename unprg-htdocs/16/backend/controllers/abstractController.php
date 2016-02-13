@@ -3,15 +3,41 @@ require_once '../config.php';
 
 abstract class abstractController {
 
+	public $isAjax = true;
+
+	public function __construct($isAjax=true){
+		if($isAjax===false){
+			$this->isAjax = false;
+		}
+
+		//Se inicializa el controlador solo si recibe peticiones ajax
+		if($isAjax){
+	        $accion = filter_input(INPUT_POST, 'accion', FILTER_SANITIZE_STRING);
+
+	        //Si no encuentra se pide por get
+	        if($accion==null){
+	        	$accion = filter_input(INPUT_GET , 'accion', FILTER_SANITIZE_STRING);
+	        }
+
+	        //Si falla se responde al usuario
+	        if($accion==false || $accion==null){
+            	$this->responder(false, "Error de parámetros");
+            }
+
+            //Se inicializar el controlador
+            $this->init($accion);
+		}
+	}
+
 	/**
 	* Inicia el controlador
 	*
-	* Esta funcion recibe la acción del usuario por get o post
+	* Esta funcion recibe la acción del cliente
 	* y hace el llamado a la funcion del controlador correspondiente.
 	* Esta función debe ser implementada por cada controlador.
 	*
 	*/
-	abstract public function init();
+	abstract protected function init($accion);
 
 	/**
 	* Controla el acceso del usuario
@@ -27,37 +53,26 @@ abstract class abstractController {
 	* @return boolean Indica si el usuario tiene acceso
 	*/
 	protected final function checkAccess($codAcceso=null){
+		session_start();
 		if( !isset($_SESSION['Usuario']) ){
-			$this->responder(false, 'Debe iniciar sesión', 'redirect', config::getPath(false ,'/admin'));
+			$mensaje = 'Debe iniciar sesión';
+			if($this->isAjax){
+				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin'.'?msj='.$mensaje));
+			}else{
+				header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+				exit;
+			}
 		}
 		if( $codAcceso!=null && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
-			$this->responder(false, 'No tiene permisos para esta acción', 'redirect', config::getPath(false ,'/admin/panel.php'));
+			$mensaje = 'No tiene permisos para esta acción';
+			if($this->isAjax){
+				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin/panel.php'.'?msj='.$mensaje));
+			}else{
+				header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+				exit;
+			}
 		}
-		return true;
-	}
-
-	/**
-	* Envía la respuesta del controlador al usuario
-	*
-	* Esta funcón recibe la respuesta del controlador, y da el formato a los datos
-	* para que estos puedan ser entendidos por el cliente, finalmente termina
-	* la ejecución del script php.
-	*
-	* @param $estado Si es verdadero, el script se ejecutó correctamente
-	* @param $mensaje Mensaje del controlador
-	* @param $detalle Detalle del controlador
-	* @param $datos Datos enviados al usuario
-	*/
-	protected final function responder($estado, $mensaje, $detalle='', $datos=array()){
-		$rpta = array(
-	            'estado' => $estado,
-	            'mensaje' => $mensaje,
-	            'detalle' => $detalle,
-	            'data' => $datos
-	            );
-	    header('Content-type: application/json; charset=utf-8');
-	    echo json_encode($rpta);
-	    exit;
+		return $_SESSION['Usuario'];
 	}
 
 	/**
@@ -73,11 +88,41 @@ abstract class abstractController {
 	protected final function checkInputs($inputs){
 		foreach ($inputs as $key => $value) {
 			if( $value==false || $value==null){
-				$this->responder(false, 'Error al recibir datos');
+				if($this->isAjax){
+					$this->responder(false, 'Error al recibir datos');
+				}else{
+					return false;
+				}
 				break;
 			}
 		}
 		return true;
+	}
+
+	/**
+	* Envía la respuesta del controlador al usuario
+	*
+	* Esta funcón recibe la respuesta del controlador, y da el formato a los datos
+	* para que estos puedan ser entendidos por el cliente, finalmente termina
+	* la ejecución del script php.
+	*
+	* @param $estado Si es verdadero, el script se ejecutó correctamente
+	* @param $mensaje Mensaje del controlador
+	* @param $detalle Detalle del controlador
+	* @param $datos Datos enviados al usuario
+	* @return Boolean Devuelve falso si $isAjax está consifurado en false
+	*/
+	protected final function responder($estado, $mensaje, $detalle='', $datos=array()){
+		if($this->isAjax==false) return false;
+		$rpta = array(
+	            'estado' => $estado,
+	            'mensaje' => $mensaje,
+	            'detalle' => $detalle,
+	            'data' => $datos
+	            );
+	    header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($rpta);
+	    exit;
 	}
 
 }

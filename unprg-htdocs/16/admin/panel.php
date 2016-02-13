@@ -1,5 +1,6 @@
 <?php
 	require_once '../backend/config.php';
+	session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,7 +33,7 @@
 	<?php require_once '../includes/navAdmin.php'; ?>
 	
 	<section>
-		
+
 	</section>
 
 	<?php require_once '../includes/footer.html'; ?>

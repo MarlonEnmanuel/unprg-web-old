@@ -1,5 +1,6 @@
 <?php
 	require_once '../backend/config.php';
+	$msj = filter_input(INPUT_GET, 'msj', FILTER_SANITIZE_STRING);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,7 +41,7 @@
 				<input type="password" name="pass" value="" placeholder="Contraseña">
 				<input type="submit" value="Entrar" class="boton-amarillo">
 			</form>
-			<h2>Información</h2>
+			<h2><?= ($msj)?$msj:'Información' ?></h2>
 		</div>
 	</section>
 

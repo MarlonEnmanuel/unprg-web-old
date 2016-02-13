@@ -5,15 +5,9 @@ require_once '../config.php';
 
 class ctrlUsuario extends abstractController {
 
-    public function init(){
-        //Obtener la accion por GET o por POST
-        $accion = filter_input(INPUT_POST, 'accion', FILTER_SANITIZE_STRING);
-        if(!$accion) $accion = filter_input(INPUT_GET , 'accion', FILTER_SANITIZE_STRING);
+    public function init($accion){
 
-        if($accion==false || $accion=null){ //verifica que la acción se recibió
-            $this->responder(false, "Error de parámetros");
-
-        }elseif($accion == 'login'){    //acción del controlador
+        if($accion == 'login'){         //acción del controlador
             $this->login();
 
         }elseif($accion == 'logout'){   //acción del controlador
@@ -25,7 +19,7 @@ class ctrlUsuario extends abstractController {
         }elseif($accion == ''){         //acción del controlador
 
 
-        }else{  //responde cuando la acción no corresponde a ningun controlador
+        }else{                          //responde cuando la acción no corresponde a ningun controlador
             $this->responder(false, "No se indicó una acción");
         }
     }
@@ -52,6 +46,5 @@ class ctrlUsuario extends abstractController {
 }
 
 $ctrl = new ctrlUsuario();
-$ctrl->init();
 
 ?>

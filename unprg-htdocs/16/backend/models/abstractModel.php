@@ -43,9 +43,9 @@ abstract class abstractModel {
     abstract public function delete();
     
     /**
-    * Combierte un modelo en una cadena con formato json
+    * Convierte un modelo en una cadena con formato json
     *
-    * Combierte el modelo a formato json, todos los caracteres deben tener 
+    * Convierte el modelo a formato json, todos los caracteres deben tener 
     * cotejamiento UTF-8 de los contrario la función fallará y devolverá false
     *
     * @param $campos Un array indicando los campos que se desean combertir, si se pasa null o un array vació se combierten todos los campos
@@ -56,7 +56,7 @@ abstract class abstractModel {
     }
     
     /**
-    * Combierte un modelo en un array asociativo
+    * Convierte un modelo en un array asociativo
     *
     * @param $campos Un array indicando los campos que se desean combertir, si se pasa null o un array vació se combierten todos los campos
     * @return Array el array asociativo
