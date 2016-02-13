@@ -6,7 +6,8 @@ abstract class abstractController {
 	public $isAjax = true;
 
 	public function __construct($isAjax=true){
-		if($isAjax===false){
+		
+		if($isAjax===true || $isAjax===false){
 			$this->isAjax = false;
 		}
 
