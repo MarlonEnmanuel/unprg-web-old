@@ -1,5 +1,5 @@
 <?php
-	require_once 'backend/config.php';
+	require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,8 +28,8 @@
 
 </head>
 <body>
-	<?php require_once 'includes/header.html'; ?>
-	<?php require_once 'includes/nav.html'; ?>
+	<?php require_once config::getRequirePath('includes/header.html'); ?>
+	<?php require_once config::getRequirePath('includes/nav.html'); ?>
 	
 	<section class="enlaces">
 		<div class="wrap">
@@ -44,6 +44,6 @@
 		</div>
 	</section>
 
-	<?php require_once 'includes/footer.html'; ?>
+	<?php require_once config::getRequirePath('includes/footer.html'); ?>
 </body>
 </html>

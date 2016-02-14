@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,8 +12,6 @@
  *
  * @author Enmanuel
  */
-require_once '../config.php';
-
 abstract class abstractModel {
     
     protected $mysqli;      //Mysqli cado para mysql

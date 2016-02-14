@@ -1,5 +1,5 @@
 <?php
-	require_once '../backend/config.php';
+	require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 	$msj = filter_input(INPUT_GET, 'msj', FILTER_SANITIZE_STRING);
 ?>
 <!DOCTYPE html>
@@ -30,8 +30,8 @@
 
 </head>
 <body>
-	<?php require_once '../includes/header.html'; ?>
-	<?php require_once '../includes/nav.html'; ?>
+	<?php require_once config::getRequirePath('includes/header.html'); ?>
+	<?php require_once config::getRequirePath('includes/nav.html'); ?>
 	
 	<section>
 		<div class="wraper">
@@ -91,6 +91,6 @@
 		});
 	</script>
 
-	<?php require_once '../includes/footer.html'; ?>
+	<?php require_once config::getRequirePath('includes/footer.html'); ?>
 </body>
 </html>

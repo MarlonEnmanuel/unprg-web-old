@@ -46,6 +46,11 @@ class config {
 		}
 	}
 
+	public static function getRequirePath($path){
+		if(substr($path, 0, 1) == '/') $path = substr($path, 1);
+		return $path = $_SERVER['DOCUMENT_ROOT'].'/'.config::$path_int.'/'.$path;
+	}
+
 	public static function getLink($path){
 		return '<link rel="stylesheet" type="text/css" href="'.$path.'">';
 	}

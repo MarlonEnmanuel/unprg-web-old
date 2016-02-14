@@ -1,10 +1,10 @@
 <?php
+	require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
+
 	header( "Expires: Mon, 20 Dec 1998 01:00:00 GMT" );
     header( "Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT" );
     header( "Cache-Control: no-cache, must-revalidate" );
     header( "Pragma: no-cache" );
-
-    require_once '16/backend/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -56,18 +56,18 @@
 		</script>
 </head>
 <body>
-	<?php require_once config::getPath(false, 'includes/header.html'); ?>
-	<?php require_once config::getPath(false, 'includes/nav.html'); ?>
+	<?php require_once config::getRequirePath('includes/header.html'); ?>
+	<?php require_once config::getRequirePath('includes/nav.html'); ?>
 	
 	<section class="unprg-portada">
 		<div class="wraper">
 			
 			<div class="portada-col unprg-slider">
-				<?php require_once config::getPath(false, 'includes/slider.html'); ?>
+				<?php require_once config::getRequirePath('includes/slider.html'); ?>
 			</div>
 
 			<div class="portada-col unprg-avisos">
-				<?php require_once config::getPath(false, 'includes/avisos.html'); ?>
+				<?php require_once config::getRequirePath('includes/avisos.html'); ?>
 			</div>
 
 			<div class="clean"></div>
@@ -274,7 +274,7 @@
 		</section>
 
 		<aside class="cuerpo-col unprg-panel">
-			<?php require_once config::getPath(false, 'includes/panel.html'); ?>
+			<?php require_once config::getRequirePath('includes/panel.html'); ?>
 		</aside>
 
 		<div class="clean"></div>
@@ -287,6 +287,6 @@
 		</div>
 	</div>
 	
-	<?php require_once config::getPath(false, 'includes/footer.html'); ?>
+	<?php require_once config::getRequirePath('includes/footer.html'); ?>
 </body>
 </html>

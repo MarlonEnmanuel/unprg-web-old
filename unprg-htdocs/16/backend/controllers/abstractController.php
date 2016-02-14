@@ -1,11 +1,11 @@
 <?php
-require_once '../config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 
 abstract class abstractController {
 
-	public $isAjax = true;
+	public $isAjax = false;
 
-	public function __construct($isAjax=true){
+	public function __construct($isAjax=false){
 		
 		if($isAjax===true || $isAjax===false){
 			$this->isAjax = $isAjax;
@@ -53,14 +53,16 @@ abstract class abstractController {
 	* @param $codAcceso Codigo de acceso del controlador, por defecto es null
 	* @return boolean Indica si el usuario tiene acceso
 	*/
-	protected final function checkAccess($codAcceso=null){
-		session_start();
-		if( !isset($_SESSION['Usuario']) ){
+	public final function checkAccess($codAcceso=null){
+		if(!isset($_SESSION)) session_start();
+
+		if(!isset($_SESSION['Usuario'])){
 			$mensaje = 'Debe iniciar sesión';
 			if($this->isAjax){
 				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin'.'?msj='.$mensaje));
 			}else{
 				header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+				echo 'hola';
 				exit;
 			}
 		}
@@ -86,7 +88,7 @@ abstract class abstractController {
 	* @param $inputs Array con los datos
 	* @return boolean Indica el estado
 	*/
-	protected final function checkInputs($inputs){
+	public final function checkInputs($inputs){
 		foreach ($inputs as $key => $value) {
 			if( $value==false || $value==null){
 				if($this->isAjax){

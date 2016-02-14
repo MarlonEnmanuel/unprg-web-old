@@ -1,6 +1,9 @@
 <?php
-	require_once '../backend/config.php';
-	session_start();
+	require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
+	require_once config::getRequirePath('backend/controllers/Controller.php');
+
+	$ctrl = new Controller();
+	$ctrl->checkAccess();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,13 +32,13 @@
 
 </head>
 <body>
-	<?php require_once '../includes/header.html'; ?>
-	<?php require_once '../includes/navAdmin.php'; ?>
+	<?php require_once config::getRequirePath('includes/header.html'); ?>
+	<?php require_once config::getRequirePath('includes/navAdmin.php'); ?>
 	
 	<section>
-
+		Hola
 	</section>
 
-	<?php require_once '../includes/footer.html'; ?>
+	<?php require_once config::getRequirePath('includes/footer.html'); ?>
 </body>
 </html>

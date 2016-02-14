@@ -1,7 +1,7 @@
 <?php
-require_once 'abstractController.php';
-require_once '../models/Usuario.php';
-require_once '../config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
+require_once config::getRequirePath('backend/controllers/abstractController.php');
+require_once config::getRequirePath('backend/models/Usuario.php');
 
 class ctrlUsuario extends abstractController {
 
@@ -24,7 +24,7 @@ class ctrlUsuario extends abstractController {
         }
     }
 
-    public function login(){
+    protected function login(){
         $inputs = array();
         $inputs['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $inputs['pass']  = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
@@ -45,6 +45,6 @@ class ctrlUsuario extends abstractController {
 
 }
 
-$ctrl = new ctrlUsuario();
+$ctrl = new ctrlUsuario(true);
 
 ?>
