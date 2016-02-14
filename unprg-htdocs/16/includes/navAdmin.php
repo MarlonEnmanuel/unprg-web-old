@@ -1,17 +1,10 @@
-<nav>
-	<div class="wraper">
-		<div class="titulo">
-			<p class="titulo1">UNPRG Administración Web</p>
-			<p class="titulo2">Bienvenido: 
-				<?php
-					if($_SESSION['Usuario']['permisos']=='admin'){
-						echo 'Administrador';
-					}else{
-						echo $_SESSION['Usuario']['nombres'].' '.$_SESSION['Usuario']['apellidos'];
-					}
-				?>
-			</p>
-		</div>
-		<div class="cerrar">Cerrar Sesión</div>
-	</div>
-</nav>
+<div class="titulo">
+	<div class="unprg">UNPRG Administración Web</div>
+	<div class="usuario">Bienvenido, Administrador</div>
+</div>
+<ul>
+	<li><a href="">Avisos</a></li>
+	<li><a href="">Noticias</a></li>
+	<li><a href="">Eventos</a></li>
+	<li><a href="<?= config::getPath(false, '/backend/controllers/ctrlUsuario.php?accion=logout') ?>">Cerrar Sesión</a></li>
+</ul>

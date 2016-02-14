@@ -11,7 +11,7 @@ class ctrlUsuario extends abstractController {
             $this->login();
 
         }elseif($accion == 'logout'){   //acción del controlador
-
+            $this->logout();    
 
         }elseif($accion == ''){         //acción del controlador
 
@@ -41,6 +41,14 @@ class ctrlUsuario extends abstractController {
         $user->permisos = split(',', $user->permisos);
         $_SESSION['Usuario'] = $user->toArray();
         $this->responder(true, 'Bienvenido', 'redirect', 'panel.php');
+    }
+
+    public function logout(){
+        session_start();
+        session_destroy();
+        $mensaje = "Hasta luego";
+        header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+        exit();
     }
 
 }

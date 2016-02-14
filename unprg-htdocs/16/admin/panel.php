@@ -28,15 +28,26 @@
 
 	<!-- Importación de archivos propios -->
 		<?= config::getLink(config::getPath(false,'/frontend/css/general.css')) ?>
-		<?= config::getLink(config::getPath(false,'/frontend/css/admin/login.css')) ?>
+		<?= config::getLink(config::getPath(false,'/frontend/css/admin/general.css')) ?>
 
 </head>
 <body>
 	<?php require_once config::getRequirePath('includes/header.html'); ?>
-	<?php require_once config::getRequirePath('includes/navAdmin.php'); ?>
+	<?php require_once config::getRequirePath('includes/nav.html'); ?>
 	
 	<section>
-		Hola
+		<div class="wraper">
+
+			<div class="admin-col admin-nav">
+				<?php require_once config::getRequirePath('includes/navAdmin.php'); ?>
+			</div>
+
+			<div class="admin-col admin-cuerpo">
+				<div class="encabezado">Bienvenido</div>
+			</div>
+
+		</div>
+		<div class="clean"></div>
 	</section>
 
 	<?php require_once config::getRequirePath('includes/footer.html'); ?>
