@@ -6,7 +6,7 @@ class Archivo extends abstractModel{
 
     public $nombre;
     public $type;
-    public $link;
+    public $rutaArch;
     public $fchReg;
 
     public function __construct(&$mysqli, $id=null){
@@ -30,7 +30,7 @@ class Archivo extends abstractModel{
             $this->id,
             $this->nombre,
             $this->type,
-            $this->link,
+            $this->rutaArch,
             $this->fchReg
             );
         if($stmt->fetch()){
@@ -53,13 +53,13 @@ class Archivo extends abstractModel{
             return $this->md_estado = false;
         }
 
-        $sql = "INSERT INTO archivo (nombre, type, link) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO archivo (nombre, type, rutaArch) VALUES (?, ?, ?)";
         $stmt = $this->mysqli->stmt_init();
         $stmt->prepare($sql);
         $stmt->bind_param('sss',
             $this->nombre,
             $this->type,
-            $this->link
+            $this->rutaArch
             );
         if($stmt->execute()){
             $this->id = $stmt->insert_id;
@@ -86,8 +86,9 @@ class Archivo extends abstractModel{
                 WHERE idArchivo=?";
         $stmt = $this->mysqli->stmt_init();
         $stmt->prepare($sql);
-        $stmt->bind_param('s',
-            $this->nombre
+        $stmt->bind_param('si',
+            $this->nombre,
+            $this->id
             );
         if($stmt->execute()){
             $this->md_estado = true;
@@ -105,11 +106,5 @@ class Archivo extends abstractModel{
     }
 
 }
-/*$mysqli = config::getMysqli();
-
-$user = new Archivo($mysqli, 1);
-$user->get();
-echo $user->toJSON();
-*/
 
 ?>

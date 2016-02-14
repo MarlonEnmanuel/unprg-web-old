@@ -24,6 +24,8 @@ class config {
 	public static $db_port = "3306";         				//Puerto de la BD
 
 	public static $date_sql = "Y-m-d H:i:s";				//Formato de fecha de la BD
+	public static $date_aviso = "@d/m/Y";					//Formato de fecha de la BD
+
 
 
 	/**

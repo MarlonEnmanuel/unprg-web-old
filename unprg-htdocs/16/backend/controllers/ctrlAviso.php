@@ -2,6 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 require_once config::getRequirePath('backend/controllers/abstractController.php');
 require_once config::getRequirePath('backend/models/Aviso.php');
+require_once config::getRequirePath('backend/models/Archivo.php');
 
 class ctrlAviso extends abstractController {
 
@@ -24,57 +25,42 @@ class ctrlAviso extends abstractController {
         }
     }
 
-    protected function getVisibles(){
+    protected function getVisibles() {
         $mysqli = config::getMysqli();
-$aviso = new Aviso($mysqli, 1);
+        $aux = new Aviso($mysqli);
 
-$lista=array();
-$lista=$aviso->searchVisible();
-$datos='{
-    "avisos" : [';
-for ($i=0; $i < count($lista); $i++) { 
-    $id=$lista[$i]->idAviso;
-    $fchReg=$lista[$i]->fchReg;
-    $texto=$lista[$i]->texto;
-    $emergente=$lista[$i]->emergente;
-    $visible=$lista[$i]->visible;
-    $estado=$lista[$i]->estado;
-    $bloqueado=$lista[$i]->bloqueado;
-    $idArchivo=$lista[$i]->idArchivo;
-    $idUsuario=$lista[$i]->idUsuario;
-    $datos=$datos .'{';
-    $datos=$datos .'"id":"'.$id.'",';
-    $datos=$datos .'"fecha":"'.$fchReg.'",';
-    $archivo= new Archivo($mysqli,$idArchivo);
-    $archivo->get();
-    $resp='false';
-        if($emergente==1){
-            $resp='true';
+        $lista = $aux->searchVisible();
+
+        $avisos = [];
+
+        foreach ($lista as $key => $aviso) {
+
+            $archivo = new Archivo($mysqli,$aviso->idArchivo);
+            $archivo->get();
+
+            $arrayAviso = array(
+                'id'        => $aviso->id,
+                'fecha'     => $aviso->fchReg->format(config::$date_aviso),
+                'emergente' => $aviso->emergente,
+                'texto'     => $aviso->texto
+            );
+
+            if($archivo->type == 'img'){
+                $arrayAviso['img'] = $archivo->rutaArch;
+                $arrayAviso['nombre'] = $archivo->nombre;
+            }elseif($archivo->type == 'doc'){
+                $arrayAviso['doc'] = $archivo->rutaArch;
+                $arrayAviso['nombre'] = $archivo->nombre;
+            }elseif($archivo->type == 'link'){
+                $arrayAviso['img'] = $archivo->rutaArch;
+                $arrayAviso['link'] = $archivo->nombre;
+            }
+
+            $avisos[$key] = $arrayAviso;
         }
-    if($archivo->type=='link'){
-        $datos=$datos.'"img":"'.$archivo->link.'",';
-        $datos=$datos .'"emergente":"'.$resp.'",';
-        $datos=$datos .'"link":"' .$archivo->nombre.'",';
-    }else{
-            $datos=$datos.'"'.$archivo->type.'":"'.$archivo->link.'",' ;
-        
-        $datos=$datos .'"emergente":"'.$resp.'",';
-        $datos=$datos .'"nombre":"'.$archivo->nombre.'",';
-    }
-    
-    $datos=$datos .'"texto:"'.$texto.'"';
-    if($i+1==count($lista)){
-        $datos=$datos .'}';
-    }else{
-        $datos=$datos .'},';
-    }
-    
 
-}
-$datos=$datos .'] }';
-
-print_r($datos);
-
+        $avisos = array('avisos' => $avisos);
+        echo json_encode($avisos);
     }
 
 }
