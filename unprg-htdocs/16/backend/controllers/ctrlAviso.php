@@ -41,13 +41,13 @@ class ctrlAviso extends abstractController {
                 'texto'     => $aviso->texto
             );
             if($archivo->type == 'img'){
-                $arrayAviso['img'] = $archivo->rutaArch;
+                $arrayAviso['img'] = config::getPath(false, $archivo->rutaArch);
                 $arrayAviso['nombre'] = $archivo->nombre;
             }elseif($archivo->type == 'doc'){
-                $arrayAviso['doc'] = $archivo->rutaArch;
+                $arrayAviso['doc'] = config::getPath(false, $archivo->rutaArch);
                 $arrayAviso['nombre'] = $archivo->nombre;
             }elseif($archivo->type == 'link'){
-                $arrayAviso['img'] = $archivo->rutaArch;
+                $arrayAviso['img'] = config::getPath(false, $archivo->rutaArch);
                 $arrayAviso['link'] = $archivo->nombre;
             }
             $avisos[$key] = $arrayAviso;

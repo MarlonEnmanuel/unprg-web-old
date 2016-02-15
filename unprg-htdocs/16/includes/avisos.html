@@ -27,7 +27,7 @@
 			timeBgInit		: 1500,   	//tiempo para mostrar el aviso emergente desde la carga de la página
 			playOnlyScroll	: false,  	//si es verdadero solo se anima cuando hay escroll
 			stopOnHover		: true,    	//si es verdadero la reproducción se detiene al posicionar el mouse
-			jsonPath 		: "/16/backend/avisos.json"	//indica la ruta de los avisos
+			jsonPath 		: '<?= config::getPath(false, "/backend/controllers/ctrlAviso.php?accion=getVisibles") ?>'
 		},
 
 		init : function(){
