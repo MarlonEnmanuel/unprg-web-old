@@ -66,12 +66,12 @@ abstract class abstractController {
 				exit;
 			}
 		}
-		if( $codAcceso!=null && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
+		if( $codAcceso!=null && $_SESSION['Usuario']['permisos'][0]!='admin' && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
 			$mensaje = 'No tiene permisos para esta acción';
 			if($this->isAjax){
 				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin/panel.php'.'?msj='.$mensaje));
 			}else{
-				header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+				header('Location: '.config::getPath(false ,'/admin/panel.php').'?msj='.$mensaje);
 				exit;
 			}
 		}

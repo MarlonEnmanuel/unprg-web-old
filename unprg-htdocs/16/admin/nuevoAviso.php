@@ -45,7 +45,115 @@
 			<div class="admin-col admin-cuerpo">
 				<div class="encabezado">Nuevo aviso</div>
 
+				<form class="formAviso">
+					<div>
+						<span>Tipo de aviso</span>
+						<select name="ar-type">
+							<option value="img">Publicar Imagen</option>
+							<option value="doc">Publicar Documento PDF</option>
+							<option value="link">Enlace a otra página</option>
+						</select>
+					</div>
+					<div>
+						<span>Descripción del aviso</span>
+						<input type="text" name="av-texto" maxlength="45">
+					</div>
+					<div>
+						<span>Visible en página principal</span>
+						<input type="checkbox" name="av-emergente" checked>
+					</div>
+					<div>
+						<span>Mostrar al abrir la página</span>
+						<input type="checkbox" name="av-visible">
+					</div>
+					<div>
+						<span>Disponible al público</span>
+						<input type="checkbox" name="av-estado" checked>
+					</div>
+					<hr>
+					<div>
+						<span class="p1">Seleccione imágen</span>
+						<input type="file" name="archivo" accept="image/jpeg,image/png">
+					</div>
+					<div>
+						<span class="p2">Nombre de la imágen</span>
+						<input type="text" name="ar-nombre" maxlength="45">
+					</div>
+					<div class="formPie">
+						<div class="info">Información de estado</div>
+						<div class="boton">
+							<input type="submit" class="boton boton-azul" value="Enviar">
+						</div>
+					</div>
+				</form>
 			</div>
+
+			<script type="text/javascript">
+				$('.formAviso select').change(function(){
+					var op = $('.formAviso select').val();
+					var p1 = $('.formAviso .p1');
+					var p2 = $('.formAviso .p2');
+					var fl = p1.siblings('input');
+					if(op == 'img'){
+						p1.text('Seleccione imágen');
+						p2.text('Nombre de la imágen');
+						fl.attr('accept', 'image/jpeg,image/png');
+					}else if(op == 'doc'){
+						p1.text('Seleccione documento');
+						p2.text('Nombre del documento');
+						fl.attr('accept', 'application/pdf');
+					}else if(op == 'link'){
+						p1.text('Imagen del enlace');
+						p2.text('Enlace de la página');
+						fl.attr('accept', 'image/jpeg,image/png');
+					}
+				});
+
+				$('.formAviso').submit(function(event) {
+					event.preventDefault();
+
+					var form = $(this);
+					var info = form.find('.info');
+
+					if( form.find('input[name=av-texto]').val().length<10 || 
+						form.find('input[name=ar-nombre]').val().length<5 || 
+						form.find('input[name=archivo]').val().length<1 ){
+
+						info.text('Llene los campos');
+						return false;
+					}
+					form.find('input[type=submit]').attr('disabled','disabled');
+
+					var data = new FormData(form[0]);
+
+					$.ajax({
+						url: "<?= config::getPath(false, '') ?>",
+						type: 'post',
+						dataType: 'json',
+						data: data,
+						cache: false,
+			            contentType: false,
+				        processData: false
+					})
+					.done(function(rpta) {
+						info.text(rpta.mensaje);
+						if(rpta.detalle=='redirect'){
+							window.setTimeout(function(){
+								window.location = rpta.data;
+							}, 600);
+						}
+						if(!rpta.estado){
+							form.find('input[type=submit]').removeAttr('disabled');
+						}
+					})
+					.fail(function(rpta) {
+						console.log(rpta);
+						info.text('Error de conección');
+						form.find('input[type=submit]').removeAttr('disabled');
+					});
+					
+				});
+			</script>
 
 		</div>
 		<div class="clean"></div>

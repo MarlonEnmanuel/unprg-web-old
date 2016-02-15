@@ -30,21 +30,16 @@ class ctrlAviso extends abstractController {
         $aux = new Aviso($mysqli);
 
         $lista = $aux->searchVisible();
-
         $avisos = [];
-
         foreach ($lista as $key => $aviso) {
-
             $archivo = new Archivo($mysqli,$aviso->idArchivo);
             $archivo->get();
-
             $arrayAviso = array(
                 'id'        => $aviso->id,
                 'fecha'     => $aviso->fchReg->format(config::$date_aviso),
                 'emergente' => $aviso->emergente,
                 'texto'     => $aviso->texto
             );
-
             if($archivo->type == 'img'){
                 $arrayAviso['img'] = $archivo->rutaArch;
                 $arrayAviso['nombre'] = $archivo->nombre;
@@ -55,10 +50,8 @@ class ctrlAviso extends abstractController {
                 $arrayAviso['img'] = $archivo->rutaArch;
                 $arrayAviso['link'] = $archivo->nombre;
             }
-
             $avisos[$key] = $arrayAviso;
         }
-
         $avisos = array('avisos' => $avisos);
         echo json_encode($avisos);
     }

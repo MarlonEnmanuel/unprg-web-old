@@ -6,22 +6,31 @@
 			
 		},
 
-		submit : function(){
-
+		enviar : function(data){
+			var base = this;
+			$.$.ajax({
+				url: base.options.url,
+				type: 'post',
+				dataType: 'json',
+				data: data,
+				cache: false,
+	            contentType: false,
+		        processData: false
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
 		}
 
 	};
 
-	$.fn.unprgCado = function(options){
-		return this.each(function(index, el) {
-			if($(el).data('cado-init')===true){
-				return false;
-			}
-			$(el).data('cado-init', true);
-			var cado = Object.create(Cado);
-			cado.init(options, el);
-			$.data(el, 'unprgCado', cado);
-		});
-	};
-
+	if(!window.unprg) window.unprg ={};
+	window.unprg.cado = Cado;
+	
 })(jQuery);

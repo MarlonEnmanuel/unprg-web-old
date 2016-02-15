@@ -14,6 +14,7 @@ section
 		
 	.admin-nav
 		width: 24%
+		margin-bottom: 40px
 		
 	.admin-cuerpo
 		width: 76%
@@ -28,3 +29,75 @@ section
 			display: block
 			margin-bottom: 0 0 16px 0
 			padding-bottom: 0 0 10px 0
+			
+	@media screen and (max-width: 870px)
+		.admin-col
+			float: none
+		.admin-nav
+			width: auto
+		.admin-cuerpo
+			width: auto
+			padding-left: auto
+			
+
+	form
+		display: block
+		margin: 24px 0px 24px 30px
+		
+		hr
+			margin: 24px 0px
+			border: none
+			height: 1px
+			box-sizing: border-box
+			background-color: rgb(160,160,160)
+			
+		& > div
+			margin: 16px 0px
+			line-height: 30px
+			
+			span
+				display: inline-block
+				min-width: 220px
+				vertical-align: middle
+				line-height: 30px
+				@media screen and (max-width: 870px)
+					font-weight: bold
+			
+			input[type=checkbox]
+				display: inline-block
+				height: 24px
+				width: 24px
+				font-size: 24px
+				margin-bottom: 1px
+				vertical-align: middle
+				
+			select, input[type=text], input[type=file]
+				display: inline-block
+				box-sizing: border-box
+				height: 28px
+				font-size: 16px
+				padding: 0px 5px
+				line-height: 12px
+				min-width: 320px
+			
+			input[type=file]
+				padding-left: 0px
+				
+
+		.formPie
+			margin-top: 24px
+			padding-top: 24px
+			border-top: 1px solid rgb(160,160,160)
+			
+			.info
+				display: inline-block
+				margin-bottom: 10px
+				font-weight: bold
+				color: ccAzul
+				font-size: 18px
+				
+			.boton
+				float: right
+				*
+					font-size: 18px
+					padding: 4px 40px
