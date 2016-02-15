@@ -115,19 +115,22 @@
 					var form = $(this);
 					var info = form.find('.info');
 
-					if( form.find('input[name=av-texto]').val().length<10 || 
-						form.find('input[name=ar-nombre]').val().length<5 || 
+					if( form.find('input[name=av-texto]').val().length<1 || 
+						form.find('input[name=ar-nombre]').val().length<1 || 
 						form.find('input[name=archivo]').val().length<1 ){
 
-						info.text('Llene los campos');
+						info.text('Llene los campos y/o seleccine un archivo');
 						return false;
 					}
+
 					form.find('input[type=submit]').attr('disabled','disabled');
 
 					var data = new FormData(form[0]);
+					data.append('accion','nuevoAviso');
 
+					console.log(data);
 					$.ajax({
-						url: "<?= config::getPath(false, '') ?>",
+						url: "<?= config::getPath(false, '/backend/controllers/ctrlAviso.php') ?>",
 						type: 'post',
 						dataType: 'json',
 						data: data,

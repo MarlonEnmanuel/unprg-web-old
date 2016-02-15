@@ -22,7 +22,7 @@ abstract class abstractController {
 
 	        //Si falla se responde al usuario
 	        if($accion==false || $accion==null){
-            	$this->responder(false, "Error de parámetros");
+            	$this->responder(false, "No se indicó una acción");
             }
 
             //Se inicializar el controlador

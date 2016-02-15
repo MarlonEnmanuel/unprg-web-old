@@ -21,7 +21,7 @@ class ctrlAviso extends abstractController {
 
 
         }else{                          //responde cuando la acción no corresponde a ningun controlador
-            $this->responder(false, "No se indicó una acción");
+            $this->responder(false, "Acción no soportada");
         }
     }
 
