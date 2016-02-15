@@ -68,7 +68,7 @@ class Usuario extends abstractModel{
 		$sql = "select * from usuario where email=?";
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);
-		$stmt->bind_param('i', $email);
+		$stmt->bind_param('s', $email);
 		$stmt->execute();
 		$stmt->bind_result(
 			$this->id,
@@ -102,16 +102,17 @@ class Usuario extends abstractModel{
     		return $this->md_estado = false;
     	}
 
-    	$sql = "INSERT INTO usuario (email, password, nombres, apellidos, oficina, permisos) VALUES (?, ?, ?, ?, ?, ?)";
+    	$sql = "INSERT INTO usuario (email, password, nombres, apellidos, oficina, permisos, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
     	$stmt = $this->mysqli->stmt_init();
     	$stmt->prepare($sql);
-    	$stmt->bind_param('ssssss',
+    	$stmt->bind_param('ssssssi',
     		$this->email,
     		$this->password,
     		$this->nombres,
     		$this->apellidos,
     		$this->oficina,
-    		$this->permisos
+    		$this->permisos,
+    		intval($this->estado)
     		);
     	if($stmt->execute()){
             $this->id = $stmt->insert_id;

@@ -55,9 +55,7 @@ class Aviso extends abstractModel{
 
 	public function searchVisible(){
 		if($this->mysqli->errno) return false; //verificar error en el cado
-
 		$sql = "select * from aviso where visible=? order by fchReg desc";
-
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);
 		$vis=1;
@@ -75,7 +73,6 @@ class Aviso extends abstractModel{
 			$_idUsuario
 			);
 		$list=array();
-		
 		while ($stmt->fetch()) {
 			$avi=new Aviso($this->mysqli);
 			$avi->id 	    = $_id;
@@ -89,7 +86,41 @@ class Aviso extends abstractModel{
 			$avi->idUsuario = $_idUsuario;
 			array_push($list, $avi);
 		}
+        return $list;
+	}
 
+	public function searchUsuario($idUsuario){
+		if($this->mysqli->errno) return false; //verificar error en el cado
+		$sql = "select * from aviso where idUsuario=? order by fchReg desc";
+		$stmt = $this->mysqli->stmt_init();
+		$stmt->prepare($sql);
+		$stmt->bind_param('i', $idUsuario);
+		$stmt->execute();
+		$stmt->bind_result(
+			$_id,
+			$_fchReg,
+			$_texto,
+			$_emergente,
+			$_visible,
+			$_estado,
+			$_bloqueado,
+			$_idArchivo,
+			$_idUsuario
+			);
+		$list=array();
+		while ($stmt->fetch()) {
+			$avi=new Aviso($this->mysqli);
+			$avi->id 	    = $_id;
+			$avi->fchReg 	= DateTime::createFromFormat(config::$date_sql, $_fchReg);
+			$avi->texto 	= $_texto;
+			$avi->emergente = $_emergente;
+			$avi->visible 	= $_visible;
+			$avi->estado 	= $_estado;
+			$avi->bloqueado = $_bloqueado;
+			$avi->idArchivo = $_idArchivo;
+			$avi->idUsuario = $_idUsuario;
+			array_push($list, $avi);
+		}
         return $list;
 	}
 

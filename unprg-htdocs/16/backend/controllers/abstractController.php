@@ -66,7 +66,7 @@ abstract class abstractController {
 				exit;
 			}
 		}
-		if( $codAcceso!=null && $_SESSION['Usuario']['permisos'][0]!='admin' && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
+		if( $codAcceso!=null && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
 			$mensaje = 'No tiene permisos para esta acción';
 			if($this->isAjax){
 				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin/panel.php'.'?msj='.$mensaje));
@@ -86,17 +86,28 @@ abstract class abstractController {
 	* al cliente
 	*
 	* @param $inputs Array con los datos
-	* @return boolean Indica el estado
+	* @return boolean Devuelve true si todos los datos son correctos
 	*/
-	public final function checkInputs($inputs){
+	public final function checkInputs($inputs, $booleans=[]){
 		foreach ($inputs as $key => $value) {
-			if( $value==false || $value==null){
-				if($this->isAjax){
-					$this->responder(false, 'Error al recibir datos');
-				}else{
-					return false;
+			if( in_array($key, $booleans) ){
+				if( is_null($value) ) {
+					if($this->isAjax){
+						$this->responder(false, 'Error al recibir datos');
+					}else{
+						return false;
+					}
+					break;
 				}
-				break;
+			}else{
+				if( is_null($value) || $value===false) {
+					if($this->isAjax){
+						$this->responder(false, 'Error al recibir datos');
+					}else{
+						return false;
+					}
+					break;
+				}
 			}
 		}
 		return true;

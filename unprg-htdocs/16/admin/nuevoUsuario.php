@@ -3,7 +3,7 @@
 	require_once config::getRequirePath('backend/controllers/Controller.php');
 
 	$ctrl = new Controller();
-	$ctrl->checkAccess('aviso');
+	$ctrl->checkAccess('admin');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,119 +43,94 @@
 			</div>
 
 			<div class="admin-col admin-cuerpo">
-				<div class="encabezado">Nuevo aviso</div>
+				<div class="encabezado">Nuevo Usuario</div>
 
 				<form class="formAviso">
 					<div>
-						<span>Tipo de aviso</span>
-						<select name="ar-type">
-							<option value="img">Publicar Imagen</option>
-							<option value="doc">Publicar Documento PDF</option>
-							<option value="link">Enlace a otra página</option>
-						</select>
+						<span>Email del usuario</span>
+						<input type="text" name="email">
 					</div>
 					<div>
-						<span>Descripción del aviso</span>
-						<input type="text" name="av-texto" maxlength="45">
+						<span>Nombres del usuario</span>
+						<input type="text" name="nombres">
 					</div>
 					<div>
-						<span>Visible en página principal</span>
-						<input type="checkbox" name="av-emergente" checked>
+						<span>Apellidos del usuario</span>
+						<input type="text" name="apellidos">
 					</div>
 					<div>
-						<span>Mostrar al abrir la página</span>
-						<input type="checkbox" name="av-visible">
+						<span>Oficina o Departamento</span>
+						<input type="text" name="oficina">
 					</div>
 					<div>
-						<span>Disponible al público</span>
-						<input type="checkbox" name="av-estado" checked>
+						<span>Usuario Activo</span>
+						<input type="checkbox" name="estado" checked>
 					</div>
 					<hr>
 					<div>
-						<span class="p1">Seleccione imágen</span>
-						<input type="file" name="archivo" accept="image/jpeg,image/png">
+						<span>Acceso a Avisos</span>
+						<input type="checkbox" name="p-aviso">
 					</div>
 					<div>
-						<span class="p2">Nombre de la imágen</span>
-						<input type="text" name="ar-nombre" maxlength="45">
+						<span>Acceso a Noticias</span>
+						<input type="checkbox" name="p-noticia">
+					</div>
+					<div>
+						<span>Acceso a Eventos</span>
+						<input type="checkbox" name="p-evento">
 					</div>
 					<div class="formPie">
 						<div class="info">Información de estado</div>
 						<div class="boton">
-							<input type="submit" class="boton boton-azul" value="Enviar">
+							<input type="submit" class="boton boton-azul" value="Crear Usuario">
 						</div>
 					</div>
 				</form>
 			</div>
 
 			<script type="text/javascript">
-				$('.formAviso select').change(function(){
-					var op = $('.formAviso select').val();
-					var p1 = $('.formAviso .p1');
-					var p2 = $('.formAviso .p2');
-					var fl = p1.siblings('input');
-					if(op == 'img'){
-						p1.text('Seleccione imágen');
-						p2.text('Nombre de la imágen');
-						fl.attr('accept', 'image/jpeg,image/png');
-					}else if(op == 'doc'){
-						p1.text('Seleccione documento');
-						p2.text('Nombre del documento');
-						fl.attr('accept', 'application/pdf');
-					}else if(op == 'link'){
-						p1.text('Imagen del enlace');
-						p2.text('Enlace de la página');
-						fl.attr('accept', 'image/jpeg,image/png');
-					}
-				});
-				$('.formAviso input[name=archivo]').change(function(event) {
-					var nom = $(this).val();
-					if( nom.lastIndexOf('\\')!=-1 ){
-						nom = nom.substring(nom.lastIndexOf('\\')+1);
-					}
-					if( nom.lastIndexOf('.')!=-1 ){
-						nom = nom.substring(0, nom.lastIndexOf('.'));
-					}
-					$('.formAviso input[name=ar-nombre]').val(nom);
-				});
-
 				$('.formAviso').submit(function(event) {
 					event.preventDefault();
 
 					var form = $(this);
 					var info = form.find('.info');
+					
+					var data = {
+						'accion' : 'nuevoUsuario',
+						'email' : form.find('input[name=email]').val().trim(),
+						'nombres' : form.find('input[name=nombres]').val().trim(),
+						'apellidos' : form.find('input[name=apellidos]').val().trim(),
+						'oficina' : form.find('input[name=oficina]').val().trim(),
+						'estado' : form.find('input[name=estado]').is(':checked'),
+						'p-aviso' : form.find('input[name=p-aviso]').is(':checked'),
+						'p-noticia' : form.find('input[name=p-noticia]').is(':checked'),
+						'p-evento' : form.find('input[name=p-evento]').is(':checked'),
+					};
 
-					if( form.find('input[name=av-texto]').val().length<1 || 
-						form.find('input[name=ar-nombre]').val().length<1 || 
-						form.find('input[name=archivo]').val().length<1 ){
+					if( data.email.length <1 || data.nombres.length<1 ||
+						data.apellidos.length<1 || data.oficina.length<1 ){
 
-						info.text('Llene los campos y/o seleccine un archivo');
+						info.text('Llene los campos');
 						return false;
 					}
 
 					form.find('input[type=submit]').attr('disabled','disabled');
-
-					var data = new FormData(form[0]);
-					data.append('accion','nuevoAviso');
-
-					console.log(data);
+					
 					$.ajax({
-						url: "<?= config::getPath(false, '/backend/controllers/ctrlAviso.php') ?>",
+						url: "<?= config::getPath(false, '/backend/controllers/ctrlUsuario.php') ?>",
 						type: 'post',
 						dataType: 'json',
-						data: data,
-						cache: false,
-			            contentType: false,
-				        processData: false
+						data: data
 					})
 					.done(function(rpta) {
-						info.text(rpta.mensaje);
+						info.html(rpta.mensaje);
 						if(rpta.detalle=='redirect'){
 							window.setTimeout(function(){
 								window.location = rpta.data;
 							}, 600);
 						}
 						if(!rpta.estado){
+							console.log(rpta);
 							form.find('input[type=submit]').removeAttr('disabled');
 						}
 					})
