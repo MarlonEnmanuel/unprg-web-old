@@ -133,10 +133,17 @@
 			var base = this, item, cont;
 			if(aviso.img){
 				aviso.src = aviso.img;
-				aviso.bg = $('<img/>').attr({
-					'class': 'documento img',
-					'alt'  : aviso.nombre
-				});
+
+				aviso.bg = $('<div/>').attr('class','img').append(
+								$('<div/>').addClass('imgTable').append(
+									$('<div/>').addClass('imgCell').append(
+										$('<img/>').attr({
+											'class': 'documento',
+											'alt'  : aviso.nombre
+										})
+									)
+								)
+							);
 			}else if(aviso.doc){
 				aviso.src = aviso.doc;
 				aviso.bg = $('<embed/>').attr({
