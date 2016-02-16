@@ -34,6 +34,7 @@ class Aviso extends abstractModel{
         	$this->idAviso,
         	$this->fchReg,
         	$this->texto,
+        	$this->destacado,
         	$this->emergente,
         	$this->visible,
         	$this->estado,
@@ -65,6 +66,7 @@ class Aviso extends abstractModel{
 			$_id,
 			$_fchReg,
 			$_texto,
+			$_destacado,
 			$_emergente,
 			$_visible,
 			$_estado,
@@ -78,6 +80,7 @@ class Aviso extends abstractModel{
 			$avi->id 	    = $_id;
 			$avi->fchReg 	= DateTime::createFromFormat(config::$date_sql, $_fchReg);
 			$avi->texto 	= $_texto;
+			$avi->destacado = $_destacado;
 			$avi->emergente = $_emergente;
 			$avi->visible 	= $_visible;
 			$avi->estado 	= $_estado;
@@ -100,6 +103,7 @@ class Aviso extends abstractModel{
 			$_id,
 			$_fchReg,
 			$_texto,
+			$_destacado,
 			$_emergente,
 			$_visible,
 			$_estado,
@@ -113,6 +117,7 @@ class Aviso extends abstractModel{
 			$avi->id 	    = $_id;
 			$avi->fchReg 	= DateTime::createFromFormat(config::$date_sql, $_fchReg);
 			$avi->texto 	= $_texto;
+			$avi->destacado = $_destacado;
 			$avi->emergente = $_emergente;
 			$avi->visible 	= $_visible;
 			$avi->estado 	= $_estado;

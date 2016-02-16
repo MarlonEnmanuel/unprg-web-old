@@ -182,6 +182,7 @@
 			aviso.load = false;
 			base.items[aviso.id] = aviso;
 			item = $("<div/>").addClass('aviso').attr('data-id',aviso.id);
+			if(aviso.destacado) item.addClass('destacado');
 			item.append($("<p/>").addClass('aviso__texto').text(aviso.texto));
 			item.append($("<p/>").addClass('aviso__fecha').text('@'+aviso.fecha));
 			item = $("<div/>").addClass('aviso-wrap').attr('data-id',aviso.id).append(item);

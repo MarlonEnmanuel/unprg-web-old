@@ -6,20 +6,22 @@
 			"img" 		: "/16/frontend/avisos/aviso5.jpg",
 			"emergente" : true,
 			"nombre"	: "UNPRG Invitacion",
-			"texto" 	: "CEREMONIA DE ASUNCIÓN DEL RECTOR DE LA UNPRG (Periodo 2016-2020)"
+			"texto" 	: "CEREMONIA DE ASUNCIÓN DEL RECTOR DE LA UNPRG (Periodo 2016-2020)",
+			"destacado" : true
 		},
 		{
 			"id" 		: "4",
 			"fecha" 	: "08/02/2016",
-			"img" 		: "/16/frontend/avisos/aviso4.jpg",
+			"img" 		: "/16/frontend/avisos/a87ff679a2f3e71d9181a67b7542122c.jpg",
 			"emergente" : false,
 			"link"		: "16/documentos/",
-			"texto" 	: "El Vicerrectorado de Investigación, en su proceso de implementación, pone a su disposición los siguientes documentos"
+			"texto" 	: "El Vicerrectorado de Investigación, en su proceso de implementación, pone a su disposición los siguientes documentos",
+			"destacado" : false
 		},
 		{
 			"id" 		: "3",
 			"fecha" 	: "07/02/2016",
-			"img" 		: "/16/frontend/img/enlaces/centropre.jpg",
+			"img" 		: "/16/frontend/avisos/eccbc87e4b5ce2fe28308fd9f2a7baf3.jpg",
 			"emergente" : false,
 			"link"		: "http://unprg.edu.pe/resexm/index.html",
 			"texto" 	: "Resultados del Primer Parcial del Centro Pre UNPRG Ciclo 2016-I"	
@@ -27,7 +29,7 @@
 		{
 			"id" 		: "2",
 			"fecha" 	: "28/01/2016",
-			"doc" 		: "/16/frontend/avisos/aviso2.pdf",
+			"doc" 		: "/16/frontend/avisos/c81e728d9d4c2f636f067f89cc14862c.pdf",
 			"emergente" : false,
 			"nombre"	: "Acta 001-2016-VRINV",
 			"texto" 	: "Acta N° 001-2016-VRINV Reunión de Trabajo del Vicerrectorado de Investigación"
@@ -35,7 +37,7 @@
 		{
 			"id" 		: "1",
 			"fecha" 	: "26/01/2016",
-			"img" 		: "/16/frontend/avisos/aviso1.jpg",
+			"img" 		: "/16/frontend/avisos/c4ca4238a0b923820dcc509a6f75849b.jpg",
 			"emergente" : false,
 			"nombre"	: "Comunicado",
 			"texto" 	: "La Oficina General de Recursos Humanos se dirige al personal de trabajadores de la UNPRG para expresar disculpas por el..."

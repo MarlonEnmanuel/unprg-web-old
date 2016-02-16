@@ -37,6 +37,7 @@ class ctrlAviso extends abstractController {
             $arrayAviso = array(
                 'id'        => $aviso->id,
                 'fecha'     => $aviso->fchReg->format(config::$date_aviso),
+                'destacado' => $aviso->destacado,
                 'emergente' => $aviso->emergente,
                 'texto'     => $aviso->texto
             );

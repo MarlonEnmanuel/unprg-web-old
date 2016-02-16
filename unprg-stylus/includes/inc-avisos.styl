@@ -62,11 +62,11 @@
 			height: 70px
 			padding: 6px 0px
 			transition: all 200ms
+			color: white
 			&:hover
 				background-color: ccAzul+4%
 				
 			&__texto
-				color: white
 				font-size: 13.6px
 				line-height: 20px
 				height: 40px
@@ -83,6 +83,12 @@
 		.aviso-hide
 			height: 0px
 			opacity: 0
+			
+		.destacado
+			animation: parpadear 1800ms infinite
+			&:hover
+				animation: none
+				color: ccAmarillo
 			
 	
 	.avisos-bg
@@ -192,3 +198,15 @@
 		transform: rotate(0deg);
 	to
 		transform: rotate(360deg);
+		
+@keyframes parpadear
+	0%
+		color: white
+	35%
+		color: white
+	50%
+		color: ccAmarillo
+	65%
+		color: white
+	100%
+		color: white
