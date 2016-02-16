@@ -45,10 +45,10 @@
 			<div class="admin-col admin-cuerpo">
 				<div class="encabezado">Nuevo aviso</div>
 
-				<form class="formAviso">
+				<form class="formAviso" enctype="multipart/form-data">
 					<div>
 						<span>Tipo de aviso</span>
-						<select name="ar-type">
+						<select name="tipo">
 							<option value="img">Publicar Imagen</option>
 							<option value="doc">Publicar Documento PDF</option>
 							<option value="link">Enlace a otra página</option>
@@ -56,28 +56,29 @@
 					</div>
 					<div>
 						<span>Descripción del aviso</span>
-						<input type="text" name="av-texto" maxlength="45">
+						<input type="text" name="descripcion" maxlength="45">
 					</div>
 					<div>
 						<span>Visible en página principal</span>
-						<input type="checkbox" name="av-emergente" checked>
+						<input type="checkbox" name="emergente" checked>
 					</div>
 					<div>
 						<span>Mostrar al abrir la página</span>
-						<input type="checkbox" name="av-visible">
+						<input type="checkbox" name="visible">
 					</div>
 					<div>
 						<span>Disponible al público</span>
-						<input type="checkbox" name="av-estado" checked>
+						<input type="checkbox" name="estado" checked>
 					</div>
 					<hr>
 					<div>
 						<span class="p1">Seleccione imágen</span>
+						<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
 						<input type="file" name="archivo" accept="image/jpeg,image/png">
 					</div>
 					<div>
 						<span class="p2">Nombre de la imágen</span>
-						<input type="text" name="ar-nombre" maxlength="45">
+						<input type="text" name="nombre" maxlength="45">
 					</div>
 					<div class="formPie">
 						<div class="info">Información de estado</div>
@@ -125,8 +126,8 @@
 					var form = $(this);
 					var info = form.find('.info');
 
-					if( form.find('input[name=av-texto]').val().length<1 || 
-						form.find('input[name=ar-nombre]').val().length<1 || 
+					if( form.find('input[name=descripcion]').val().length<1 || 
+						form.find('input[name=nombre]').val().length<1 || 
 						form.find('input[name=archivo]').val().length<1 ){
 
 						info.text('Llene los campos y/o seleccine un archivo');
@@ -156,6 +157,7 @@
 							}, 600);
 						}
 						if(!rpta.estado){
+							console.log(rpta);
 							form.find('input[type=submit]').removeAttr('disabled');
 						}
 					})

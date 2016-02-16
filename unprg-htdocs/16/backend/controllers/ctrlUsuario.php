@@ -25,10 +25,10 @@ class ctrlUsuario extends abstractController {
     }
 
     protected function login(){
-        $inputs = array();
-        $inputs['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $inputs['pass']  = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
-        $this->checkInputs($inputs);
+        $inputs = $this->getFilterInputs('post', array(
+            'email' => 'email',
+            'pass' => 'string'
+        ));
 
         $mysqli = config::getMysqli();
         $user = new Usuario($mysqli);
@@ -54,18 +54,16 @@ class ctrlUsuario extends abstractController {
     protected function nuevoUsuario(){
         $this->checkAccess('admin');
 
-        $ipts = array(
-            'email' => filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
-            'nombres' => filter_input(INPUT_POST, 'nombres', FILTER_SANITIZE_STRING),
-            'apellidos' => filter_input(INPUT_POST, 'apellidos', FILTER_SANITIZE_STRING),
-            'oficina' => filter_input(INPUT_POST, 'oficina', FILTER_SANITIZE_STRING),
-            'estado' => filter_input(INPUT_POST, 'estado', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            'p-aviso' => filter_input(INPUT_POST, 'p-aviso', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            'p-noticia' => filter_input(INPUT_POST, 'p-noticia', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            'p-evento' => filter_input(INPUT_POST, 'p-evento', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
-        );
-
-        $this->checkInputs($ipts, ['estado','p-aviso','p-noticia','p-evento']);
+        $ipts = $this->getFilterInputs('post', array(
+            'email' => 'email',
+            'nombres' => ['string', 4, 45],
+            'apellidos' => ['string', 4, 45],
+            'oficina' => ['string', 4, 45],
+            'estado' => 'boolean',
+            'p-aviso' => 'boolean',
+            'p-noticia' => 'boolean',
+            'p-evento' => 'boolean'
+        ));
 
         $ipts['permisos'] = [];
         if($ipts['p-aviso']) array_push($ipts['permisos'], 'aviso');

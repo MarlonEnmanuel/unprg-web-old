@@ -79,38 +79,172 @@ abstract class abstractController {
 	}
 
 	/**
-	* Comprueba los datos recibidos por get o post
+	* Obtiene inputs GET o POST, filtra valida y responde
 	*
-	* Comprueba que los dato se hayan filtrado correctamente
-	* verificando si es null o false, en tal caso responde con una alerta
-	* al cliente
+	* Obtiene los datos por el metodo inficado GET o POST, luego filtra cada datos de acuerdo al tipo de filtro indicado, valida los datos recibidos de acuerdo al filtro, y finalmente responde el usuario si ocurre algún error
 	*
-	* @param $inputs Array con los datos
-	* @return boolean Devuelve true si todos los datos son correctos
+	* @param $method string Metodo de entrada get o post
+	* @param $inputData array Array asociativo, debe tener como clave el nombre del input, y como llave el tipo de filtro aplicado. Los tipos de filtro pueden ser:
+	* "string,maxLength,trim" escapa una cadena, se puede indicar un tamaño máximo (opcional), y si debe recortar o invalidar si no cumple el maxLength.
+	* "int,min,max" valida un número, opcionalmente se puede indicar un máximo y un mínimo, si min o max es null entonces no se toma en cuenta el limite.
+	* "email" valida un correo electrónio.
+	* "url" valida una URL
+	* "bool" valida un booleano.
+	*
+	* @return array devuele un array con llave input y valor el valor del input, o false en caso de error
 	*/
-	public final function checkInputs($inputs, $booleans=[]){
-		foreach ($inputs as $key => $value) {
-			if( in_array($key, $booleans) ){
-				if( is_null($value) ) {
-					if($this->isAjax){
-						$this->responder(false, 'Error al recibir datos');
-					}else{
-						return false;
-					}
-					break;
+	public final function getFilterInputs($method, $inputData){
+		$method = strtolower($method);
+		if($method==='post'){
+			$method = INPUT_POST;
+		}elseif($method==='get') {
+			$method = INPUT_GET;
+		}else{
+			return null;
+		}
+
+		$ip = array();
+		foreach ($inputData as $name => $filter) {
+			if( !is_array($filter) && !is_string($filter) ) return null;
+
+			if(is_string($filter)) $filter = explode(',', $filter);
+			$val; $type = strtolower(trim($filter[0]));
+
+			if($type==='string'){
+				if( isset($filter[1]) ){
+					if(!is_int($filter[1])) return null;
+				}else{
+					$filter[1] = '-';
 				}
+				if( isset($filter[2]) ){
+					if(!is_int($filter[2])) return null;
+				}else{
+					$filter[2] = '-';
+				}
+				if( isset($filter[3]) ){
+					if( $filter[3]!==true ) $filter[3] = false;
+				}else{
+					$filter[3] = false;
+				}
+				$val = filter_input($method, $name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+				$msj = 'Texto inválido: '.$name.'<br>Min: '.$filter[1].', max: '.$filter[2].' caracteres';
+				if($this->checkInputValue($val, $msj, false)===false) return false;
+
+				if( is_int($filter[1]) && strlen($val)<$filter[1]){
+					if($this->isAjax) $this->responder(false, $msj);
+					return false;
+				}
+				if( is_int($filter[2]) && strlen($val)>$filter[2] && $filter[3]===false ){
+					if($this->isAjax) $this->responder(false, $msj);
+					return false;
+				}
+				if( is_int($filter[2]) && strlen($val)>$filter[2] && $filter[3]===true ){
+					$val = substr($val, 0, $filter[2]);
+				}
+			}elseif($type==='int'){
+				$ops = array('options'=>array());
+				if( isset($filter[1]) ){
+					if( is_int($filter[1]) ){
+						$ops['options']['min_range'] = $filter[1];
+					}else{
+						return null;
+					}
+				}else{
+					$filter[1] = '-';
+				}
+				if( isset($filter[2]) ){
+					if( is_int($filter[2]) ){
+						$ops['options']['max_range'] = $filter[2];
+					}else{
+						return null;
+					}
+				}else{
+					$filter[2] = '-';
+				}
+				$val = filter_input($method, $name, FILTER_VALIDATE_INT, $ops);
+				$msj = 'Número inválido: '.$name.'<br>Min: '.$filter[1].', Max: '.$filter[2];
+				if($this->checkInputValue($val, $msj, false)===false) return false;
+			}elseif($type==='email'){
+				$val = filter_input($method, $name, FILTER_VALIDATE_EMAIL);
+				$msj = 'Email inválido';
+				if($this->checkInputValue($val, $msj, false)===false) return false;
+			}elseif($type==='url'){
+				$val = filter_input($method, $name, FILTER_VALIDATE_URL);
+				$msj = 'URL inválida';
+				if($this->checkInputValue($val, $msj, false)===false) return false;
+			}elseif($type==='boolean'){
+				$val = filter_input($method, $name, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+				$msj = 'Falta checkbox: '.$name;
+				if($this->checkInputValue($val, $msj, true)===false) return false;
 			}else{
-				if( is_null($value) || $value===false) {
-					if($this->isAjax){
-						$this->responder(false, 'Error al recibir datos');
-					}else{
-						return false;
-					}
-					break;
-				}
+				return false;
 			}
+			$ip[$name] = $val;
+		}
+		return $ip;
+	}
+
+	/**
+	* Verifica el valor de un input después del filtrado
+	*
+	* Verifica que el valor no sea null, y que no sea false si no es booleano, alerta al usuario si es ajax o retorna false, retorna true si el valor es válido.
+	* 
+	* @param $value mixin Valor a comprobar
+	* @param $msj string Mensaje en caso de invalidez
+	* @param isBoolean bool Indicar si $value es un booleano
+	* @return bool True si es válido, o false en caso contrario.
+	*/
+	private function checkInputValue($value, $msj, $isBoolean=false){
+		if( is_null($value) ){
+			if($this->isAjax) $this->responder(false, $msj);
+			return false;
+		}
+		if(!$isBoolean && $value===false){
+			if($this->isAjax) $this->responder(false, $msj);
+			return false;
 		}
 		return true;
+	}
+
+	public function getFileUpload($nameFile, $types, $maxSize=2000000){
+		$file = array(
+			'name' => $_FILES[$nameFile]['name'],
+		    'type' => $_FILES[$nameFile]['type'],
+		    'size' => $_FILES[$nameFile]['size'],
+		    'temp' => $_FILES[$nameFile]['tmp_name'],
+		    'errno' => $_FILES[$nameFile]['error']
+		);
+		if( $file['errno']!==0 ){
+			if($file['errno']===1||$file['errno']===2){
+				$file['error'] = 'Archivo muy grande<br>Máximo'.($maxSize/1000000).'MB';
+			}elseif ($file['errno']===3) {
+				$file['error'] = 'El archivo se recibió imcompleto';
+			}elseif ($file['errno']===4) {
+				$file['error'] = 'No se recibió el archivo';
+			}elseif ($file['errno']===7) {
+				$file['error'] = 'Error de escritura del archivo';
+			}else {
+				$file['error'] = 'Error desconocido al subir archivo';
+			}
+			if($this->isAjax) $this->responder(false, $file['error']);
+			return $file;
+		}
+		if($file['size']<=0){
+			$file['error'] = 'No se envió el archivo';
+			if($this->isAjax) $this->responder(false, $file['error']);
+			return $file;
+		}
+		if($file['size']>$maxSize){
+			$file['error'] = 'Archivo muy grande<br>Máximo'.($maxSize/1000000).'MB';
+			if($this->isAjax) $this->responder(false, $file['error']);
+			return $file;
+		}
+		if(!in_array($fie['type'], $types)){
+			$file['error'] = 'Formato inválido del archivo<br>Se acepta: '.implode(', ', $types);
+			if($this->isAjax) $this->responder(false, $file['error']);
+			return $file;
+		}
+		return $file;
 	}
 
 	/**

@@ -11,8 +11,8 @@ class ctrlAviso extends abstractController {
         if($accion == 'getVisibles'){   //acción del controlador
             $this->getVisibles();
 
-        }elseif($accion == ''){         //acción del controlador
-            
+        }elseif($accion == 'nuevoAviso'){         //acción del controlador
+            $this->nuevoAviso();
 
         }elseif($accion == ''){         //acción del controlador
 
@@ -54,6 +54,34 @@ class ctrlAviso extends abstractController {
         }
         $avisos = array('avisos' => $avisos);
         echo json_encode($avisos);
+    }
+
+    protected function nuevoAviso(){
+        $this->checkAccess('aviso');
+
+        $ops = array(
+            'tipo' => 'string',
+            'descripcion' => ['string', 12, null],
+            'emergente' => 'boolean',
+            'visible' => 'boolean',
+            'estado' => 'boolean',
+            'nombre' => ['string',5,45]
+        );
+        $type = filter_input(INPUT_POST, 'tipo');
+        if($type==='link'){
+            $ops['nombre'] = 'url';
+        }else{
+            if( $type!=='img' && $type!=='doc' ) $this->responder(false, 'Tipo de aviso inválido');
+        }
+
+        $ipts = $this->getFilterInputs('post', $ops);
+        $file;
+        if($type==='doc'){
+            $file = $this->getFileUpload('archivo', ['application/pdf']);
+        }else{
+            $file = $this->getFileUpload('archivo', ['image/jpeg','image/png']);
+        }
+        
     }
 
 }

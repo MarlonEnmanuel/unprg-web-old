@@ -83,11 +83,15 @@ class Archivo extends abstractModel{
 
         $sql = "UPDATE archivo SET 
                     nombre=?, 
+                    type=?, 
+                    rutaArch=? 
                 WHERE idArchivo=?";
         $stmt = $this->mysqli->stmt_init();
         $stmt->prepare($sql);
-        $stmt->bind_param('si',
+        $stmt->bind_param('sssi',
             $this->nombre,
+            $this->type,
+            $this->rutaArch,
             $this->id
             );
         if($stmt->execute()){
