@@ -11,25 +11,39 @@
 
 class config {
 
-	public static $isDeveloping = true;   					// indica si es producción o desarrollo
+	public static $isDeveloping = true; // indica si el codigo actual está en desarrollo o producción
 
+
+	/* Datos del dominio del proyecto
+	*/
 	public static $path_dom = 'http://www.unprg.edu.pe/';	// dominio del proyecto
 	public static $path_dev = 'http://unprg.local/';     	// dominio para desarrollo
 	public static $path_int = '16';       					// carpeta interna del proyecto
 
+
+	/* Datos de conección a la BD
+	*/
 	public static $db_host = "localhost";           		//Dirección de la BD
 	public static $db_user = "root";            			//Usuario de la BD
 	public static $db_pass = "";          					//Password de la BD
 	public static $db_name = "unprg-web";        			//Nombre de la BD	
 	public static $db_port = "3306";         				//Puerto de la BD
 
-	public static $date_sql = "Y-m-d H:i:s";				//Formato de fecha de la BD
-	public static $date_aviso = "d/m/Y";					//Formato de fecha de la BD
+
+	/* Formatos de fecha usados en el proyecto
+	*/
+	public static $date_sql = "Y-m-d H:i:s";				//Formato de la BD
+	public static $date_aviso = "d/m/Y";					//Formato de los avisos
+
+
+	/* Rutas de alamacenamiento de archivos
+	*/
+	public static $path_avisos = "/frontend/avisos/";     	//Debe comenzar y terminar en '/'
 
 
 
 	/**
-	* Genera la ruta para un archivo
+	* Genera la ruta para un archivo, orientado al lado del cliente (navegadores)
 	*
 	* @param $withDom Incluir el dominio
 	* @param $path Ruta
@@ -48,30 +62,48 @@ class config {
 		}
 	}
 
+	/**
+	* Genera una ruta absoluta para importar clases o archivos, sin perder la referencia, al ser invocados desde scripts ubicados en diferentes carpetas y niveles del servidor.
+	*
+	* @return conección con la BD
+	*/
 	public static function getRequirePath($path){
 		if(substr($path, 0, 1) == '/') $path = substr($path, 1);
 		return $path = $_SERVER['DOCUMENT_ROOT'].'/'.config::$path_int.'/'.$path;
 	}
 
+	/**
+	* Genera la etiqueta html link configurada, dada una ruta. Usada solo para mayor orden en los documentos.
+	*
+	* @return string Etiqueta html link
+	*/
 	public static function getLink($path){
 		return '<link rel="stylesheet" type="text/css" href="'.$path.'">';
 	}
 
+	/**
+	* Genera la etiqueta html script configurada, dada una ruta. Usada solo para mayor orden en los documentos.
+	*
+	* @return string Etiqueta html script
+	*/
 	public static function getScript($path){
 		return '<script src="'.$path.'"></script>';
 	}
 
+
 	/**
-	* Genera la conección con la BD
+	* Abre una conección a la BD, y configura el charset a UTF-8
 	*
-	* @return conección con la BD
+	* @return mysqli Conección a la base de datos
 	*/
 	public static function getMysqli(){
-		return new mysqli ( config::$db_host,
-                            config::$db_user,
-                            config::$db_pass,
-                            config::$db_name,
-                            config::$db_port );
+		$mysqli =   new mysqli (config::$db_host,
+                            	config::$db_user,
+                            	config::$db_pass,
+                            	config::$db_name,
+                            	config::$db_port);
+		$mysqli->set_charset("utf8");
+		return $mysqli;
 	}
 
 }

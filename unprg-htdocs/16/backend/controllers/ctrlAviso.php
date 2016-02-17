@@ -58,16 +58,18 @@ class ctrlAviso extends abstractController {
     }
 
     protected function nuevoAviso(){
-        $this->checkAccess('aviso');
+        $Usuario = $this->checkAccess('aviso');
 
         $ops = array(
             'tipo' => 'string',
             'descripcion' => ['string', 12, null],
+            'destacado' => 'boolean',
             'emergente' => 'boolean',
             'visible' => 'boolean',
             'estado' => 'boolean',
             'nombre' => ['string',5,45]
         );
+
         $type = filter_input(INPUT_POST, 'tipo');
         if($type==='link'){
             $ops['nombre'] = 'url';
@@ -75,14 +77,62 @@ class ctrlAviso extends abstractController {
             if( $type!=='img' && $type!=='doc' ) $this->responder(false, 'Tipo de aviso inválido');
         }
 
-        $ipts = $this->getFilterInputs('post', $ops);
-        $file;
+        $file; $ipts = $this->getFilterInputs('post', $ops);
         if($type==='doc'){
             $file = $this->getFileUpload('archivo', ['application/pdf']);
         }else{
-            $file = $this->getFileUpload('archivo', ['image/jpeg','image/png']);
+            $file = $this->getFileUpload('archivo', ['image/jpeg','image/jpg','image/png']);
         }
-        
+
+        //Abrir coneccion en modo NO autoconfirmado
+        $mysqli = config::getMysqli();
+        $mysqli->autocommit(false);
+
+        //Creando el archivo
+        $archivo = new Archivo($mysqli);
+        $archivo->nombre    = $ipts['nombre'];
+        $archivo->type      = $type;
+        $archivo->rutaArch  = '';
+
+        if(!$archivo->set()) { //Insertar archivo
+            $this->responder(false, 'No se pudo insertar archivo', $archivo->md_detalle, null, $mysqli);
+        }
+
+        //Crear el nombre a partir del id del archivo
+        $nombre = md5($archivo->id).'.'.substr(strrchr($file['type'], "/"), 1);
+
+        //Actualizar ruta del archivo
+        $archivo->rutaArch = config::$path_avisos.$nombre;
+        if(!$archivo->edit()) {
+            $this->responder(false, 'No se pudo insertar archivo (ruta)', $archivo->md_detalle, null, $mysqli);
+        }
+
+        //Creando el aviso
+        $aviso = new Aviso($mysqli);
+        $aviso->texto       = $ipts['descripcion'];
+        $aviso->destacado   = $ipts['destacado'];
+        $aviso->emergente   = $ipts['emergente'];
+        $aviso->visible     = $ipts['visible'];
+        $aviso->estado      = $ipts['estado'];
+        $aviso->bloqueado   = false;
+        $aviso->idArchivo   = $archivo->id;
+        $aviso->idUsuario   = $Usuario['id'];
+
+        if(!$aviso->set()) { //Insertando el aviso
+            $this->responder(false, "No se pudo guardar el aviso", $aviso->md_detalle, null, $mysqli);
+        }
+
+        $rutaNueva = $_SERVER['DOCUMENT_ROOT'].config::getPath(false, config::$path_avisos.$nombre);
+        if(!move_uploaded_file($file['tmp'], $rutaNueva)){
+            $this->responder(false, "No se pudo guardar archivo", 'Error al almacear el archivo subido', null, $mysqli);
+        }
+
+        if(!$mysqli->commit()){
+            $this->responder(false, "No se pudo confirmar cambios", $mysqli->error, null, $mysqli);
+        }
+
+        $this->responder(true, "Aviso creado!", "redirect", '/');
+
     }
 
 }

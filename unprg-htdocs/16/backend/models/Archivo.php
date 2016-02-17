@@ -42,6 +42,7 @@ class Archivo extends abstractModel{
             $this->md_mensaje = "Error al obtener archivo";//mensaje del procedimiento
             $this->md_detalle = $stmt->error;       //detalle del procedimiento
         }
+        $stmt->close();
         return $this->md_estado;
     }
 
@@ -49,7 +50,7 @@ class Archivo extends abstractModel{
         if($this->mysqli->errno) return false;
 
         if(isset($this->id)){   //si tiene ID entonces ya existe en la BD
-            $this->md_mensaje = "El usuario ya tiene id";
+            $this->md_mensaje = "El archivo ya tiene id";
             return $this->md_estado = false;
         }
 
@@ -70,6 +71,7 @@ class Archivo extends abstractModel{
             $this->md_mensaje = "Error al insertar archivo";
             $this->md_detalle = $stmt->error;
         }
+        $stmt->close();
         return $this->md_estado;
     }
 
@@ -77,7 +79,7 @@ class Archivo extends abstractModel{
         if($this->mysqli->errno) return false;
 
         if(!isset($this->id)){  //debe tener id para poder editar
-            $this->md_mensaje = "Debe indicar un id para buscar";
+            $this->md_mensaje = "Debe indicar un id para editar";
             return $this->md_estado = false;
         }
 
@@ -102,11 +104,32 @@ class Archivo extends abstractModel{
             $this->md_mensaje = "Error al actualizar archivo";
             $this->md_detalle = $stmt->error;
         }
+        $stmt->close();
         return $this->md_estado;
     }
 
     public function delete(){
-        
+        if($this->mysqli->errno) return false;
+
+        if(!isset($this->id)){  //debe tener id para poder eliminar
+            $this->md_mensaje = "Debe indicar un id para eliminar";
+            return $this->md_estado = false;
+        }
+
+        $sql = "DELETE FROM archivo WHERE idArchivo=?";
+        $stmt = $this->mysqli->stmt_init();
+        $stmt->prepare($sql);
+        $stmt->bind_param('i', $this->id);
+        if($stmt->execute()){
+            $this->md_estado = true;
+            $this->md_mensaje = "Archivo eliminado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al eliminar archivo";
+            $this->md_detalle = $stmt->error;
+        }
+        $stmt->close();
+        return $this->md_estado;
     }
 
 }

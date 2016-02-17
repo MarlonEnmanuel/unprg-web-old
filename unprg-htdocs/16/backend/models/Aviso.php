@@ -7,6 +7,7 @@ class Aviso extends abstractModel{
 
 	public $fchReg;
 	public $texto;
+	public $destacado;
 	public $emergente;
 	public $visible;
 	public $estado;
@@ -51,6 +52,7 @@ class Aviso extends abstractModel{
             $this->md_mensaje = "Error al obtener Aviso";//mensaje del procedimiento
             $this->md_detalle = $stmt->error;       //detalle del procedimiento
         }
+        $stmt->close();
         return $this->md_estado;
 	}
 
@@ -89,6 +91,7 @@ class Aviso extends abstractModel{
 			$avi->idUsuario = $_idUsuario;
 			array_push($list, $avi);
 		}
+		$stmt->close();
         return $list;
 	}
 
@@ -126,19 +129,104 @@ class Aviso extends abstractModel{
 			$avi->idUsuario = $_idUsuario;
 			array_push($list, $avi);
 		}
+		$stmt->close();
         return $list;
 	}
 
     public function set(){
+		if($this->mysqli->errno) return false;
+		if(isset($this->id)){	//si tiene ID entonces ya existe en la BD
+    		$this->md_mensaje = "El usuario ya tiene id";
+    		return $this->md_estado = false;
+    	}
 
+    	$sql = "INSERT INTO aviso (texto, destacado, emergente, visible, estado, bloqueado, idArchivo, idUsuario) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $this->mysqli->stmt_init();
+    	$stmt->prepare($sql);
+    	$stmt->bind_param('siiiiiii',
+    		$this->texto,
+    		intval($this->destacado),
+    		intval($this->emergente),
+    		intval($this->visible),
+    		intval($this->estado),
+    		intval($this->bloqueado),
+    		$this->idArchivo,
+    		$this->idUsuario
+    		);
+    	if($stmt->execute()){
+            $this->id = $stmt->insert_id;
+            $this->md_estado = true;
+            $this->md_mensaje = "Aviso insertado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al insertar aviso";
+            $this->md_detalle = $stmt->error;
+        }
+        $stmt->close();
+        return $this->md_estado;
     }
 
     public function edit(){
+    	if($this->mysqli->errno) return false;
 
+    	if(!isset($this->id)){	//debe tener id para poder editar
+    		$this->md_mensaje = "Debe indicar un id para buscar";
+    		return $this->md_estado = false;
+    	}
+    	$sql = "UPDATE aviso SET 
+					texto=?, 
+					destacado=?, 
+					emergente=?, 
+					visible=?, 
+					estado=?, 
+					bloqueado=? 
+				WHERE idAviso=?";
+		$stmt = $this->mysqli->stmt_init();
+		$stmt->prepare($sql);
+		$stmt->bind_param('siiiiii',
+    		$this->texto,
+    		intval($this->destacado),
+    		intval($this->emergente),
+    		intval($this->visible),
+    		intval($this->estado),
+    		intval($this->bloqueado),
+    		$this->id
+    		);
+		if($stmt->execute()){
+            $this->md_estado = true;
+            $this->md_mensaje = "Aviso actualizado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al actualizar aviso";
+            $this->md_detalle = $stmt->error;
+        }
+        $stmt->close();
+        return $this->md_estado;
     }
 
     public function delete(){
+    	if($this->mysqli->errno) return false;
 
+        if(!isset($this->id)){  //debe tener id para poder eliminar
+            $this->md_mensaje = "Debe indicar un id para eliminar";
+            return $this->md_estado = false;
+        }
+        
+        $sql = "DELETE FROM aviso WHERE idAviso=?";
+        $stmt = $this->mysqli->stmt_init();
+        $stmt->prepare($sql);
+        $stmt->bind_param('i', $this->id);
+        if($stmt->execute()){
+            $this->md_estado = true;
+            $this->md_mensaje = "Aviso eliminado";
+        }else{
+            $this->md_estado = false;
+            $this->md_mensaje = "Error al eliminar aviso";
+            $this->md_detalle = $stmt->error;
+        }
+        $stmt->close();
+        return $this->md_estado;
     }
 
 }

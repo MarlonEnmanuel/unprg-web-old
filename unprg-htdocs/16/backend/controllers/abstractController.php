@@ -102,7 +102,6 @@ abstract class abstractController {
 		}else{
 			return null;
 		}
-
 		$ip = array();
 		foreach ($inputData as $name => $filter) {
 			if( !is_array($filter) && !is_string($filter) ) return null;
@@ -177,7 +176,7 @@ abstract class abstractController {
 				$msj = 'Falta checkbox: '.$name;
 				if($this->checkInputValue($val, $msj, true)===false) return false;
 			}else{
-				return false;
+				return null;
 			}
 			$ip[$name] = $val;
 		}
@@ -206,17 +205,25 @@ abstract class abstractController {
 		return true;
 	}
 
+	/**
+	* Obtiene y valida un archivo enviado por el cliente
+	* 
+	* @param $nameFile name del input usado en el formaulario para el archivo
+	* @param $types array con los tipos MIME admitidos
+	* @param $maxSize tamaño máximo admitivo, en bytes por defecto es 2MB
+	* @return array array asociativo con los datos del archivo
+	*/
 	public function getFileUpload($nameFile, $types, $maxSize=2000000){
 		$file = array(
 			'name' => $_FILES[$nameFile]['name'],
 		    'type' => $_FILES[$nameFile]['type'],
 		    'size' => $_FILES[$nameFile]['size'],
-		    'temp' => $_FILES[$nameFile]['tmp_name'],
+		    'tmp' => $_FILES[$nameFile]['tmp_name'],
 		    'errno' => $_FILES[$nameFile]['error']
 		);
 		if( $file['errno']!==0 ){
 			if($file['errno']===1||$file['errno']===2){
-				$file['error'] = 'Archivo muy grande<br>Máximo'.($maxSize/1000000).'MB';
+				$file['error'] = 'Archivo muy grande<br>Máximo '.($maxSize/1000000).'MB';
 			}elseif ($file['errno']===3) {
 				$file['error'] = 'El archivo se recibió imcompleto';
 			}elseif ($file['errno']===4) {
@@ -235,11 +242,11 @@ abstract class abstractController {
 			return $file;
 		}
 		if($file['size']>$maxSize){
-			$file['error'] = 'Archivo muy grande<br>Máximo'.($maxSize/1000000).'MB';
+			$file['error'] = 'Archivo muy grande<br>Máximo '.($maxSize/1000000).'MB';
 			if($this->isAjax) $this->responder(false, $file['error']);
 			return $file;
 		}
-		if(!in_array($fie['type'], $types)){
+		if(!in_array($file['type'], $types)){
 			$file['error'] = 'Formato inválido del archivo<br>Se acepta: '.implode(', ', $types);
 			if($this->isAjax) $this->responder(false, $file['error']);
 			return $file;
@@ -260,7 +267,10 @@ abstract class abstractController {
 	* @param $datos Datos enviados al usuario
 	* @return Boolean Devuelve falso si $isAjax está consifurado en false
 	*/
-	protected final function responder($estado, $mensaje, $detalle='', $datos=array()){
+	protected final function responder($estado, $mensaje, $detalle='', $datos=array(), &$mysqli=null){
+		if(isset($mysqli) && ($mysqli instanceof mysqli) && $estado===false){
+			$mysqli->rollback();
+		}
 		if($this->isAjax==false) return false;
 		$rpta = array(
 	            'estado' => $estado,

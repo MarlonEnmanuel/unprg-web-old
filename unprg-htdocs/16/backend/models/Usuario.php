@@ -59,6 +59,7 @@ class Usuario extends abstractModel{
             $this->md_mensaje = "Error al obtener usuario";//mensaje del procedimiento
             $this->md_detalle = $stmt->error;		//detalle del procedimiento
         }
+        $stmt->close();
         return $this->md_estado;					//devuelve el estado del procedimiento
 	}
 
@@ -91,6 +92,7 @@ class Usuario extends abstractModel{
             $this->md_mensaje = "Error al obtener usuario";
             $this->md_detalle = $stmt->error;
         }
+        $stmt->close();
         return $this->md_estado;
 	}
 
@@ -123,6 +125,7 @@ class Usuario extends abstractModel{
             $this->md_mensaje = "Error al insertar usuario";
             $this->md_detalle = $stmt->error;
         }
+        $stmt->close();
         return $this->md_estado;
     }
 
@@ -164,6 +167,7 @@ class Usuario extends abstractModel{
             $this->md_mensaje = "Error al actualizar usuario";
             $this->md_detalle = $stmt->error;
         }
+        $stmt->close();
         return $this->md_estado;
     }
 

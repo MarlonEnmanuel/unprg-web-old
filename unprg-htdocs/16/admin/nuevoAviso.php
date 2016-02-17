@@ -55,29 +55,47 @@
 						</select>
 					</div>
 					<div>
-						<span>Descripción del aviso</span>
+						<span title="Descripción breve del aviso, aparece en el panel de avisos.">
+							Descripción del aviso
+						</span>
 						<input type="text" name="descripcion" maxlength="45">
 					</div>
 					<div>
-						<span>Visible en página principal</span>
+						<span title="Hacer que el avise parpadee para llamar la atención.">
+							Aviso destacado
+						</span>
+						<input type="checkbox" name="destacado">
+					</div>
+					<div>
+						<span title="Mostrar el aviso en la página principal.">
+							Visible en página principal
+						</span>
 						<input type="checkbox" name="emergente" checked>
 					</div>
 					<div>
-						<span>Mostrar al abrir la página</span>
+						<span title="Hacer que el aviso, se despliegue al cargar la página (Nota: el aviso será emergente, hasta que algún usuario cree otro aviso emergente).">
+							Mostrar al abrir la página
+						</span>
 						<input type="checkbox" name="visible">
 					</div>
 					<div>
-						<span>Disponible al público</span>
+						<span title="Hacer que el aviso sea público, caso contrario solo Ud. y el administrador podrán verlo.">
+							Disponible al público
+						</span>
 						<input type="checkbox" name="estado" checked>
 					</div>
 					<hr>
 					<div>
-						<span class="p1">Seleccione imágen</span>
+						<span class="p1" title="Este archivo se mostrará al desplegar el aviso.">
+							Seleccione imágen
+						</span>
 						<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-						<input type="file" name="archivo" accept="image/jpeg,image/png">
+						<input type="file" name="archivo[]" accept="image/jpeg,image/png" multiple>
 					</div>
 					<div>
-						<span class="p2">Nombre de la imágen</span>
+						<span class="p2" title="Nombre que tendrá el archivo al ser descargado.">
+							Nombre de la imágen
+						</span>
 						<input type="text" name="nombre" maxlength="45">
 					</div>
 					<div class="formPie">
@@ -109,7 +127,7 @@
 						fl.attr('accept', 'image/jpeg,image/png');
 					}
 				});
-				$('.formAviso input[name=archivo]').change(function(event) {
+				$('.formAviso input[name^=archivo]').change(function(event) {
 					var nom = $(this).val();
 					if( nom.lastIndexOf('\\')!=-1 ){
 						nom = nom.substring(nom.lastIndexOf('\\')+1);
@@ -117,7 +135,8 @@
 					if( nom.lastIndexOf('.')!=-1 ){
 						nom = nom.substring(0, nom.lastIndexOf('.'));
 					}
-					$('.formAviso input[name=ar-nombre]').val(nom);
+					$('.formAviso input[name=nombre]').val(nom);
+					console.log($(this));
 				});
 
 				$('.formAviso').submit(function(event) {
