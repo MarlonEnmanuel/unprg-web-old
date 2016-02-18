@@ -66,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `unprg-web`.`aviso` (
   CONSTRAINT `fk_aviso_archivo`
     FOREIGN KEY (`idArchivo`)
     REFERENCES `unprg-web`.`archivo` (`idArchivo`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_aviso_usuario1`
     FOREIGN KEY (`idUsuario`)
     REFERENCES `unprg-web`.`usuario` (`idUsuario`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
