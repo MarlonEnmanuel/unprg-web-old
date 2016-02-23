@@ -58,7 +58,7 @@
 						<span title="Descripción breve del aviso, aparece en el panel de avisos.">
 							Descripción del aviso
 						</span>
-						<input type="text" name="descripcion" maxlength="45">
+						<input type="text" name="descripcion">
 					</div>
 					<div>
 						<span title="Hacer que el avise parpadee para llamar la atención.">
@@ -90,7 +90,7 @@
 							Seleccione imágen
 						</span>
 						<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-						<input type="file" name="archivo[]" accept="image/jpeg,image/png" multiple>
+						<input type="file" name="archivo" accept="image/jpeg,image/png">
 					</div>
 					<div>
 						<span class="p2" title="Nombre que tendrá el archivo al ser descargado.">
