@@ -4,6 +4,9 @@
 #ignorar archivos complementarios para el proyectos
 /unprg-archivos/
 
+#ignorar archivos de sincronizacion
+/unprg-htdocs/_gsdata_
+
 # sublimetext
 *.sublime-project
 *.sublime-workspace

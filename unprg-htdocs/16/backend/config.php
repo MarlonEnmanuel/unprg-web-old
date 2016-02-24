@@ -17,7 +17,6 @@ class config {
 	/* Datos del dominio del proyecto
 	*/
 	public static $path_dom = 'http://www.unprg.edu.pe/';	// dominio del proyecto
-	public static $path_dev = 'http://unprg.local/';     	// dominio para desarrollo
 	public static $path_int = '16';       					// carpeta interna del proyecto
 
 
@@ -55,8 +54,8 @@ class config {
 			$path = substr($path, 1);
 			$rel = true;
 		}
-		if($withDom){
-			return ((config::$isDeveloping)?config::$path_dev:config::$path_dom).config::$path_int.'/'.$path;
+		if($withDom===true && config::$isDeveloping===false){
+			return config::$path_dom.config::$path_int.'/'.$path;
 		}else{
 			return (($rel)?'/':'').config::$path_int.'/'.$path;
 		}

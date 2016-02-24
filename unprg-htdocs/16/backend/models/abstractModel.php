@@ -34,6 +34,7 @@ class abstractModel {
     public function __construct(&$mysqli, $id=null){
         $this->mysqli = $mysqli;
         if(isset($id)) $this->id = $id;
+        date_default_timezone_set("America/Lima");
     }
     
     /**

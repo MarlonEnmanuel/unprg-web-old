@@ -55,7 +55,7 @@ class abstractController {
 	* los usuarios tendrán acceso al controlador.
 	*
 	* @param $codAcceso Codigo de acceso del controlador, por defecto es null
-	* @return boolean Indica si el usuario tiene acceso
+	* @return mixed Devuelve el usuario en caso de éxito, caso contrario devuelve false o alerta al usuario
 	*/
 	public final function checkAccess($codAcceso=null){
 		if(!isset($_SESSION)) session_start();
