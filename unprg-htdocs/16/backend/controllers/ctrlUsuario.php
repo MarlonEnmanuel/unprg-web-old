@@ -56,16 +56,16 @@ class ctrlUsuario extends abstractController {
 
         $ipts = $this->getFilterInputs('post', array(
             'email' => 'email',
-            'nombres' => ['string', 4, 45],
-            'apellidos' => ['string', 4, 45],
-            'oficina' => ['string', 4, 45],
+            'nombres' => array('string', 4, 45),
+            'apellidos' => array('string', 4, 45),
+            'oficina' => array('string', 4, 45),
             'estado' => 'boolean',
             'p-aviso' => 'boolean',
             'p-noticia' => 'boolean',
             'p-evento' => 'boolean'
         ));
 
-        $ipts['permisos'] = [];
+        $ipts['permisos'] = array();
         if($ipts['p-aviso']) array_push($ipts['permisos'], 'aviso');
         if($ipts['p-noticia']) array_push($ipts['permisos'], 'noticia');
         if($ipts['p-evento']) array_push($ipts['permisos'], 'evento');

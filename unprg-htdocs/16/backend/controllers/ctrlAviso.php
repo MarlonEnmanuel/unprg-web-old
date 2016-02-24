@@ -7,7 +7,7 @@ require_once config::getRequirePath('backend/models/Archivo.php');
 class ctrlAviso extends abstractController {
 
     protected function init($accion){
-
+        
         if($accion == 'getVisibles'){   //acción del controlador
             $this->getVisibles();
 
@@ -30,7 +30,7 @@ class ctrlAviso extends abstractController {
         $aux = new Aviso($mysqli);
 
         $lista = $aux->searchVisible();
-        $avisos = [];
+        $avisos = array();
         foreach ($lista as $key => $aviso) {
             $archivo = new Archivo($mysqli,$aviso->idArchivo);
             $archivo->get();
@@ -62,12 +62,12 @@ class ctrlAviso extends abstractController {
 
         $ops = array(
             'tipo' => 'string',
-            'descripcion' => ['string', 12, null],
+            'descripcion' => array('string', 12, null),
             'destacado' => 'boolean',
             'emergente' => 'boolean',
             'visible' => 'boolean',
             'estado' => 'boolean',
-            'nombre' => ['string',5,45]
+            'nombre' => array('string',5,45)
         );
 
         $type = filter_input(INPUT_POST, 'tipo');
@@ -79,9 +79,9 @@ class ctrlAviso extends abstractController {
 
         $file; $ipts = $this->getFilterInputs('post', $ops);
         if($type==='doc'){
-            $file = $this->getFileUpload('archivo', ['application/pdf']);
+            $file = $this->getFileUpload('archivo', array('application/pdf'));
         }else{
-            $file = $this->getFileUpload('archivo', ['image/jpeg','image/jpg','image/png']);
+            $file = $this->getFileUpload('archivo', array('image/jpeg','image/jpg','image/png'));
         }
 
         //Abrir coneccion en modo NO autoconfirmado

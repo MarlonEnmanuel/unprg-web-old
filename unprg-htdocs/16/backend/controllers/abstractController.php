@@ -1,11 +1,15 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 
-abstract class abstractController {
+class abstractController {
 
 	public $isAjax = false;
 
 	public function __construct($isAjax=false){
+
+		if(!method_exists($this, 'init')){
+			throw new Exception("No se ha definido el método init()");
+		}
 		
 		if($isAjax===true || $isAjax===false){
 			$this->isAjax = $isAjax;
@@ -38,7 +42,7 @@ abstract class abstractController {
 	* Esta función debe ser implementada por cada controlador.
 	*
 	*/
-	abstract protected function init($accion);
+	//abstract protected function init($accion);
 
 	/**
 	* Controla el acceso del usuario

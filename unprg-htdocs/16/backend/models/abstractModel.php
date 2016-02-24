@@ -12,7 +12,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
  *
  * @author Enmanuel
  */
-abstract class abstractModel {
+class abstractModel {
     
     protected $mysqli;      //Mysqli cado para mysql
     
@@ -35,11 +35,6 @@ abstract class abstractModel {
         $this->mysqli = $mysqli;
         if(isset($id)) $this->id = $id;
     }
-    
-    abstract public function get();
-    abstract public function set();
-    abstract public function edit();
-    abstract public function delete();
     
     /**
     * Convierte un modelo en una cadena con formato json

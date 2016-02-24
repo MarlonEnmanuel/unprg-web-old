@@ -1,14 +1,14 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/16/backend/config.php';
 
-$menuItems = [
+$menuItems = array(
 	array(
 		'text' => 'Avisos',
-		'menu' => [
+		'menu' => array(
 			array('text' => 'Crear Aviso', 'perm' => 'aviso', 'link' => '/admin/nuevoAviso.php'),
 			array('text' => 'Mis Avisos', 'perm' => 'aviso', 'link' => '/admin/misAvisos.php'),
 			array('text' => 'Todos los Avisos', 'perm' => 'admin', 'link' => '/admin/todosAvisos.php'),
-		]
+		)
 	),
 	array(
 		'text' => 'Noticias'
@@ -18,15 +18,15 @@ $menuItems = [
 	),
 	array(
 		'text' => 'Usuario',
-		'menu' => [
+		'menu' => array(
 			array('text' => 'Crear Usuario', 'perm' => 'admin', 'link' => '/admin/nuevoUsuario.php'),
 			array('text' => 'Mi usuario', 'perm' => 'all', 'link' => '/admin/perfil.php'),
-		]
+		)
 	),
 	array(
 		'text' => 'Cerrar Sesión', 'link' => '/backend/controllers/ctrlUsuario.php?accion=logout'
 	),
-];
+);
 
 ?>
 
