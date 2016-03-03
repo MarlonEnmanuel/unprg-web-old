@@ -8,15 +8,15 @@
 				<a href="<?= config::getPath(false,'/documentos/unprg-directorio.pdf') ?>" target="_blank">
 					<i class="icon-phone"></i> Directorio Telefónico
 				</a>
-				<a href="<?= config::getPath(false,'/admin') ?>" target="_blank">
+				<a href="<?= config::getPath(false,'/gestion') ?>">
 					<i class="icon-cog"></i>
 				</a>
 			</div>
 			<div class="redes-sociales">
-				<a href=""><img src="<?= config::getPath(false,'/frontend/img/redes/youtube.png') ?>" alt="Youtube"></a>
-				<a href=""><img src="<?= config::getPath(false,'/frontend/img/redes/facebook.png') ?>" alt="Facebook"></a>
-				<a href=""><img src="<?= config::getPath(false,'/frontend/img/redes/gplus.png') ?>" alt="Google Plus"></a>
-				<a href=""><img src="<?= config::getPath(false,'/frontend/img/redes/twitter.png') ?>" alt="Twitter"></a>
+				<a href="#"><img src="<?= config::getPath(false,'/frontend/img/redes/youtube.png') ?>" alt="Youtube"></a>
+				<a href="#"><img src="<?= config::getPath(false,'/frontend/img/redes/facebook.png') ?>" alt="Facebook"></a>
+				<a href="#"><img src="<?= config::getPath(false,'/frontend/img/redes/gplus.png') ?>" alt="Google Plus"></a>
+				<a href="#"><img src="<?= config::getPath(false,'/frontend/img/redes/twitter.png') ?>" alt="Twitter"></a>
 			</div>
 		</div>
 		<div class="unprg-inicio">

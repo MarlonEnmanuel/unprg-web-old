@@ -17,6 +17,11 @@
 	&:active
 		border-bottom-width: 0.2em !important
 		padding-top: 0.3em
+	&:disabled
+		border-bottom-width: 0 !important
+		padding-top: 0.4em !important
+		padding-bottom: 0.4em !important
+		pointer: initial
 	
 .boton-amarillo
 	background-color: ccAmarillo
@@ -24,6 +29,9 @@
 	color: black
 	&:hover
 		background-color: ccAmarillo+12%
+	&:disabled
+		color: rgb(50,50,50)
+		background-color: ccAmarillo !important
 		
 .boton-azul
 	background-color: ccAzul
@@ -31,3 +39,6 @@
 	color: white
 	&:hover
 		background-color: ccAzul+12%
+	&:disabled
+		color: rgb(200,200,200)
+		background-color: ccAzul !important

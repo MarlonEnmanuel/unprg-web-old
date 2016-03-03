@@ -1,7 +1,7 @@
 <div class="panel-elem">
-	<p class="titulo">Incripciones al Examen de Admisión</p>
-	<a href="#">
-		<span class="icono icon-alarm" ></span>
+	<p class="titulo">Proceso de admisión 2016 - Inscripciones al Examen de Admisión</p>
+	<a href="http://admision.unprg.edu.pe/inscripcion_principal/">
+		<img class="iconImg" src="<?= config::getPath(false,'/frontend/img/enlaces/prospecto2016_logo.jpg')?>" alt="Sistema Académico">
 	</a>
 </div>
 

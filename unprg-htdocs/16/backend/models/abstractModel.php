@@ -32,9 +32,23 @@ class abstractModel {
     * @param $id Identificador del modelo (opcional)
     */
     public function __construct(&$mysqli, $id=null){
-        $this->mysqli = $mysqli;
+        $this->mysqli = &$mysqli;
         if(isset($id)) $this->id = $id;
-        date_default_timezone_set("America/Lima");
+    }
+
+    public final function checkMysqli(){
+        if($this->mysqli->connect_errno || $this->mysqli->errno){
+            $this->md_estado = false;
+            if($this->mysqli->connect_errno){
+                $this->md_mensaje = "Error de conección (modelo)";
+                if(config::$isDebugging===true) $this->md_detalle = $mysqli->connect_error;
+            }else{
+                $this->md_mensaje = "Error en la BD (modelo)";
+                if(config::$isDebugging===true) $this->md_detalle = $mysqli->error;
+            }
+            return false;
+        }
+        return true;
     }
     
     /**

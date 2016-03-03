@@ -8,7 +8,7 @@ class abstractController {
 	public function __construct($isAjax=false){
 
 		if(!method_exists($this, 'init')){
-			throw new Exception("No se ha definido el método init()");
+			throw new ErrorException("No se ha definido el método init()");
 		}
 		
 		if($isAjax===true || $isAjax===false){
@@ -32,6 +32,25 @@ class abstractController {
             //Se inicializar el controlador
             $this->init($accion);
 		}
+	}
+
+	/**
+	* Abre una conección y comprueba su estado
+	*
+	* Abre una conección y compreba el estado, en caso de error alerta al usuario y retorna false
+	*
+	* @return mysqli Conección a la BD
+	*/
+	public final function getMysqli(){
+		$mysqli = config::getMysqli();
+		if($mysqli->connect_errno){
+			if($this->isAjax){
+				$detalle = (config::$isDebugging) ? $mysqli->connect_error : '';
+				$this->responder(false, "Error de conección", $detalle);
+			}
+			return false;
+		}
+		return $mysqli;
 	}
 
 	/**
@@ -59,13 +78,12 @@ class abstractController {
 	*/
 	public final function checkAccess($codAcceso=null){
 		if(!isset($_SESSION)) session_start();
-
 		if(!isset($_SESSION['Usuario'])){
 			$mensaje = 'Debe iniciar sesión';
 			if($this->isAjax){
-				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin'.'?msj='.$mensaje));
+				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/gestion'.'?msj='.$mensaje));
 			}else{
-				header('Location: '.config::getPath(false ,'/admin').'?msj='.$mensaje);
+				header('Location: '.config::getPath(false ,'/gestion').'?msj='.$mensaje);
 				echo 'hola';
 				exit;
 			}
@@ -73,9 +91,9 @@ class abstractController {
 		if( $codAcceso!=null && !in_array($codAcceso , $_SESSION['Usuario']['permisos']) ){
 			$mensaje = 'No tiene permisos para esta acción';
 			if($this->isAjax){
-				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/admin/panel.php'.'?msj='.$mensaje));
+				$this->responder(false, $mensaje, 'redirect', config::getPath(false ,'/gestion/panel.php'.'?msj='.$mensaje));
 			}else{
-				header('Location: '.config::getPath(false ,'/admin/panel.php').'?msj='.$mensaje);
+				header('Location: '.config::getPath(false ,'/gestion/panel.php').'?msj='.$mensaje);
 				exit;
 			}
 		}

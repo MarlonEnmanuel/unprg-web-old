@@ -56,18 +56,18 @@
 		</script>
 </head>
 <body>
-	<?php require_once config::getRequirePath('includes/header.html'); ?>
-	<?php require_once config::getRequirePath('includes/nav.html'); ?>
+	<?php require_once config::getRequirePath('includes/header.php'); ?>
+	<?php require_once config::getRequirePath('includes/nav.php'); ?>
 	
 	<section class="unprg-portada">
 		<div class="wraper">
 			
 			<div class="portada-col unprg-slider">
-				<?php require_once config::getRequirePath('includes/slider.html'); ?>
+				<?php require_once config::getRequirePath('includes/slider.php'); ?>
 			</div>
 
 			<div class="portada-col unprg-avisos">
-				<?php require_once config::getRequirePath('includes/avisos.html'); ?>
+				<?php require_once config::getRequirePath('includes/avisos.php'); ?>
 			</div>
 
 			<div class="clean"></div>
@@ -274,7 +274,7 @@
 		</section>
 
 		<aside class="cuerpo-col unprg-panel">
-			<?php require_once config::getRequirePath('includes/panel.html'); ?>
+			<?php require_once config::getRequirePath('includes/panel.php'); ?>
 		</aside>
 
 		<div class="clean"></div>
@@ -287,6 +287,6 @@
 		</div>
 	</div>
 	
-	<?php require_once config::getRequirePath('includes/footer.html'); ?>
+	<?php require_once config::getRequirePath('includes/footer.php'); ?>
 </body>
 </html>

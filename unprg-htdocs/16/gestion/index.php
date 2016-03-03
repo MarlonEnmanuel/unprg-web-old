@@ -26,16 +26,17 @@
 
 	<!-- Importación de archivos propios -->
 		<?= config::getLink(config::getPath(false,'/frontend/css/general.css')) ?>
+		<?= config::getLink(config::getPath(false,'/frontend/css/admin/general.css')) ?>
 		<?= config::getLink(config::getPath(false,'/frontend/css/admin/login.css')) ?>
 
 </head>
 <body>
-	<?php require_once config::getRequirePath('includes/header.html'); ?>
-	<?php require_once config::getRequirePath('includes/nav.html'); ?>
+	<?php require_once config::getRequirePath('includes/header.php'); ?>
+	<?php require_once config::getRequirePath('includes/nav.php'); ?>
 	
 	<section>
 		<div class="wraper">
-			<h1 class="titulo">Sistema de Administración Web<br><b>UNPRG</b></h1>
+			<h1 class="titulo">Sistema de Gestión Web<br><b>UNPRG</b></h1>
 			<form>
 				<input type="email" name="email" value="" placeholder="Correo">
 				<input type="password" name="pass" value="" placeholder="Contraseña">
@@ -91,6 +92,6 @@
 		});
 	</script>
 
-	<?php require_once config::getRequirePath('includes/footer.html'); ?>
+	<?php require_once config::getRequirePath('includes/footer.php'); ?>
 </body>
 </html>

@@ -110,21 +110,28 @@
 			var base = this, 
 				time = 0;
 			$.getJSON(base.options.jsonPath)
-				.done(function(data){
-					base.status = true;
-					base.$container.find('.carga').remove();
-					$.each(data.avisos, function(index, el) {
-						base.addItem(el);
-					});
-					window.setTimeout(function(){
-						base.startSlide();
-					},base.options.timeChange+base.options.timeChangeDelay*2);
+				.done(function(response){
+					if(response.estado){
+						base.status = true;
+						base.$container.find('.carga').remove();
+						$.each(response.data, function(index, el) {
+							base.addItem(el);
+						});
+						window.setTimeout(function(){
+							base.startSlide();
+						},base.options.timeChange+base.options.timeChangeDelay*2);
+					}else{
+						base.status = false;
+						base.$container.find('.carga .icono').remove();
+						base.$container.find('.carga .texto').text(response.mensaje);
+						console.log(response);
+					}
 				})
-				.fail(function(data){
+				.fail(function(response){
 					base.status = false;
 					base.$container.find('.carga .icono').remove();
 					base.$container.find('.carga .texto').text('Error al cargar contenido');
-					console.log(data);
+					console.log(response);
 				});
 		},
 

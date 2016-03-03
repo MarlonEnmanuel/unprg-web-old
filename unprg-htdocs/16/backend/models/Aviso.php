@@ -20,7 +20,7 @@ class Aviso extends abstractModel{
 	}
 
 	public function get(){
-		if($this->mysqli->errno) return false;  //verificar error en el cado
+		if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(!isset($this->id)){                  //debe tener id para buscar
             $this->md_mensaje = "Debe indicar un id para buscar";
@@ -50,19 +50,18 @@ class Aviso extends abstractModel{
         }else{
             $this->md_estado = false;               //estado del procedimiento: fallido
             $this->md_mensaje = "Error al obtener Aviso";//mensaje del procedimiento
-            $this->md_detalle = $stmt->error;       //detalle del procedimiento
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
 	}
 
 	public function searchVisible(){
-		if($this->mysqli->errno) return false; //verificar error en el cado
+		if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 		$sql = "select * from aviso where visible=? order by fchReg desc";
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);
-		$vis=1;
-		$stmt->bind_param('i', $vis);
+		$stmt->bind_param('i', $vis=1);
 		$stmt->execute();
 		$stmt->bind_result(
 			$_id,
@@ -96,7 +95,7 @@ class Aviso extends abstractModel{
 	}
 
 	public function searchUsuario($idUsuario){
-		if($this->mysqli->errno) return false; //verificar error en el cado
+		if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 		$sql = "select * from aviso where idUsuario=? order by fchReg desc";
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);
@@ -134,7 +133,7 @@ class Aviso extends abstractModel{
 	}
 
     public function set(){
-		if($this->mysqli->errno) return false;
+		if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 		if(isset($this->id)){	//si tiene ID entonces ya existe en la BD
     		$this->md_mensaje = "El usuario ya tiene id";
     		return $this->md_estado = false;
@@ -161,14 +160,14 @@ class Aviso extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al insertar aviso";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
     }
 
     public function edit(){
-    	if($this->mysqli->errno) return false;
+    	if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
     	if(!isset($this->id)){	//debe tener id para poder editar
     		$this->md_mensaje = "Debe indicar un id para buscar";
@@ -199,14 +198,14 @@ class Aviso extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al actualizar aviso";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
     }
 
     public function delete(){
-    	if($this->mysqli->errno) return false;
+    	if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(!isset($this->id)){  //debe tener id para poder eliminar
             $this->md_mensaje = "Debe indicar un id para eliminar";
@@ -223,7 +222,7 @@ class Aviso extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al eliminar aviso";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;

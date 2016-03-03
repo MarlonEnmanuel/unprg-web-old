@@ -38,8 +38,8 @@
 	</script>
 </head>
 <body>
-	<?php require_once config::getRequirePath('includes/header.html'); ?>
-	<?php require_once config::getRequirePath('includes/nav.html'); ?>
+	<?php require_once config::getRequirePath('includes/header.php'); ?>
+	<?php require_once config::getRequirePath('includes/nav.php'); ?>
 	
 	<section>
 		<div class="wraper">
@@ -51,6 +51,6 @@
 		</div>
 	</section>
 
-	<?php require_once config::getRequirePath('includes/footer.html'); ?>
+	<?php require_once config::getRequirePath('includes/footer.php'); ?>
 </body>
 </html>

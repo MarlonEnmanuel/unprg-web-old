@@ -11,7 +11,8 @@
 
 class config {
 
-	public static $isDeveloping = true; // indica si el codigo actual está en desarrollo o producción
+	public static $isDeveloping = false; 	// indica si el codigo actual está en desarrollo o producción
+	public static $isDebugging = false; 	//mostrar detalles de errores
 
 
 	/* Datos del dominio del proyecto
@@ -24,7 +25,7 @@ class config {
 	*/
 	public static $db_host = "192.168.0.10";           		//Dirección de la BD
 	public static $db_user = "root";            			//Usuario de la BD
-	public static $db_pass = "root";          					//Password de la BD
+	public static $db_pass = "root";          				//Password de la BD
 	public static $db_name = "unprg-web";        			//Nombre de la BD	
 	public static $db_port = "3306";         				//Puerto de la BD
 
@@ -101,10 +102,23 @@ class config {
                             	config::$db_pass,
                             	config::$db_name,
                             	config::$db_port);
-		$mysqli->set_charset("utf8");
+		if(!$mysqli->connect_errno){
+			$mysqli->set_charset("utf8");
+		}
 		return $mysqli;
 	}
 
+	public static function configGlobal(){
+		if(config::$isDebugging === true){
+			error_reporting(E_ALL);
+		}else{
+			error_reporting(E_ERROR);
+		}
+		date_default_timezone_set("America/Lima");
+	}
+
 }
+
+config::configGlobal();
 
 ?>

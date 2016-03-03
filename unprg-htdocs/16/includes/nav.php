@@ -14,20 +14,20 @@
 			</li>
 			<li><p>Facultades</p>
 				<ul class="level-second">
-					<li><a href="http://www2.unprg.edu.pe/faceac" target="_blank">Fac. de CC. Encon. Admin. y Contables</a></li>
-					<li><a href="http://www2.unprg.edu.pe/facfym" target="_blank">Fac. de CC. Físicas y Matemáticas</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fchse"  target="_blank">Fac. de CC. Histórico Sociales y Edu.</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fag"    target="_blank">Fac. de Agronomía</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fccbb"  target="_blank">Fac. de CC. Biológicas</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fdcp"   target="_blank">Fac. de Derecho y CC. Políticas</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fe"     target="_blank">Fac. de Enfermería</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fia"    target="_blank">Fac. de Ing. Agrícola</a></li>
+					<li><a href="#" 		target="_blank">Fac. de CC. Encon. Admin. y Contables</a></li>
+					<li><a href="#" 		target="_blank">Fac. de CC. Físicas y Matemáticas</a></li>
+					<li><a href="#"  		target="_blank">Fac. de CC. Histórico Sociales y Edu.</a></li>
+					<li><a href="#"    		target="_blank">Fac. de Agronomía</a></li>
+					<li><a href="#"  		target="_blank">Fac. de CC. Biológicas</a></li>
+					<li><a href="#"   		target="_blank">Fac. de Derecho y CC. Políticas</a></li>
+					<li><a href="#"     	target="_blank">Fac. de Enfermería</a></li>
+					<li><a href="#"    		target="_blank">Fac. de Ing. Agrícola</a></li>
 					<li><a href="http://www2.unprg.edu.pe/ficsa"  target="_blank">Fac. de Ing. Civil, Sistemas y Arquitectura</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fime"   target="_blank">Fac. de Ing Mecánica y Eléctrica</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fiquia" target="_blank">Fac. de Ing Química e Industrias Aliment.</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fiz"    target="_blank">Fac. de Ing. Zootecnia</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fmh"    target="_blank">Fac. de Medicina Humana</a></li>
-					<li><a href="http://www2.unprg.edu.pe/fmv"    target="_blank">Fac. de Meicina Veterinaria</a></li>
+					<li><a href="#"   		target="_blank">Fac. de Ing Mecánica y Eléctrica</a></li>
+					<li><a href="#" 		target="_blank">Fac. de Ing Química e Industrias Aliment.</a></li>
+					<li><a href="#" 		target="_blank">Fac. de Ing. Zootecnia</a></li>
+					<li><a href="#"    		target="_blank">Fac. de Medicina Humana</a></li>
+					<li><a href="#"    		target="_blank">Fac. de Medicina Veterinaria</a></li>
 				</ul>
 			</li>
 			<li><a href="<?= config::getPath(true,'estatuto.php') ?>">Estatuto</a></li>

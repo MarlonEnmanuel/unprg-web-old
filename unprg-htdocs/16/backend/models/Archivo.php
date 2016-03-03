@@ -14,7 +14,7 @@ class Archivo extends abstractModel{
     }
 
     public function get(){
-        if($this->mysqli->errno) return false;  //verificar error en el cado
+        if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(!isset($this->id)){                  //debe tener id para buscar
             $this->md_mensaje = "Debe indicar un id para buscar";
@@ -40,14 +40,14 @@ class Archivo extends abstractModel{
         }else{
             $this->md_estado = false;               //estado del procedimiento: fallido
             $this->md_mensaje = "Error al obtener archivo";//mensaje del procedimiento
-            $this->md_detalle = $stmt->error;       //detalle del procedimiento
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
     }
 
     public function set(){
-        if($this->mysqli->errno) return false;
+        if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(isset($this->id)){   //si tiene ID entonces ya existe en la BD
             $this->md_mensaje = "El archivo ya tiene id";
@@ -69,14 +69,14 @@ class Archivo extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al insertar archivo";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
     }
 
     public function edit(){
-        if($this->mysqli->errno) return false;
+        if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(!isset($this->id)){  //debe tener id para poder editar
             $this->md_mensaje = "Debe indicar un id para editar";
@@ -102,14 +102,14 @@ class Archivo extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al actualizar archivo";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;
     }
 
     public function delete(){
-        if($this->mysqli->errno) return false;
+        if($this->checkMysqli()===false) return false; //verificar estado de mysqli
 
         if(!isset($this->id)){  //debe tener id para poder eliminar
             $this->md_mensaje = "Debe indicar un id para eliminar";
@@ -126,7 +126,7 @@ class Archivo extends abstractModel{
         }else{
             $this->md_estado = false;
             $this->md_mensaje = "Error al eliminar archivo";
-            $this->md_detalle = $stmt->error;
+            if(config::$isDebugging) $this->md_detalle = $stmt->error;      //detalle del procedimiento
         }
         $stmt->close();
         return $this->md_estado;

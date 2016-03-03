@@ -30,17 +30,20 @@ class ctrlUsuario extends abstractController {
             'pass' => 'string'
         ));
 
-        $mysqli = config::getMysqli();
+        $mysqli = $this->getMysqli();
+
         $user = new Usuario($mysqli);
         $user->getEmail($inputs['email']);
 
-        if($user->md_estado == false) $this->responder(false, "El usuario no existe");
+        if($user->md_estado == false) $this->responder(false, "Usuario incorrecto");
         if($user->password != $inputs['pass']) $this->responder(false, "Contraseña incorrecta");
+
+        if(!$user->estado) $this->responder(false, "Usuario bloqueado, contacte con el administrador");
 
         session_start();
         $user->permisos = explode(',', $user->permisos);
         $_SESSION['Usuario'] = $user->toArray();
-        $this->responder(true, 'Bienvenido', 'redirect', 'panel.php');
+        $this->responder(true, 'Bienvenido', 'redirect', config::getPath(false, '/gestion/panel.php'));
     }
 
     public function logout(){
@@ -74,7 +77,8 @@ class ctrlUsuario extends abstractController {
         }
         $ipts['permisos'] = implode(',', $ipts['permisos']);
 
-        $mysqli = config::getMysqli();
+        $mysqli = $this->getMysqli();
+
         $aux = new Usuario($mysqli);
         if( $aux->getEmail($ipts['email']) ){
             $this->responder(false, 'El email '.$ipts['email'].' ya está en uso');
@@ -103,6 +107,37 @@ class ctrlUsuario extends abstractController {
             $pass .= chr(rand(97,122));
         }
         return $pass;
+    }
+
+    protected function cambiarContra(){
+        $Usuario = $this->checkAccess();
+
+        $ipts = $this->getFilterInputs('post', array(
+            'pass' => array('string', 40, 40),
+            'nuevoPass' => array('string', 40, 40),
+            'nuevoPass2' => array('string', 40, 40),
+        ));
+
+        if($Usuario['password']!=$ipts['pass']){
+            $this->responder(false, 'Contraseña incorrecta');
+        }
+
+        if($ipts['nuevoPass']!=$ipts['nuevoPass']){
+            $this->responder(false, 'Las contraseñas no coinciden');
+        }
+
+        $mysqli = $this->getMysqli();
+
+        $user = new Usuario($mysqli, $Usuario['id']);
+        $user->get();
+        $user->password = $ipts['nuevoPass'];
+
+        if(!$user->edit()){
+            $this->responder(false, 'Error al guardar cambios', $user->md_detalle);
+        }
+
+        $_SESSION['Usuario'] = $user->toArray();
+        $this->responder(true, 'Cambios guardados');
     }
 
 }

@@ -26,11 +26,12 @@ class ctrlAviso extends abstractController {
     }
 
     protected function getVisibles() {
-        $mysqli = config::getMysqli();
+        $mysqli = $this->getMysqli();
+        
         $aux = new Aviso($mysqli);
-
         $lista = $aux->searchVisible();
         $avisos = array();
+
         foreach ($lista as $key => $aviso) {
             $archivo = new Archivo($mysqli,$aviso->idArchivo);
             $archivo->get();
@@ -53,8 +54,8 @@ class ctrlAviso extends abstractController {
             }
             $avisos[$key] = $arrayAviso;
         }
-        $avisos = array('avisos' => $avisos);
-        echo json_encode($avisos);
+
+        $this->responder(true, 'Avisos visible', '', $avisos);
     }
 
     protected function nuevoAviso(){
@@ -85,7 +86,8 @@ class ctrlAviso extends abstractController {
         }
 
         //Abrir coneccion en modo NO autoconfirmado
-        $mysqli = config::getMysqli();
+        $mysqli = $this->getMysqli();
+        
         $mysqli->autocommit(false);
 
         //Creando el archivo

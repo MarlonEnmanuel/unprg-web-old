@@ -5,9 +5,8 @@ $menuItems = array(
 	array(
 		'text' => 'Avisos',
 		'menu' => array(
-			array('text' => 'Crear Aviso', 'perm' => 'aviso', 'link' => '/admin/nuevoAviso.php'),
-			array('text' => 'Mis Avisos', 'perm' => 'aviso', 'link' => '/admin/misAvisos.php'),
-			array('text' => 'Todos los Avisos', 'perm' => 'admin', 'link' => '/admin/todosAvisos.php'),
+			array('text' => 'Mis Avisos', 'perm' => 'aviso', 'link' => '/gestion/avisos/'),
+			array('text' => 'Crear Aviso', 'perm' => 'aviso', 'link' => '/gestion/avisos/nuevo.php'),
 		)
 	),
 	array(
@@ -19,8 +18,8 @@ $menuItems = array(
 	array(
 		'text' => 'Usuario',
 		'menu' => array(
-			array('text' => 'Crear Usuario', 'perm' => 'admin', 'link' => '/admin/nuevoUsuario.php'),
-			array('text' => 'Mi usuario', 'perm' => 'all', 'link' => '/admin/perfil.php'),
+			array('text' => 'Crear Usuario', 'perm' => 'admin', 'link' => '/gestion/usuarios/nuevo.php'),
+			array('text' => 'Mi usuario', 'perm' => 'all', 'link' => '/gestion/perfil.php'),
 		)
 	),
 	array(
@@ -31,7 +30,7 @@ $menuItems = array(
 ?>
 
 <div class="titulo">
-	<div class="unprg">Administración Web</div>
+	<div class="unprg">Gestión Web</div>
 	<div class="usuario">Bienvenido, Administrador</div>
 </div>
 <ul>
