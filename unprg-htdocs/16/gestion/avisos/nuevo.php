@@ -135,8 +135,7 @@
 					if( nom.lastIndexOf('.')!=-1 ){
 						nom = nom.substring(0, nom.lastIndexOf('.'));
 					}
-					$('.formAviso input[name=nombre]').val(nom);
-					console.log($(this));
+					$('.formAviso input[name=nombre]').val(nom);					
 				});
 
 				$('.formAviso').submit(function(event) {

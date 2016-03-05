@@ -59,6 +59,7 @@ class ctrlAviso extends abstractController {
     }
 
     protected function nuevoAviso(){
+        set_time_limit(1);
         $Usuario = $this->checkAccess('aviso');
 
         $ops = array(
@@ -97,7 +98,7 @@ class ctrlAviso extends abstractController {
         $archivo->rutaArch  = '';
 
         if(!$archivo->set()) { //Insertar archivo
-            $this->responder(false, 'No se pudo insertar archivo', $archivo->md_detalle, null, $mysqli);
+            $this->responder(false, 'No se pudo insertar archivo', $archivo->md_detalle, $ipts, $mysqli);
         }
 
         //Crear el nombre a partir del id del archivo

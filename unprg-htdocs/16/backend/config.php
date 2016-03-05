@@ -12,7 +12,7 @@
 class config {
 
 	public static $isDeveloping = false; 	// indica si el codigo actual está en desarrollo o producción
-	public static $isDebugging = false; 	//mostrar detalles de errores
+	public static $isDebugging = true; 	//mostrar detalles de errores
 
 
 	/* Datos del dominio del proyecto
@@ -23,7 +23,7 @@ class config {
 
 	/* Datos de conección a la BD
 	*/
-	public static $db_host = "192.168.0.10";           		//Dirección de la BD
+	public static $db_host = "192.168.20.1";           		//Dirección de la BD
 	public static $db_user = "root";            			//Usuario de la BD
 	public static $db_pass = "root";          				//Password de la BD
 	public static $db_name = "unprg-web";        			//Nombre de la BD	
