@@ -55,6 +55,8 @@ class ctrlAviso extends abstractController {
             $avisos[$key] = $arrayAviso;
         }
 
+        if(empty($avisos)) $this->responder(false, 'No hay avisos para mostrar');
+
         $this->responder(true, 'Avisos visible', '', $avisos);
     }
 

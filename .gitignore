@@ -10,3 +10,6 @@
 # sublimetext
 *.sublime-project
 *.sublime-workspace
+
+#sftp
+/unprg-htdocs/sftp-config.json

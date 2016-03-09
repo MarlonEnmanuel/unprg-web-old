@@ -61,7 +61,8 @@ class Aviso extends abstractModel{
 		$sql = "select * from aviso where visible=? order by fchReg desc";
 		$stmt = $this->mysqli->stmt_init();
 		$stmt->prepare($sql);
-		$stmt->bind_param('i', $vis=1);
+        $vis=1;
+		$stmt->bind_param('i', $vis);
 		$stmt->execute();
 		$stmt->bind_result(
 			$_id,
@@ -145,11 +146,11 @@ class Aviso extends abstractModel{
     	$stmt->prepare($sql);
     	$stmt->bind_param('siiiiiii',
     		$this->texto,
-    		intval($this->destacado),
-    		intval($this->emergente),
-    		intval($this->visible),
-    		intval($this->estado),
-    		intval($this->bloqueado),
+    		$this->destacado,
+    		$this->emergente,
+    		$this->visible,
+    		$this->estado,
+    		$this->bloqueado,
     		$this->idArchivo,
     		$this->idUsuario
     		);
